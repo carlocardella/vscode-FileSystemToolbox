@@ -4,7 +4,7 @@
   "description": "",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.54.0"
+    "vscode": "^1.45.0"
   },
   "categories": [
     "Other"
@@ -16,8 +16,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "vscode-FSToolbox.helloWorld",
-        "title": "Hello World"
+        "command": "vscode-FSToolbox.CopyFileName",
+        "title": "FST: Copy active file name"
       }
     ]
   },

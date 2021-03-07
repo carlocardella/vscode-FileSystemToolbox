@@ -8,6 +8,11 @@ function getLineNumber(): number | undefined {
     return window.activeTextEditor?.selection.active.line;
 }
 
+export function getFileName(): string | undefined {
+    window.showInformationMessage(window.activeTextEditor?.document.fileName!);
+    return window.activeTextEditor?.document.fileName;
+}
+
 function getWorkspaceRootFolder(): string | undefined {
     const filePath = getFilePath();
     if (!filePath) { return; }
