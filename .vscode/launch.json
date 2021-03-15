@@ -11,7 +11,8 @@
 			"request": "launch",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
-				"--disable-extensions"
+				"--disable-extensions",
+				"${workspaceFolder}/src/test/assets"
 			],
 			"outFiles": [
 				"${workspaceFolder}/dist/**/*.js"
@@ -19,12 +20,27 @@
 			"preLaunchTask": "${defaultBuildTask}"
 		},
 		{
+			"name": "Debug Extension",
+			"type": "extensionHost",
+			"request": "launch",
+			"args": [
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--disable-extensions",
+				"--add ${workspaceFolder}/test/assets"
+			],
+			"outFiles": [
+				"${workspaceFolder}/out/**/*.js"
+			],
+			"preLaunchTask": "npm: test"
+		},
+		{
 			"name": "Extension Tests",
 			"type": "extensionHost",
 			"request": "launch",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
-				"--extensionTestsPath=${workspaceFolder}/out/test/suite/index"
+				"--extensionTestsPath=${workspaceFolder}/out/test/suite/index",
+				"--add ${workspaceFolder}/test/assets"
 			],
 			"outFiles": [
 				"${workspaceFolder}/out/test/**/*.js"

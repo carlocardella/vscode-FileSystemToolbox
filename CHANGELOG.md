@@ -7,14 +7,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [Unreleased]
 
 - Duplicate file
-- Copy full file path
-- Copy full file path with line number
-- Copy file name
-- Copy file name with line number
-- Copy contiaining folder full path
-- Copy contiaining folder relative path
-- Copy relative file path
-- Copy relative file path with line number
+- Copy workspace name
 - Open file path under cursor
 - Open file path under cursor in external default editor
 - Show path autocomplete
@@ -28,3 +21,16 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Add relevant commands to context menu
 - Context menu in `Folders` treeview
 - Context menu on file tab
+- Copy contiaining folder relative path
+
+### Added
+
+- Copy file name
+- Copy file name without extension
+- Copy file name with line number
+- Copy full file path
+- Copy full file path with line number
+- Copy contiaining folder full path
+- Copy relative file path
+- Copy relative file path with line number
+- Copy workspace folder path
