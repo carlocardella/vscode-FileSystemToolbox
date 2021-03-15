@@ -6,25 +6,25 @@ import * as folders from './folders';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	console.log("vscode-FSToolbox is active");
+	console.log("vscode-FileSystemToolbox is active");
 
 	// files
-	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FSToolbox.CopyFilePath', () => { files.copyFilePath(false); }));
-	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FSToolbox.CopyFileName', () => { files.copyFileName(false); }));
-	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FSToolbox.CopyFileNameWithoutExtension', () => { files.copyFileNameWithoutExtension(); }));
-	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FSToolbox.CopyFilePathWithLineNumber', () => { files.copyFilePath(true); }));
-	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FSToolbox.CopyFileNameWithLineNumber', () => { files.copyFileName(true); }));
-	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FSToolbox.CopyRelativeFilePath', () => { files.copyRelativeFilePath(false); }));
-	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FSToolbox.CopyRelativeFilePathWithLineNumber', () => { files.copyRelativeFilePath(true); }));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.CopyFilePath', () => { files.copyFilePath(false); }));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.CopyFileName', () => { files.copyFileName(false); }));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.CopyFileNameWithoutExtension', () => { files.copyFileNameWithoutExtension(); }));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.CopyFilePathWithLineNumber', () => { files.copyFilePath(true); }));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.CopyFileNameWithLineNumber', () => { files.copyFileName(true); }));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.CopyRelativeFilePath', () => { files.copyRelativeFilePath(false); }));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.CopyRelativeFilePathWithLineNumber', () => { files.copyRelativeFilePath(true); }));
 
 	// folders
-	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FSToolbox.CopyFolderPath', () => { folders.copyFolderPath(); }));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.CopyFolderPath', () => { folders.copyFolderPath(); }));
 
 	// workspaces
-	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FSToolbox.CopyWorkspaceRootPath', () => { workspaces.getWorkspaceRootPath(); }));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.CopyWorkspaceRootPath', () => { workspaces.getWorkspaceRootPath(); }));
 }
 
 // this method is called when your extension is deactivated
 export function deactivate() {
-	console.log("vscode-FSToolbox unloaded");
+	console.log("vscode-FileSystemToolbox unloaded");
 }

@@ -1,1 +1,1 @@
-# vscode-FSToolbox README
+# vscode-FileSystemToolbox README

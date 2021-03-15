@@ -1,6 +1,6 @@
 {
-  "name": "vscode-FSToolbox",
-  "displayName": "FSToolbox",
+  "name": "vscode-FileSystemToolbox",
+  "displayName": "FileSystemToolbox",
   "description": "",
   "version": "0.0.1",
   "engines": {
@@ -16,43 +16,43 @@
   "contributes": {
     "commands": [
       {
-        "command": "vscode-FSToolbox.CopyFilePath",
+        "command": "vscode-FileSystemToolbox.CopyFilePath",
         "title": "FST: Copy active file path"
       },
       {
-        "command": "vscode-FSToolbox.CopyFileName",
+        "command": "vscode-FileSystemToolbox.CopyFileName",
         "title": "FST: Copy active file name"
       },
       {
-        "command": "vscode-FSToolbox.CopyRelativeFilePath",
+        "command": "vscode-FileSystemToolbox.CopyRelativeFilePath",
         "title": "FST: Copy relative file path"
       },
       {
-        "command": "vscode-FSToolbox.CopyFileNameWithoutExtension",
+        "command": "vscode-FileSystemToolbox.CopyFileNameWithoutExtension",
         "title": "FST: Copy active file name without extension"
       },
       {
-        "command": "vscode-FSToolbox.CopyFilePathWithLineNumber",
+        "command": "vscode-FileSystemToolbox.CopyFilePathWithLineNumber",
         "title": "FST: Copy active file path name and line number"
       },
       {
-        "command": "vscode-FSToolbox.CopyFileNameWithLineNumber",
+        "command": "vscode-FileSystemToolbox.CopyFileNameWithLineNumber",
         "title": "FST: Copy active file name and line number"
       },
       {
-        "command": "vscode-FSToolbox.CopyWorkspaceRootPath",
+        "command": "vscode-FileSystemToolbox.CopyWorkspaceRootPath",
         "title": "FST: Copy Workspace root path"
       },
       {
-        "command": "vscode-FSToolbox.CopyFolderPath",
+        "command": "vscode-FileSystemToolbox.CopyFolderPath",
         "title": "FST: Copy folder path"
       },
       {
-        "command": "vscode-FSToolbox.CopyRelativeFilePath",
+        "command": "vscode-FileSystemToolbox.CopyRelativeFilePath",
         "title": "FST: Copy relative file path"
       },
       {
-        "command": "vscode-FSToolbox.CopyRelativeFilePathWithLineNumber",
+        "command": "vscode-FileSystemToolbox.CopyRelativeFilePathWithLineNumber",
         "title": "FST: Copy relative file path with line number"
       }
     ]
