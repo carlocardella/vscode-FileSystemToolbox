@@ -12,7 +12,7 @@
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--disable-extensions",
-				"${workspaceFolder}/src/test/assets"
+				"${workspaceFolder}/src/test/assets/assets.code-workspace"
 			],
 			"outFiles": [
 				"${workspaceFolder}/dist/**/*.js"
@@ -26,7 +26,7 @@
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--disable-extensions",
-				"--add ${workspaceFolder}/test/assets"
+				"${workspaceFolder}/src/test/assets/assets.code-workspace"
 			],
 			"outFiles": [
 				"${workspaceFolder}/out/**/*.js"
@@ -40,7 +40,8 @@
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--extensionTestsPath=${workspaceFolder}/out/test/suite/index",
-				"--add ${workspaceFolder}/test/assets"
+				"--disable-extensions",
+				"${workspaceFolder}/test/assets/assets.code-workspace"
 			],
 			"outFiles": [
 				"${workspaceFolder}/out/test/**/*.js"

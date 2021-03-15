@@ -22,6 +22,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Context menu in `Folders` treeview
 - Context menu on file tab
 - Copy contiaining folder relative path
+- Copy text selection with file metadata (file path, line number)
 
 ### Added
 
