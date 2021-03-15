@@ -10,9 +10,14 @@ suite("Files", () => {
     });
 
     describe("File path", () => {
-        test("Copy file path", () => {
-            const workspaceFilePath = "${workspaceFolder}/assets/ws1/ws1_1.txt";
-            workspace.openTextDocument(workspaceFilePath);
+        test("Copy file path", async () => {
+            // const workspaceFilePath = "${workspaceFolder}/assets/ws1/ws1_1.txt";
+            const workspaceFilePath = "C:/Users/carloc/Git/vscode-FSToolbox/src/test/assets/ws1/ws1_1.txt"; // todo: use a relative path
+            const fileUri = Uri.file(workspaceFilePath);
+            await workspace.openTextDocument(fileUri).then((doc) => {
+                window.showTextDocument(doc);
+            });
+
             // const editor = vscode.window.activeTextEditor;
             // const position = editor!.selection.active;
             // var newPosition = position.with(3, 0);

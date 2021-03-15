@@ -41,7 +41,7 @@
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--extensionTestsPath=${workspaceFolder}/out/test/suite/index",
 				"--disable-extensions",
-				"${workspaceFolder}/test/assets/assets.code-workspace"
+				"${workspaceFolder}/src/test/assets/assets.code-workspace"
 			],
 			"outFiles": [
 				"${workspaceFolder}/out/test/**/*.js"
