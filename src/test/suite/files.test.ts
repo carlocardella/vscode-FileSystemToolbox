@@ -3,6 +3,8 @@ import * as assert from 'assert';
 import { Uri, window, workspace, env } from "vscode";
 import * as vscode from 'vscode';
 import { copyFilePath } from "../../files";
+import * as path from 'path';
+import { sleep } from "../helpers";
 
 suite("Files", () => {
     before(() => {
@@ -11,12 +13,12 @@ suite("Files", () => {
 
     describe("File path", () => {
         test("Copy file path", async () => {
-            // const workspaceFilePath = "${workspaceFolder}/assets/ws1/ws1_1.txt";
-            const workspaceFilePath = "C:/Users/carloc/Git/vscode-FSToolbox/src/test/assets/ws1/ws1_1.txt"; // todo: use a relative path
+            const workspaceFilePath = path.join(workspace.workspaceFolders![0].uri.fsPath, "ws1/ws1_1.txt");
             const fileUri = Uri.file(workspaceFilePath);
             await workspace.openTextDocument(fileUri).then((doc) => {
                 window.showTextDocument(doc);
             });
+            await sleep(500);
 
             // const editor = vscode.window.activeTextEditor;
             // const position = editor!.selection.active;
