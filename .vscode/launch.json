@@ -9,10 +9,10 @@
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",
+			"runtimeExecutable": "${execPath}",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
-				"--disable-extensions",
-				"${workspaceFolder}/src/test/assets/assets.code-workspace"
+				"--disable-extensions"
 			],
 			"outFiles": [
 				"${workspaceFolder}/dist/**/*.js"
@@ -20,33 +20,19 @@
 			"preLaunchTask": "${defaultBuildTask}"
 		},
 		{
-			"name": "Debug Extension",
-			"type": "extensionHost",
-			"request": "launch",
-			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}",
-				"--disable-extensions",
-				"${workspaceFolder}/src/test/assets/assets.code-workspace"
-			],
-			"outFiles": [
-				"${workspaceFolder}/out/**/*.js"
-			],
-			"preLaunchTask": "npm: test"
-		},
-		{
 			"name": "Extension Tests",
 			"type": "extensionHost",
 			"request": "launch",
+			"runtimeExecutable": "${execPath}",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--extensionTestsPath=${workspaceFolder}/out/test/suite/index",
-				"--disable-extensions",
-				"${workspaceFolder}/src/test/assets/assets.code-workspace"
+				"--disable-extensions"
 			],
 			"outFiles": [
 				"${workspaceFolder}/out/test/**/*.js"
 			],
-			"preLaunchTask": "npm: test-watch"
+			"preLaunchTask": "npm: unit-tests"
 		}
 	]
 }

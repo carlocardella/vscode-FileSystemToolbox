@@ -1,4 +1,4 @@
-import { getDocumentUri, copyToClipboard, getLineNumber, getWorkspaceFolder, log } from './shared';
+import { getDocumentUri, writeClipboard, getLineNumber, getWorkspaceFolder, log } from './shared';
 import * as path from 'path';
 
 export function copyFilePath(appendFileNumber: boolean) {
@@ -19,7 +19,7 @@ export function copyFilePath(appendFileNumber: boolean) {
     }
 
     log(filePath);
-    copyToClipboard(filePath);
+    writeClipboard(filePath);
 }
 
 export function copyFileName(appendFileNumber: boolean) {
@@ -42,7 +42,7 @@ export function copyFileName(appendFileNumber: boolean) {
     }
 
     log(fileName);
-    copyToClipboard(fileName);
+    writeClipboard(fileName);
 }
 
 export function copyFileNameWithoutExtension() {
@@ -54,7 +54,7 @@ export function copyFileNameWithoutExtension() {
 
     const fileName = path.parse(filePath).name;
     log(fileName);
-    copyToClipboard(fileName);
+    writeClipboard(fileName);
 }
 
 export function copyRelativeFilePath(appendLineNumber: boolean): string | undefined {
@@ -83,5 +83,5 @@ export function copyRelativeFilePath(appendLineNumber: boolean): string | undefi
     }
 
     log(relativeFilePath);
-    copyToClipboard(relativeFilePath);
+    writeClipboard(relativeFilePath);
 }

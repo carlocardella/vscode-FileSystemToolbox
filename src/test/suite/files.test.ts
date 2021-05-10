@@ -1,10 +1,9 @@
 import { before, describe } from "mocha";
 import * as assert from 'assert';
 import { Uri, window, workspace, env } from "vscode";
-import * as vscode from 'vscode';
-import { copyFilePath } from "../../files";
+import { copyFilePath, copyFileName } from '../../modules/files';
 import * as path from 'path';
-import { sleep } from "../helpers";
+import { sleep, readClipboard } from './testHelpers';
 
 suite("Files", () => {
     before(() => {
@@ -12,7 +11,7 @@ suite("Files", () => {
     });
 
     describe("File path", () => {
-        test("Copy file path", async () => {
+        test.skip("Copy file path", async () => {
             const workspaceFilePath = path.join(workspace.workspaceFolders![0].uri.fsPath, "ws1/ws1_1.txt");
             const fileUri = Uri.file(workspaceFilePath);
             await workspace.openTextDocument(fileUri).then((doc) => {
@@ -29,6 +28,14 @@ suite("Files", () => {
             copyFilePath(false);
             const clip = env.clipboard.readText();
             assert.deepStrictEqual(clip, workspaceFilePath);
+        });
+
+        test("Copy file name (no workspace)", async () => {
+            await workspace.openTextDocument("/src/test/assets/test.txt");
+            copyFileName(false);
+
+            let clipContent = readClipboard();
+            assert.deepStrictEqual(clipContent, "test.txt");
         });
     });
 });

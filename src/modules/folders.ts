@@ -1,4 +1,4 @@
-import { copyToClipboard, getDocumentUri, log } from "./shared";
+import { writeClipboard, getDocumentUri, log } from "./shared";
 import * as path from 'path';
 
 export function copyFolderPath() {
@@ -10,5 +10,5 @@ export function copyFolderPath() {
 
     const folderPath = path.dirname(filePath);
     console.log(folderPath);
-    copyToClipboard(folderPath);
+    writeClipboard(folderPath);
 }

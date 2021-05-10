@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import * as files from './files';
-import * as workspaces from './workspaces';
-import * as folders from './folders';
+import * as files from './modules/files';
+import * as workspaces from './modules/workspaces';
+import * as folders from './modules/folders';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed

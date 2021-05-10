@@ -1,4 +1,4 @@
-import { getDocumentUri, copyToClipboard, getWorkspaceFolder, log } from './shared';
+import { getDocumentUri, writeClipboard, getWorkspaceFolder, log } from './shared';
 
 export function getWorkspaceRootPath(): string | undefined {
     const filePath = getDocumentUri();
@@ -14,5 +14,5 @@ export function getWorkspaceRootPath(): string | undefined {
     }
 
     log(workspaceRootFolder);
-    copyToClipboard(workspaceRootFolder);
+    writeClipboard(workspaceRootFolder);
 }

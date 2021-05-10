@@ -14,7 +14,7 @@ export function getLineNumber(): number | undefined {
     return window.activeTextEditor?.selection.active.line;
 }
 
-export function copyToClipboard(textToCopy: string) {
+export function writeClipboard(textToCopy: string) {
     env.clipboard.writeText(textToCopy);
 }
 
