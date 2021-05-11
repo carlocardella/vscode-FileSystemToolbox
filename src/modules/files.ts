@@ -1,6 +1,13 @@
-import { getDocumentUri, writeClipboard, getLineNumber, getWorkspaceFolder, log } from './shared';
+import { getDocumentUri, writeClipboard, getLineNumber, log } from './shared';
 import * as path from 'path';
+import { workspace } from 'vscode';
 
+/**
+ * Copies the path of the file open in the current editor to the clipboard
+ * @export
+ * @param {boolean} appendFileNumber Optionally copies the file path with the active line number
+ * @return {*} 
+ */
 export function copyFilePath(appendFileNumber: boolean) {
     var filePath = getDocumentUri()?.fsPath;
     if (!filePath) {
@@ -18,10 +25,15 @@ export function copyFilePath(appendFileNumber: boolean) {
         filePath = filePath + ":" + lineNumber.toString();
     }
 
-    log(filePath);
     writeClipboard(filePath);
 }
 
+/**
+ * Copes the name of the file open in the current editor to the clipboard
+ * @export
+ * @param {boolean} appendFileNumber Optionally copies the file name with the active line number
+ * @return {*} 
+ */
 export function copyFileName(appendFileNumber: boolean) {
     const filePath = getDocumentUri()?.fsPath;
     if (!filePath) {
@@ -41,10 +53,14 @@ export function copyFileName(appendFileNumber: boolean) {
         fileName = fileName + ":" + lineNumber.toString();
     }
 
-    log(fileName);
     writeClipboard(fileName);
 }
 
+/**
+ * Copy the name of the file open in the current editor, without extension
+ * @export
+ * @return {*} 
+ */
 export function copyFileNameWithoutExtension() {
     const filePath = getDocumentUri()?.fsPath;
     if (!filePath) {
@@ -53,10 +69,16 @@ export function copyFileNameWithoutExtension() {
     }
 
     const fileName = path.parse(filePath).name;
-    log(fileName);
     writeClipboard(fileName);
 }
 
+/**
+ * Copy the path of the file open in the editor relative to the workspace root folder. 
+ * If there is no workspace or folder open, the function returns undefined
+ * @export
+ * @param {boolean} appendLineNumber
+ * @return {*}  {(string | undefined)}
+ */
 export function copyRelativeFilePath(appendLineNumber: boolean): string | undefined {
     const filePath = getDocumentUri()?.fsPath;
     if (!filePath) {
@@ -64,13 +86,11 @@ export function copyRelativeFilePath(appendLineNumber: boolean): string | undefi
         return;
     }
 
-    const workspaceFolderPath = getWorkspaceFolder()?.uri.fsPath;
-    if (!workspaceFolderPath) {
-        log("No active workspace found");
+    let relativeFilePath = workspace.asRelativePath(filePath);
+    if (!relativeFilePath) {
+        console.log("No active workspace found");
         return;
-    }
-
-    var relativeFilePath = filePath.replace(workspaceFolderPath, "");
+    };
 
     if (appendLineNumber) {
         const lineNumber = getLineNumber();
@@ -82,6 +102,5 @@ export function copyRelativeFilePath(appendLineNumber: boolean): string | undefi
         relativeFilePath = relativeFilePath + ":" + lineNumber;
     }
 
-    log(relativeFilePath);
     writeClipboard(relativeFilePath);
 }

@@ -40,11 +40,11 @@
       },
       {
         "command": "vscode-FileSystemToolbox.CopyFilePathWithLineNumber",
-        "title": "FST: Copy active file path name and line number"
+        "title": "FST: Copy active file path name with line number"
       },
       {
         "command": "vscode-FileSystemToolbox.CopyFileNameWithLineNumber",
-        "title": "FST: Copy active file name and line number"
+        "title": "FST: Copy active file name with line number"
       },
       {
         "command": "vscode-FileSystemToolbox.CopyWorkspaceRootPath",

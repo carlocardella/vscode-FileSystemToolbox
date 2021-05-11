@@ -9,6 +9,5 @@ export function copyFolderPath() {
     }
 
     const folderPath = path.dirname(filePath);
-    console.log(folderPath);
     writeClipboard(folderPath);
 }
