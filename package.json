@@ -55,6 +55,10 @@
         "title": "FST: Copy folder path"
       },
       {
+        "command": "vscode-FileSystemToolbox.CopyRelativeFolderPath",
+        "title": "FST: Copy relative folder path"
+      },
+      {
         "command": "vscode-FileSystemToolbox.CopyRelativeFilePath",
         "title": "FST: Copy relative file path"
       },

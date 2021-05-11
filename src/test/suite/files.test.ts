@@ -9,12 +9,11 @@ import * as vscode from 'vscode';
 suite("Files", () => {
     const testFilePath = path.join(__dirname, "../../../src/test/assets/test.txt");
     before(async () => {
-        console.log("Starting files tests");
+        console.log("Starting Files tests");
     });
 
     describe("No workspace", () => {
         before(async () => {
-            // console.log("Starting files tests");
             await workspace.openTextDocument(testFilePath).then(doc => { window.showTextDocument(doc); });
             await sleep(500);
         });
