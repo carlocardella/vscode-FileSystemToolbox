@@ -1,6 +1,6 @@
 import { before, describe, after } from "mocha";
 import * as assert from 'assert';
-import { window, workspace, commands, Uri } from 'vscode';
+import { window, workspace, Uri } from 'vscode';
 import { copyFilePath, copyFileName, copyFileNameWithoutExtension } from '../../modules/files';
 import * as path from 'path';
 import { sleep, readClipboard, closeTextEditor } from './testHelpers';
