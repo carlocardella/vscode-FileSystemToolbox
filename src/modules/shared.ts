@@ -1,4 +1,4 @@
-import { env, Uri, window, workspace, WorkspaceFolder } from 'vscode';
+import { env, TextEditor, Uri, window, workspace, WorkspaceFolder } from 'vscode';
 
 /**
  * Returns the Uri of the active document
@@ -30,6 +30,26 @@ export function getLineNumber(): number | undefined {
 }
 
 /**
+ * Returns the current line number or selection ranges
+ * @export
+ * @return {*}  {Promise<string>}
+ */
+export function getLineNumberOrRange(): Promise<string> {
+    const editor = getActiveEditor();
+    
+    if (editor?.selection.isEmpty) {
+        return Promise.resolve(editor.selection.active.line.toString());
+    }
+    
+    let lineNumberOrRange: string = "";
+    editor?.selections?.forEach(s => {
+        lineNumberOrRange += s.start + '~' + s.end + ';';
+    });
+
+    return Promise.resolve(lineNumberOrRange);
+}
+
+/**
  * Writes text to the system clipboard
  * @export
  * @param {string} textToCopy
@@ -45,4 +65,12 @@ export function writeClipboard(textToCopy: string) {
  */
 export function log(message: string) {
     console.log(message);
+}
+
+/**
+ * Returns the current active editor
+ * @return {*}  {(TextEditor | undefined)}
+ */
+function getActiveEditor(): TextEditor | undefined {
+    return window.activeTextEditor;
 }

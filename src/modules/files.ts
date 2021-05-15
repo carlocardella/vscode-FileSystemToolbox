@@ -1,4 +1,4 @@
-import { getDocumentUri, writeClipboard, getLineNumber, log } from './shared';
+import { getDocumentUri, writeClipboard, getLineNumber, log, getLineNumberOrRange } from './shared';
 import * as path from 'path';
 import { workspace } from 'vscode';
 
@@ -34,7 +34,7 @@ export function copyFilePath(appendFileNumber: boolean) {
  * @param {boolean} appendFileNumber Optionally copies the file name with the active line number
  * @return {*} 
  */
-export function copyFileName(appendFileNumber: boolean) {
+export async function copyFileName(appendFileNumber: boolean) {
     const filePath = getDocumentUri()?.fsPath;
     if (!filePath) {
         log("No active file found");
@@ -44,13 +44,15 @@ export function copyFileName(appendFileNumber: boolean) {
     var fileName = path.parse(filePath).base;
 
     if (appendFileNumber) {
-        const lineNumber = getLineNumber();
-        if (!lineNumber) {
-            log("No active line number found");
-            return;
-        }
+        // const lineNumber = getLineNumber();
+        // if (!lineNumber) {
+        //     log("No active line number found");
+        //     return;
+        // }
 
-        fileName = fileName + ":" + lineNumber.toString();
+        let lineNumber: string = await getLineNumberOrRange();
+        // fileName = fileName + ":" + lineNumber.toString();
+        fileName = fileName + ":" + lineNumber;
     }
 
     writeClipboard(fileName);
