@@ -1,4 +1,4 @@
-import { commands, env } from "vscode";
+import { commands, env, Uri, workspace, window } from 'vscode';
 
 /**
  * Pauses execution of the given number of milliseconds
@@ -33,4 +33,9 @@ export function closeTextEditor(closeAll?: boolean): Promise<void> {
     }
 
     return Promise.resolve();
+}
+
+export function openFolder(folderPath: string) {
+    console.log("enter openFolder");
+    workspace.updateWorkspaceFolders(0, 0, { uri: Uri.parse(folderPath) });
 }

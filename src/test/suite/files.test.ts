@@ -1,6 +1,6 @@
 import { before, describe, after } from "mocha";
 import * as assert from 'assert';
-import { window, workspace, Uri } from 'vscode';
+import { window, workspace, Uri, Selection } from 'vscode';
 import { copyFilePath, copyFileName, copyFileNameWithoutExtension } from '../../modules/files';
 import * as path from 'path';
 import { sleep, readClipboard, closeTextEditor } from './testHelpers';
@@ -23,20 +23,28 @@ suite("Files", () => {
         });
 
         const testFileName = [
-            { f: copyFileName, description: "Copy file name", copyLineNumber: false, expected: "test.txt" },
-            { f: copyFileName, description: "Copy file name with line number", copyLineNumber: true, expected: 'test.txt:2' },
-            { f: copyFilePath, description: "Copy file path", copyLineNumber: false, expected: testFilePath },
-            { f: copyFilePath, description: "Copy file path with line number", copyLineNumber: true, expected: `${testFilePath}:2` }
+            { f: copyFileName, description: "Copy file name", copyLineNumber: false, useRanges: false, expected: "test.txt" },
+            { f: copyFileName, description: "Copy file name with line number", copyLineNumber: true, useRanges: false, expected: 'test.txt:2' },
+            { f: copyFileName, description: "Copy file name with line ranges", copyLineNumber: true, useRanges: true, expected: 'test.txt:2~3;5' },
+            { f: copyFilePath, description: "Copy file path", copyLineNumber: false, useRanges: false, expected: testFilePath },
+            { f: copyFilePath, description: "Copy file path with line number", copyLineNumber: true, useRanges: false, expected: `${testFilePath}:2` },
+            { f: copyFilePath, description: "Copy file path with line ranges", copyLineNumber: true, useRanges: true, expected: `${testFilePath}:2~3;5` }
         ];
 
         testFileName.forEach(t => {
             test(`${t.description}`, async () => {
                 if (t.copyLineNumber) {
                     const editor = vscode.window.activeTextEditor;
-                    const position = editor!.selection.active;
-                    var newPosition = position.with(2, 2);
-                    var newSelection = new vscode.Selection(newPosition, newPosition);
-                    editor!.selection = newSelection;
+                    let selections: Selection[] = [];
+                    if (t.useRanges) {
+                        selections.push(new Selection(1, 0, 2, 6));
+                        selections.push(new Selection(4, 0, 4, 5));
+                        editor!.selections = selections;
+                    }
+                    else {
+                        selections.push(new Selection(2, 0, 2, 0));
+                        editor!.selections = selections;
+                    }
                 };
                 t.f(t.copyLineNumber!);
 
@@ -57,8 +65,8 @@ suite("Files", () => {
         test("Copy file name in workspace", async () => {
             workspace.updateWorkspaceFolders(0, null, { uri: Uri.file(__dirname) });
             // await sleep(500);
-            
-            
+
+
             console.log(workspace.workspaceFolders);
         });
     });

@@ -1,4 +1,4 @@
-import { getDocumentUri, writeClipboard, getLineNumber, log, getLineNumberOrRange } from './shared';
+import { getDocumentUri, writeClipboard, log, getLineNumberOrRange, getFilePath, getFileName } from './shared';
 import * as path from 'path';
 import { workspace } from 'vscode';
 
@@ -8,21 +8,16 @@ import { workspace } from 'vscode';
  * @param {boolean} appendFileNumber Optionally copies the file path with the active line number
  * @return {*} 
  */
-export function copyFilePath(appendFileNumber: boolean) {
-    var filePath = getDocumentUri()?.fsPath;
+export async function copyFilePath(appendFileNumber: boolean) {
+    var filePath = getFilePath();
     if (!filePath) {
         log("No active file found");
         return;
     }
 
     if (appendFileNumber) {
-        const lineNumber = getLineNumber();
-        if (!lineNumber) {
-            log("No active line number found");
-            return;
-        }
-
-        filePath = filePath + ":" + lineNumber.toString();
+        const lineNumberOrRange: string = await getLineNumberOrRange();
+        filePath = filePath + ":" + lineNumberOrRange;
     }
 
     writeClipboard(filePath);
@@ -35,24 +30,12 @@ export function copyFilePath(appendFileNumber: boolean) {
  * @return {*} 
  */
 export async function copyFileName(appendFileNumber: boolean) {
-    const filePath = getDocumentUri()?.fsPath;
-    if (!filePath) {
-        log("No active file found");
-        return;
-    }
-
-    var fileName = path.parse(filePath).base;
+    var fileName = getFileName();
+    if (!fileName) { return; }
 
     if (appendFileNumber) {
-        // const lineNumber = getLineNumber();
-        // if (!lineNumber) {
-        //     log("No active line number found");
-        //     return;
-        // }
-
-        let lineNumber: string = await getLineNumberOrRange();
-        // fileName = fileName + ":" + lineNumber.toString();
-        fileName = fileName + ":" + lineNumber;
+        let lineNumberOrRange: string = await getLineNumberOrRange();
+        fileName = fileName + ":" + lineNumberOrRange;
     }
 
     writeClipboard(fileName);
@@ -64,14 +47,10 @@ export async function copyFileName(appendFileNumber: boolean) {
  * @return {*} 
  */
 export function copyFileNameWithoutExtension() {
-    const filePath = getDocumentUri()?.fsPath;
-    if (!filePath) {
-        log("No active file found");
-        return;
-    }
+    const fileName = getFileName();
+    if (!fileName) { return; }
 
-    const fileName = path.parse(filePath).name;
-    writeClipboard(fileName);
+    writeClipboard(path.parse(fileName).name);
 }
 
 /**
@@ -95,7 +74,7 @@ export function copyRelativeFilePath(appendLineNumber: boolean): string | undefi
     };
 
     if (appendLineNumber) {
-        const lineNumber = getLineNumber();
+        const lineNumber = getLineNumberOrRange();
         if (!lineNumber) {
             log("No active line number found");
             return;

@@ -28,7 +28,7 @@
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--disable-extensions",
 				"--add C:/temp/",
-				"--reue-window"
+				"--resue-window"
 			],
 			"outFiles": [
 				"${workspaceFolder}/dist/**/*.js"

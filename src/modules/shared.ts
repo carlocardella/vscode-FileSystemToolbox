@@ -1,4 +1,5 @@
 import { env, TextEditor, Uri, window, workspace, WorkspaceFolder } from 'vscode';
+import * as path from 'path';
 
 /**
  * Returns the Uri of the active document
@@ -21,32 +22,25 @@ export function getWorkspaceFolder(): WorkspaceFolder | undefined {
 }
 
 /**
- * Returns the active line number
- * @export
- * @return {*}  {(number | undefined)}
- */
-export function getLineNumber(): number | undefined {
-    return window.activeTextEditor?.selection.active.line;
-}
-
-/**
  * Returns the current line number or selection ranges
  * @export
  * @return {*}  {Promise<string>}
  */
 export function getLineNumberOrRange(): Promise<string> {
     const editor = getActiveEditor();
-    
+
     if (editor?.selection.isEmpty) {
-        return Promise.resolve(editor.selection.active.line.toString());
+        let lineNumber = editor.selection.active.line + 1;
+        return Promise.resolve(lineNumber.toString());
     }
-    
-    let lineNumberOrRange: string = "";
-    editor?.selections?.forEach(s => {
-        lineNumberOrRange += s.start + '~' + s.end + ';';
+
+    let selectedRanges = editor?.selections.map((s) => {
+        let lineStart = s.start.line + 1;
+        let lineEnd = s.end.line + 1;
+        return lineStart === lineEnd ? lineStart : `${lineStart}~${lineEnd}`;
     });
 
-    return Promise.resolve(lineNumberOrRange);
+    return Promise.resolve(selectedRanges!.join(';')!);
 }
 
 /**
@@ -73,4 +67,25 @@ export function log(message: string) {
  */
 function getActiveEditor(): TextEditor | undefined {
     return window.activeTextEditor;
+}
+
+/**
+ * Returns the active file path
+ * @export
+ * @return {*}  {(string | undefined)}
+ */
+export function getFilePath(): string | undefined {
+    return getDocumentUri()?.fsPath;
+}
+
+/**
+ * Returns the active file name
+ * @export
+ * @return {*}  {(string | undefined)}
+ */
+export function getFileName(): string | undefined {
+    const filePath = getFilePath();
+    if (!filePath) { return undefined; }
+
+    return path.parse(filePath).base;
 }

@@ -11,13 +11,14 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Duplicate file
 * Open file path under cursor
 * Open file path under cursor in external default editor
-* Copy selected range info (e.g. `file.txt:2~8` for a selection from line 2 through 8)
-  * Support multiple selections
 * Copy relative path relative to current file
 * Copy absolute path relative to current file
 * New file in workspace/folder root
 * New file relative to current file
 * Duplicate file
+* Copy lines with original line numbers
+* Copy lines with original line numbers + file name
+* Copy lines with original line numbers + file path
 
 ### Folders
 
@@ -49,13 +50,19 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Context menu in `Folders` treeview
 * Context menu on file tab
 
+## [version] - @todo
+
 ## Added
 
 * Copy file name
 * Copy file name without extension
-* Copy file name with line number
+* Copy file name with line number or range (e.g. `file.txt:2~8` for a selection from line 2 through 8)
+  * Supports multiple selections
+  * Multiple ranges are separated by `;`
 * Copy full file path
-* Copy full file path with line number
+* Copy full file path with line number or range (e.g. `C:\temp\file.txt:2~8` for a selection from line 2 through 8)
+  * Supports multiple selections
+  * Multiple ranges are separated by `;`
 * Copy containing folder full path
 * Copy relative file path
 * Copy relative file path with line number
