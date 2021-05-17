@@ -1,5 +1,4 @@
 import { env, TextEditor, Uri, window, workspace, WorkspaceFolder } from 'vscode';
-import * as path from 'path';
 
 /**
  * Returns the Uri of the active document
@@ -69,23 +68,34 @@ function getActiveEditor(): TextEditor | undefined {
     return window.activeTextEditor;
 }
 
+
+export type ValueSelection = {
+    /**
+     * Start and End index to be used to select the file name to duplicate
+     * @type {number}
+     */
+    start: number;
+    end: number;
+};
+
 /**
- * Returns the active file path
- * @export
- * @return {*}  {(string | undefined)}
+ * Prompts the user to select a new name for the file to be duplicated
+ * @param {string} value The value to prefill in the input box
+ * @param {string} promptThe text to display underneath the input box
+ * @param {ValueSelection} valueSelection Selection of the prefilled value
+ * @return {*}  {(Promise<string | undefined>)}
  */
-export function getFilePath(): string | undefined {
-    return getDocumentUri()?.fsPath;
+export async function askForDuplicateName(value: string, prompt: string, valueSelection: ValueSelection): Promise<string | undefined> {
+    let newPath = await window.showInputBox({
+        ignoreFocusOut: true,
+        value: value,
+        prompt: prompt,
+        valueSelection: [valueSelection.start, valueSelection.end]
+    });
+
+    return Promise.resolve(newPath);
 }
 
-/**
- * Returns the active file name
- * @export
- * @return {*}  {(string | undefined)}
- */
-export function getFileName(): string | undefined {
-    const filePath = getFilePath();
-    if (!filePath) { return undefined; }
-
-    return path.parse(filePath).base;
+export function notImplementedException() {
+    throw new Error("NotImplementedException");
 }

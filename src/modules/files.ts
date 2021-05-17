@@ -1,4 +1,4 @@
-import { getDocumentUri, writeClipboard, log, getLineNumberOrRange, getFilePath, getFileName } from './shared';
+import { getDocumentUri, writeClipboard, log, getLineNumberOrRange } from './shared';
 import * as path from 'path';
 import { workspace } from 'vscode';
 
@@ -84,4 +84,25 @@ export function copyRelativeFilePath(appendLineNumber: boolean): string | undefi
     }
 
     writeClipboard(relativeFilePath);
+}
+
+/**
+ * Returns the active file path
+ * @export
+ * @return {*}  {(string | undefined)}
+ */
+export function getFilePath(): string | undefined {
+    return getDocumentUri()?.fsPath;
+}
+
+/**
+ * Returns the active file name
+ * @export
+ * @return {*}  {(string | undefined)}
+ */
+export function getFileName(): string | undefined {
+    const filePath = getFilePath();
+    if (!filePath) { return undefined; }
+
+    return path.parse(filePath).base;
 }
