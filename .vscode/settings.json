@@ -25,5 +25,9 @@
         "titleBar.inactiveBackground": "#450b1e99",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.color": "#450b1e"
+    "peacock.color": "#450b1e",
+    "mochaExplorer.files": "src/test/**/*test.ts",
+    "mochaExplorer.logpanel": true,
+    "mochaExplorer.require": "ts-node/register",
+    "mochaExplorer.esmLoader": false
 }

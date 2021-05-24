@@ -3,10 +3,10 @@ import * as assert from 'assert';
 import { window, workspace, Uri, Selection } from 'vscode';
 import { copyFilePath, copyFileName, copyFileNameWithoutExtension } from '../../modules/files';
 import * as path from 'path';
-import { sleep, readClipboard, closeTextEditor } from './testHelpers';
+import { sleep, readClipboard, closeTextEditor, openDocument, getActiveTextEditor } from './testHelpers';
 import * as vscode from 'vscode';
 
-suite("Files", () => {
+describe("Files", () => {
     const testFilePath = path.join(__dirname, "../../../src/test/assets/test.txt");
     before(async () => {
         console.log("Starting Files tests");
@@ -14,7 +14,8 @@ suite("Files", () => {
 
     describe("No workspace", () => {
         before(async () => {
-            await workspace.openTextDocument(testFilePath).then(doc => { window.showTextDocument(doc); });
+            // await workspace.openTextDocument(testFilePath).then(doc => { window.showTextDocument(doc); });
+            await openDocument(testFilePath);
             await sleep(500);
         });
         after(async () => {
@@ -32,9 +33,10 @@ suite("Files", () => {
         ];
 
         testFileName.forEach(t => {
-            test(`${t.description}`, async () => {
+            it(`${t.description}`, async () => {
                 if (t.copyLineNumber) {
-                    const editor = vscode.window.activeTextEditor;
+                    // const editor = vscode.window.activeTextEditor;
+                    const editor = await getActiveTextEditor();
                     let selections: Selection[] = [];
                     if (t.useRanges) {
                         selections.push(new Selection(1, 0, 2, 6));
@@ -54,7 +56,7 @@ suite("Files", () => {
             });
         });
 
-        test("Copy file name without extension", async () => {
+        it("Copy file name without extension", async () => {
             copyFileNameWithoutExtension();
             let clipContent = await readClipboard();
             assert.deepStrictEqual(clipContent, "test");
@@ -62,7 +64,7 @@ suite("Files", () => {
     });
 
     describe.skip("Workspace", () => {
-        test("Copy file name in workspace", async () => {
+        it("Copy file name in workspace", async () => {
             workspace.updateWorkspaceFolders(0, null, { uri: Uri.file(__dirname) });
             // await sleep(500);
 

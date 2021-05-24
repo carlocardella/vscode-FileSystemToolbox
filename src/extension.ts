@@ -18,6 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.CopyRelativeFilePath', () => { files.copyRelativeFilePath(false); }));
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.CopyRelativeFilePathWithLineNumber', () => { files.copyRelativeFilePath(true); }));
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.DuplicateFile', () => { crud.duplicateFile(); }));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.RemoveFile', () => { crud.removeFile(); }));
 
 	// folders
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.CopyFolderPath', () => { folders.copyFolderPath(false); }));

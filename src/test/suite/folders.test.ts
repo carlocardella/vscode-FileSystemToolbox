@@ -1,11 +1,11 @@
-import { before, describe, after } from "mocha";
+// import { before, describe, after } from "mocha";
 import * as assert from 'assert';
 import * as path from 'path';
 import { closeTextEditor, readClipboard, sleep } from "./testHelpers";
 import { window, workspace } from "vscode";
 import { copyFolderPath } from '../../modules/folders';
 
-suite("Folders", () => {
+describe("Folders", () => {
     const testFilePath = path.join(__dirname, "../../../src/test/assets/test.txt");
     before(async () => {
         console.log("Starting Folders tests");
@@ -21,7 +21,7 @@ suite("Folders", () => {
             await closeTextEditor(true);
         });
 
-        test("Copy folder path", async () => {
+        it("Copy folder path", async () => {
             const expectedPath = path.dirname(testFilePath);
             copyFolderPath(false);
             let clipContent = await readClipboard();
