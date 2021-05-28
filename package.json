@@ -19,6 +19,11 @@
   "activationEvents": [
     "*"
   ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
   "main": "./dist/extension",
   "contributes": {
     "commands": [
