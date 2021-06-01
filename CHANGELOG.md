@@ -48,7 +48,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Context menu in `Folders` treeview
 * Context menu on file tab
 
-## [0.0.1] - @todo
+## [0.0.1] - 2021-06-01
 
 ## Added
 
