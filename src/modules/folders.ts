@@ -28,11 +28,11 @@ export function getFolderPath(relativeToWorkspace: boolean): string | undefined 
  * @param {boolean} relativeToWorkspace Copies the path relative to the current workspace
  * @return {*} 
  */
-export function copyFolderPath(relativeToWorkspace: boolean) {
+export async function copyFolderPath(relativeToWorkspace: boolean) {
     let folderPath = getFolderPath(relativeToWorkspace);
     if (!folderPath) { return; }
 
-    writeClipboard(folderPath);
+    await writeClipboard(folderPath);
 }
 
 /**

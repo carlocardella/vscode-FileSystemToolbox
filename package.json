@@ -93,6 +93,14 @@
             {
                 "command": "vscode-FileSystemToolbox.CopyRelativeFilePathWithLineNumber",
                 "title": "FST: Copy relative file path with line number"
+            },
+            {
+                "command": "vscode-FileSystemToolbox.TransformPathToPosix",
+                "title": "TT: Transform path to Posix"
+            },
+            {
+                "command": "vscode-FileSystemToolbox.TransformPathToWin32",
+                "title": "TT: Transform path to Win32"
             }
         ]
     },

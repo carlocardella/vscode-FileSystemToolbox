@@ -36,8 +36,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Make Relative
 * Resolve
 * Normalize
-* Convert to posix
-* Convert to windows
 * Convert HOME to ~
 * Convert ~ to HOME
 * Copy text selection with file metadata (file path, line number)
@@ -50,7 +48,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Context menu in `Folders` treeview
 * Context menu on file tab
 
-## [version] - @todo
+## [0.0.1] - @todo
 
 ## Added
 
@@ -67,3 +65,5 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Copy relative file path
 * Copy relative file path with line number
 * Copy workspace folder path
+* Convert path string to posix format
+* Convert path string to win32 format

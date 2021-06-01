@@ -20,7 +20,7 @@ export async function copyFilePath(appendFileNumber: boolean) {
         filePath = filePath + ":" + lineNumberOrRange;
     }
 
-    writeClipboard(filePath);
+    await writeClipboard(filePath);
 }
 
 /**
@@ -38,7 +38,7 @@ export async function copyFileName(appendFileNumber: boolean) {
         fileName = fileName + ":" + lineNumberOrRange;
     }
 
-    writeClipboard(fileName);
+    await writeClipboard(fileName);
 }
 
 /**
@@ -46,11 +46,11 @@ export async function copyFileName(appendFileNumber: boolean) {
  * @export
  * @return {*} 
  */
-export function copyFileNameWithoutExtension() {
+export async function copyFileNameWithoutExtension() {
     const fileName = getFileName();
     if (!fileName) { return; }
 
-    writeClipboard(path.parse(fileName).name);
+    await writeClipboard(path.parse(fileName).name);
 }
 
 /**

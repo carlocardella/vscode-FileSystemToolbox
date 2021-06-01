@@ -1,4 +1,4 @@
-import { env, TextEditor, Uri, window, workspace, WorkspaceFolder } from 'vscode';
+import { env, Range, Selection, TextEditor, Uri, window, workspace, WorkspaceFolder } from 'vscode';
 
 /**
  * Returns the Uri of the active document
@@ -45,10 +45,12 @@ export function getLineNumberOrRange(): Promise<string> {
 /**
  * Writes text to the system clipboard
  * @export
- * @param {string} textToCopy
+ * @async
+ * @param {string} textToCopy The text to add to the system clipboard
  */
-export function writeClipboard(textToCopy: string) {
-    env.clipboard.writeText(textToCopy);
+export async function writeClipboard(textToCopy: string): Promise<void> {
+    await env.clipboard.writeText(textToCopy);
+    return Promise.resolve();
 }
 
 /**
@@ -64,7 +66,7 @@ export function log(message: string) {
  * Returns the current active editor
  * @return {*}  {(TextEditor | undefined)}
  */
-function getActiveEditor(): TextEditor | undefined {
+export function getActiveEditor(): TextEditor | undefined {
     return window.activeTextEditor;
 }
 
@@ -98,4 +100,14 @@ export async function askForDuplicateName(value: string, prompt: string, valueSe
 
 export function notImplementedException() {
     throw new Error("NotImplementedException");
+}
+
+/**
+ * Returns text from the passed in Selection
+ * @param editor The Editor with the selection
+ * @param selection The Selection object to convert into text
+ * @type {string | undefined}
+ */
+export function getTextFromSelection(editor: TextEditor, selection: Selection): string | undefined {
+    return editor.document.getText(new Range(selection.start, selection.end));
 }

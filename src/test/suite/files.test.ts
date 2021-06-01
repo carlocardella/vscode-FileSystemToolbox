@@ -1,4 +1,4 @@
-import { before, describe, after } from "mocha";
+import { before, describe, after, afterEach } from "mocha";
 import * as assert from 'assert';
 import { workspace, Uri, Selection } from 'vscode';
 import { copyFilePath, copyFileName, copyFileNameWithoutExtension } from '../../modules/files';
@@ -14,13 +14,17 @@ suite("Files", () => {
     describe("No workspace", () => {
         before(async () => {
             const testFilePath = path.join(__dirname, "../../../src/test/assets/test.txt");
-            // await workspace.openTextDocument(testFilePath).then(doc => { window.showTextDocument(doc); });
             await openDocument(testFilePath);
             await sleep(500);
         });
         after(async () => {
             await sleep(500);
             await closeTextEditor(true);
+        });
+        afterEach(async () => {
+            const editor = await getActiveTextEditor();
+            let selections: Selection[] = [];
+            editor!.selections = selections;
         });
 
         const testFileName = [
@@ -34,9 +38,11 @@ suite("Files", () => {
 
         testFileName.forEach(t => {
             test(`${t.description}`, async () => {
+                let selections: Selection[] = [];
+                const editor = await getActiveTextEditor();
+                editor!.selections = selections;
+
                 if (t.copyLineNumber) {
-                    const editor = await getActiveTextEditor();
-                    let selections: Selection[] = [];
                     if (t.useRanges) {
                         selections.push(new Selection(1, 0, 2, 6));
                         selections.push(new Selection(4, 0, 4, 5));

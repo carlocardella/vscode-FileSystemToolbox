@@ -2,15 +2,18 @@ import { writeClipboard, getWorkspaceFolder, log } from './shared';
 
 /**
  * Copies the workspace path to the clipboard
+
  * @export
- * @return {*}  {(string | undefined)}
+ * @async
+ * @return {*}  {Promise<void>}
  */
-export function getWorkspaceRootPath(): string | undefined {
+export async function getWorkspaceRootPath(): Promise<void> {
     const workspaceRootFolder = getWorkspaceFolder()?.uri.fsPath;
     if (!workspaceRootFolder) {
         log("No active workspace found");
         return;
     }
 
-    writeClipboard(workspaceRootFolder);
+    await writeClipboard(workspaceRootFolder);
+    return Promise.resolve();
 }
