@@ -1,6 +1,6 @@
 {
     "name": "vscode-filesystemtoolbox",
-    "displayName": "FileSystemToolbox",
+    "displayName": "File System Toolbox",
     "description": "",
     "version": "0.0.1",
     "engines": {
@@ -16,6 +16,14 @@
         "name": "Carlo Cardella",
         "url": "https://cloudnotes.io"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/carlocardella/vscode-TextToolbox.git"
+    },
+    "bugs": {
+        "url": "https://github.com/carlocardella/vscode-TextToolbox/issues"
+    },
+    "license": "MIT",
     "keywords": [
         "tools",
         "utility",
@@ -99,7 +107,7 @@
         "@types/glob": "^7.1.3",
         "@types/mocha": "^8.0.4",
         "@types/node": "^12.11.7",
-        "@types/vscode": "^1.54.0",
+        "@types/vscode": "^1.45.0",
         "@typescript-eslint/eslint-plugin": "^4.14.1",
         "@typescript-eslint/parser": "^4.14.1",
         "eslint": "^7.19.0",

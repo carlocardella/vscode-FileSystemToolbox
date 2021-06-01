@@ -1,12 +1,11 @@
 import { before, describe, after } from "mocha";
 import * as assert from 'assert';
-import { window, workspace, Uri, Selection } from 'vscode';
+import { workspace, Uri, Selection } from 'vscode';
 import { copyFilePath, copyFileName, copyFileNameWithoutExtension } from '../../modules/files';
 import * as path from 'path';
 import { sleep, readClipboard, closeTextEditor, openDocument, getActiveTextEditor } from './testHelpers';
-import * as vscode from 'vscode';
 
-describe("Files", () => {
+suite("Files", () => {
     const testFilePath = path.join(__dirname, "../../../src/test/assets/test.txt");
     before(async () => {
         console.log("Starting Files tests");
@@ -14,6 +13,7 @@ describe("Files", () => {
 
     describe("No workspace", () => {
         before(async () => {
+            const testFilePath = path.join(__dirname, "../../../src/test/assets/test.txt");
             // await workspace.openTextDocument(testFilePath).then(doc => { window.showTextDocument(doc); });
             await openDocument(testFilePath);
             await sleep(500);
@@ -33,20 +33,18 @@ describe("Files", () => {
         ];
 
         testFileName.forEach(t => {
-            it(`${t.description}`, async () => {
+            test(`${t.description}`, async () => {
                 if (t.copyLineNumber) {
-                    // const editor = vscode.window.activeTextEditor;
                     const editor = await getActiveTextEditor();
                     let selections: Selection[] = [];
                     if (t.useRanges) {
                         selections.push(new Selection(1, 0, 2, 6));
                         selections.push(new Selection(4, 0, 4, 5));
-                        editor!.selections = selections;
                     }
                     else {
                         selections.push(new Selection(2, 0, 2, 0));
-                        editor!.selections = selections;
                     }
+                    editor!.selections = selections;
                 };
                 t.f(t.copyLineNumber!);
 
@@ -56,7 +54,7 @@ describe("Files", () => {
             });
         });
 
-        it("Copy file name without extension", async () => {
+        test("Copy file name without extension", async () => {
             copyFileNameWithoutExtension();
             let clipContent = await readClipboard();
             assert.deepStrictEqual(clipContent, "test");
@@ -64,7 +62,7 @@ describe("Files", () => {
     });
 
     describe.skip("Workspace", () => {
-        it("Copy file name in workspace", async () => {
+        test("Copy file name in workspace", async () => {
             workspace.updateWorkspaceFolders(0, null, { uri: Uri.file(__dirname) });
             // await sleep(500);
 

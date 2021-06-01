@@ -1,4 +1,4 @@
-// import { before, describe, after } from "mocha";
+import { before, describe, after } from "mocha";
 import * as assert from 'assert';
 import * as path from 'path';
 import { closeTextEditor, readClipboard, sleep } from "./testHelpers";
@@ -21,7 +21,7 @@ describe("Folders", () => {
             await closeTextEditor(true);
         });
 
-        it("Copy folder path", async () => {
+        test("Copy folder path", async () => {
             const expectedPath = path.dirname(testFilePath);
             copyFolderPath(false);
             let clipContent = await readClipboard();

@@ -20,22 +20,6 @@
 			"preLaunchTask": "${defaultBuildTask}"
 		},
 		{
-			"name": "Run Extension in Workspace",
-			"type": "extensionHost",
-			"request": "launch",
-			"runtimeExecutable": "${execPath}",
-			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}",
-				"--disable-extensions",
-				"--add C:/temp/",
-				"--resue-window"
-			],
-			"outFiles": [
-				"${workspaceFolder}/dist/**/*.js"
-			],
-			"preLaunchTask": "${defaultBuildTask}"
-		},
-		{
 			"name": "Extension Tests",
 			"type": "extensionHost",
 			"request": "launch",
