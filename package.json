@@ -18,10 +18,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/carlocardella/vscode-TextToolbox.git"
+        "url": "https://github.com/carlocardella/vscode-FileSystemToolbox.git"
     },
     "bugs": {
-        "url": "https://github.com/carlocardella/vscode-TextToolbox/issues"
+        "url": "https://github.com/carlocardella/vscode-FileSystemToolbox/issues"
     },
     "license": "MIT",
     "keywords": [
