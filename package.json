@@ -102,6 +102,33 @@
                 "command": "vscode-FileSystemToolbox.TransformPathToWin32",
                 "title": "TT: Transform path to Win32"
             }
+        ],
+        "configuration": [
+            {
+                "title": "File System Toolbox",
+                "properties": {
+                    "fst.CopyMetadataPathType": {
+                        "type": "string",
+                        "description": "The type of path to use when copying a selection with metadata",
+                        "enum": [
+                            "FullPath",
+                            "FileName",
+                            "RelativePath"
+                        ],
+                        "default": "FullPath"
+                    },
+                    "fst.CopyMetadataLineNumbers": {
+                        "type": "boolean",
+                        "description": "Copy the line numbers with the text selection and metadata",
+                        "default": true
+                    },
+                    "fst.CopyMetadataSelectionRange": {
+                        "type": "boolean",
+                        "description": "Copy the selection range along with the selection metatada",
+                        "default": true
+                    }
+                }
+            }
         ]
     },
     "scripts": {

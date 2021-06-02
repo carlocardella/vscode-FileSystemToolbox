@@ -8,14 +8,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ### Files
 
-* Duplicate file
 * Open file path under cursor
 * Open file path under cursor in external default editor
 * Copy relative path relative to current file
 * Copy absolute path relative to current file
 * New file in workspace/folder root
 * New file relative to current file
-* Duplicate file
 * Copy lines with original line numbers
 * Copy lines with original line numbers + file name
 * Copy lines with original line numbers + file path
@@ -67,3 +65,5 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Copy workspace folder path
 * Convert path string to posix format
 * Convert path string to win32 format
+* Duplicate file
+* Remove file in the active editor

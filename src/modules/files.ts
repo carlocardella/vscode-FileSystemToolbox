@@ -1,6 +1,6 @@
-import { getDocumentUri, writeClipboard, log, getLineNumberOrRange } from './shared';
+import { getDocumentUri, writeClipboard, log, getLineNumberOrRange, getActiveEditor, getTextFromSelection, getLinesFromSelection } from './shared';
 import * as path from 'path';
-import { workspace } from 'vscode';
+import { window, workspace } from 'vscode';
 
 /**
  * Copies the path of the file open in the current editor to the clipboard
@@ -105,4 +105,18 @@ export function getFileName(): string | undefined {
     if (!filePath) { return undefined; }
 
     return path.parse(filePath).base;
+}
+
+export async function copySelectionWithMetadata(): Promise<string | undefined> {
+    const editor = getActiveEditor();
+    if (!editor) { return Promise.reject(); }
+
+    let selectedLines = getLinesFromSelection(editor);
+    if (!selectedLines) { return Promise.reject(); }
+
+    let config = workspace.getConfiguration("fst", window.activeTextEditor?.document);
+    let outputText: string[] = [];
+
+    // copy to clipboard
+    selectedLines.map();
 }

@@ -1,4 +1,4 @@
-import { env, Range, Selection, TextEditor, Uri, window, workspace, WorkspaceFolder } from 'vscode';
+import { env, Range, Selection, TextEditor, TextLine, Uri, window, workspace, WorkspaceFolder } from 'vscode';
 
 /**
  * Returns the Uri of the active document
@@ -110,4 +110,25 @@ export function notImplementedException() {
  */
 export function getTextFromSelection(editor: TextEditor, selection: Selection): string | undefined {
     return editor.document.getText(new Range(selection.start, selection.end));
+}
+
+/**
+ * Returns an object with line information for each line in the selection
+ * @return {(TextLine[] | undefined)}
+ */
+export function getLinesFromSelection(editor: TextEditor): TextLine[] | undefined {
+    let lines: TextLine[] = [];
+    let selections = editor?.selections;
+    if (!selections) { return; }
+
+    selections.forEach(s => {
+        let selectionStartLine = s.start.line;
+        let selectionEndLine = s.end.line;
+
+        for (let i = selectionStartLine; i <= selectionEndLine; i++) {
+            lines.push(editor?.document.lineAt(i));
+        }
+    });
+
+    return lines!;
 }

@@ -15,7 +15,7 @@ The marketplace has a number of great extensions to work with files and folder, 
 
 Please open an issue to leave a comment, report a bug, request a feature etc... (you know the drill).
 
-### Workspace Trust
+## Workspace Trust
 
 The extension does not require any special permission, therefore is enabled to run in an [Untrusted Workspace](https://github.com/microsoft/vscode/issues/120251).
 
