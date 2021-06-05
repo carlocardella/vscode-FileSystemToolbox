@@ -96,11 +96,11 @@
             },
             {
                 "command": "vscode-FileSystemToolbox.TransformPathToPosix",
-                "title": "TT: Transform path to Posix"
+                "title": "FST: Transform path to Posix"
             },
             {
                 "command": "vscode-FileSystemToolbox.TransformPathToWin32",
-                "title": "TT: Transform path to Win32"
+                "title": "FST: Transform path to Win32"
             }
         ],
         "configuration": [
