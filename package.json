@@ -147,7 +147,157 @@
                     }
                 }
             }
-        ]
+        ],
+        "menus": {
+            "menuBar/edit/copy": [
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFilePath",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFileName",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyRelativeFilePath",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFileNameWithoutExtension",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFilePathWithLineNumber",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFileNameWithLineNumber",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyWorkspaceRootPath",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFolderPath",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyRelativeFolderPath",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyRelativeFilePath",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.DuplicateFile",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.RemoveFile",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyRelativeFilePathWithLineNumber",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.TransformPathToPosix",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopySelectionWithMetadata",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.TransformPathToWin32",
+                    "group": "File System Toolbox",
+                    "when": "editorIsOpen"
+                }
+            ],
+            "editor/title/context": [
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFilePath",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFileName",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyRelativeFilePath",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFileNameWithoutExtension",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFilePathWithLineNumber",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFileNameWithLineNumber",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyWorkspaceRootPath",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFolderPath",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyRelativeFolderPath",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyRelativeFilePath",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.DuplicateFile",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.RemoveFile",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyRelativeFilePathWithLineNumber",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.TransformPathToPosix",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopySelectionWithMetadata",
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.TransformPathToWin32",
+                    "group": "File System Toolbox"
+                }
+            ]
+        }
     },
     "scripts": {
         "vscode:prepublish": "webpack --mode production",

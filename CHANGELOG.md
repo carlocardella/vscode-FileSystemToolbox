@@ -36,7 +36,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Normalize
 * Convert HOME to ~
 * Convert ~ to HOME
-* Copy text selection with file metadata (file path, line number)
 * Create tree with braces as placeholder, e.g. `/folder/{d1,d2,d2}` created folders `d1`, `d2` and `d3` under `/folder`
   * Create files under each leaf folder with the same braces mechanism
 
@@ -47,6 +46,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Context menu on file tab
 
 ## Log
+
+## [0.0.3] - @todo
+
+### Added
+
+* Copy text selection with file metadata (line numbers, file path, selection range)
+* Enabled context menu commands: `Edit/Copy As` and editor title
 
 ## [0.0.2] - 2021-06-05
 
