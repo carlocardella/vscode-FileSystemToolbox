@@ -45,7 +45,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Add relevant commands to context menu
 * Context menu in `Folders` treeview
 * Context menu on file tab
-* 
+
+## Log
 
 ## [0.0.2] - 2021-06-05
 

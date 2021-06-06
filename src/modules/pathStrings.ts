@@ -5,9 +5,10 @@ import { getActiveEditor, getTextFromSelection } from './shared';
  * Enumerates Platform path types
  * @enum {number}
  */
+// prettier-ignore
 export enum PathTransformationType {
-    'posix' = 'posix',
-    'win32' = 'win32',
+    'posix'  = 'posix',
+    'win32'  = 'win32',
     'darwin' = 'darwin'
 }
 

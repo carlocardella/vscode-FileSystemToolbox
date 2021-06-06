@@ -23,7 +23,8 @@
         "titleBar.activeBackground": "#450b1e",
         "titleBar.activeForeground": "#e7e7e7",
         "titleBar.inactiveBackground": "#450b1e99",
-        "titleBar.inactiveForeground": "#e7e7e799"
+        "titleBar.inactiveForeground": "#e7e7e799",
+        "tab.activeBorder": "#711231"
     },
     "peacock.color": "#450b1e",
     "mochaExplorer.files": "src/test/**/*test.ts",
