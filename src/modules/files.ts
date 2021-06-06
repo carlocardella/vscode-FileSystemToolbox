@@ -118,5 +118,5 @@ export async function copySelectionWithMetadata(): Promise<string | undefined> {
     let outputText: string[] = [];
 
     // copy to clipboard
-    selectedLines.map();
+    // selectedLines.map();
 }
