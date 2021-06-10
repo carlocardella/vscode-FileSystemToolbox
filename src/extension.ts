@@ -1,12 +1,14 @@
-import * as vscode from 'vscode';
-import * as files from './modules/files';
-import * as workspaces from './modules/workspaces';
-import * as folders from './modules/folders';
-import * as crud from './modules/crud';
-import * as pathStrings from './modules/pathStrings';
+import * as vscode from "vscode";
+import * as files from "./modules/files";
+import * as workspaces from "./modules/workspaces";
+import * as folders from "./modules/folders";
+import * as crud from "./modules/crud";
+import * as pathStrings from "./modules/pathStrings";
+import * as pathCompleter from "./modules/pathCompleter";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
+// prettier-ignore
 export function activate(context: vscode.ExtensionContext) {
 	console.log("vscode-FileSystemToolbox is active");
 
@@ -33,9 +35,16 @@ export function activate(context: vscode.ExtensionContext) {
 	// path transformation
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.TransformPathToPosix', () => { pathStrings.transformPath(pathStrings.PathTransformationType.posix); }));
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.TransformPathToWin32', () => { pathStrings.transformPath(pathStrings.PathTransformationType.win32); }));
+
+	// path intellisense
+	   var selector : vscode.DocumentSelector = [{
+        pattern: '**'
+	}];
+	// context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new PathAutocomplete(), "/", "\\"));
+	context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, pathCompleter.provideCompletionItems(), "/"));
 }
 
 // this method is called when your extension is deactivated
 export function deactivate() {
-	console.log("vscode-FileSystemToolbox unloaded");
+    console.log("vscode-FileSystemToolbox unloaded");
 }
