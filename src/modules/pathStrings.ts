@@ -1,5 +1,5 @@
-import * as path from 'path';
-import { getActiveEditor, getTextFromSelection } from './shared';
+import * as path from "path";
+import { getActiveEditor, getTextFromSelection } from "./shared";
 
 /**
  * Enumerates Platform path types
@@ -19,31 +19,40 @@ export enum PathTransformationType {
  */
 export async function transformPath(type: PathTransformationType): Promise<string | undefined> {
     const editor = getActiveEditor();
-    if (!editor) { return Promise.reject(); }
+    if (!editor) {
+        return Promise.reject();
+    }
 
     const selection = editor.selection;
-    if (!selection) { return Promise.reject(); }
+    if (!selection) {
+        return Promise.reject();
+    }
 
     let pathString = getTextFromSelection(editor, selection);
 
     switch (type) {
         case PathTransformationType.posix:
-            pathString = path.posix.normalize(pathString!).replace(/\\+/g, '/');
+            pathString = path.posix.normalize(pathString!).replace(/\\+/g, "/");
             break;
 
         case PathTransformationType.darwin:
-            pathString = path.posix.normalize(pathString!).replace(/\\+/g, '/');
+            pathString = path.posix.normalize(pathString!).replace(/\\+/g, "/");
             break;
 
         case PathTransformationType.win32:
-            pathString = path.posix.normalize(pathString!).replace(/\/+/g, '\\');
+            // if this is a json document, use double backslashes
+            if (editor.document.languageId === "json" || editor.document.languageId === "jsonc") {
+                pathString = path.posix.normalize(pathString!).replace(/\/+/g, "\\\\");
+            } else {
+                pathString = path.posix.normalize(pathString!).replace(/\/+/g, "\\");
+            }
             break;
 
         default:
             break;
     }
 
-    editor.edit(editBuilder => {
+    editor.edit((editBuilder) => {
         editBuilder.replace(selection, pathString!);
     });
 }
