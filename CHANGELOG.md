@@ -12,11 +12,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Open file path under cursor in external default editor
 * Copy relative path relative to current file
 * Copy absolute path relative to current file
-* New file in workspace/folder root
-* New file relative to current file
-* Copy lines with original line numbers
-* Copy lines with original line numbers + file name
-* Copy lines with original line numbers + file path
 
 ### Folders
 
@@ -39,20 +34,22 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Create tree with braces as placeholder, e.g. `/folder/{d1,d2,d2}` created folders `d1`, `d2` and `d3` under `/folder`
   * Create files under each leaf folder with the same braces mechanism
 
-### Context Menu
-
-* Add relevant commands to context menu
-* Context menu in `Folders` treeview
-* Context menu on file tab
-
 ## Log
 
-## [0.0.3] - @todo
+## [0.1.0] - 2021-06-13
 
 ### Added
 
 * Copy text selection with file metadata (line numbers, file path, selection range)
 * Enabled context menu commands: `Edit/Copy As` and editor title
+* `New file relative to current file`
+* `New file relative to workspace root`
+
+### Changed
+
+* Updated `Remove File`:
+  * Prompt the user to confirm the operation
+  * Move the file to Recycle Bin
 
 ## [0.0.2] - 2021-06-05
 

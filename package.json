@@ -2,7 +2,7 @@
     "name": "vscode-filesystemtoolbox",
     "displayName": "File System Toolbox",
     "description": "Collection of tools to work with the File System",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "engines": {
         "vscode": "^1.45.0"
     },
@@ -116,6 +116,14 @@
                 "command": "vscode-FileSystemToolbox.TransformPathToWin32",
                 "title": "FST: Transform path to Win32",
                 "enablement": "editorHasSelection"
+            },
+            {
+                "command": "vscode-FileSystemToolbox.NewFileRelativeToCurrentFile",
+                "title": "FST: New file relative to current file"
+            },
+            {
+                "command": "vscode-FileSystemToolbox.NewFileRelativeToWorkspaceRoot",
+                "title": "FST: New file relative to workspace root"
             }
         ],
         "menus": {
