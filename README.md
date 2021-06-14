@@ -36,6 +36,11 @@ The extension does not require any special permission, therefore is enabled to r
 * Copy workspace folder path
 * Convert path string to posix format
 * Convert path string to win32 format
+* Copy text selection with file metadata (line numbers, file path, selection range)
+* New file relative to current file path
+* New file relative to workspace root
+* Duplicate active file
+* Remove active file
 
 ### Thanks to
 
