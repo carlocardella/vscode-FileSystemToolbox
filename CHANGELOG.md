@@ -36,6 +36,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [0.1.1] - 2021-06-17
+
+### Changed
+
+* Updated context menu contributions
+
 ## [0.1.0] - 2021-06-13
 
 ### Added
