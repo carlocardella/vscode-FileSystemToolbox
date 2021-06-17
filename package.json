@@ -207,14 +207,6 @@
                     "group": "File System Toolbox"
                 },
                 {
-                    "command": "vscode-FileSystemToolbox.CopyFilePathWithLineNumber",
-                    "group": "File System Toolbox"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.CopyFileNameWithLineNumber",
-                    "group": "File System Toolbox"
-                },
-                {
                     "command": "vscode-FileSystemToolbox.CopyWorkspaceRootPath",
                     "group": "File System Toolbox"
                 },
@@ -232,85 +224,33 @@
                 },
                 {
                     "command": "vscode-FileSystemToolbox.RemoveFile",
-                    "group": "File System Toolbox"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.CopyRelativeFilePathWithLineNumber",
-                    "group": "File System Toolbox"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.TransformPathToPosix",
-                    "group": "File System Toolbox"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.CopySelectionWithMetadata",
-                    "group": "File System Toolbox"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.TransformPathToWin32",
                     "group": "File System Toolbox"
                 }
             ],
             "editor/context": [
                 {
-                    "command": "vscode-FileSystemToolbox.CopyFilePath",
-                    "title": "FST: Copy active file path"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.CopyFileName",
-                    "title": "FST: Copy active file name"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.CopyRelativeFilePath",
-                    "title": "FST: Copy relative file path"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.CopyFileNameWithoutExtension",
-                    "title": "FST: Copy active file name without extension"
-                },
-                {
                     "command": "vscode-FileSystemToolbox.CopyFilePathWithLineNumber",
-                    "title": "FST: Copy active file path with line number"
+                    "group": "File System Toolbox"
                 },
                 {
                     "command": "vscode-FileSystemToolbox.CopyFileNameWithLineNumber",
-                    "title": "FST: Copy active file name with line number"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.CopyWorkspaceRootPath",
-                    "title": "FST: Copy Workspace root path"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.CopyFolderPath",
-                    "title": "FST: Copy folder path"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.CopyRelativeFolderPath",
-                    "title": "FST: Copy relative folder path"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.DuplicateFile",
-                    "title": "FST: Duplicate file"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.RemoveFile",
-                    "title": "FST: Remove file"
+                    "group": "File System Toolbox"
                 },
                 {
                     "command": "vscode-FileSystemToolbox.CopyRelativeFilePathWithLineNumber",
-                    "title": "FST: Copy relative file path with line number"
-                },
-                {
-                    "command": "vscode-FileSystemToolbox.CopySelectionWithMetadata",
-                    "title": "FST: Copy Selection With Metadata"
+                    "group": "File System Toolbox"
                 },
                 {
                     "command": "vscode-FileSystemToolbox.TransformPathToPosix",
-                    "title": "FST: Transform path to Posix"
+                    "group": "File System Toolbox"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopySelectionWithMetadata",
+                    "group": "File System Toolbox"
                 },
                 {
                     "command": "vscode-FileSystemToolbox.TransformPathToWin32",
-                    "title": "FST: Transform path to Win32"
+                    "group": "File System Toolbox"
                 }
             ]
         },
