@@ -2,6 +2,7 @@ import { getDocumentUri, writeClipboard, log, getLineNumberOrRange, getActiveEdi
 import * as path from "path";
 import { window, workspace } from "vscode";
 import { EOL } from "os";
+import { getActiveTextEditor } from "../test/suite/testHelpers";
 
 /**
  * The type of file path to return as file metadata
@@ -156,7 +157,17 @@ export function getRelativeFilePath(): string | undefined {
     return relativeFilePath;
 }
 
+/**
+ * Copy the selected text along with selection and file metadata: file path, selection range, line numbers.
+ * Metadata details can be configured in Settings
+ * @export
+ * @return {*}  {(Promise<string | undefined | void>)}
+ */
 export async function copySelectionWithMetadata(): Promise<string | undefined | void> {
+    if (window.activeTextEditor?.selection.isEmpty) {
+        return Promise.reject();
+    }
+
     let config = workspace.getConfiguration("fst", window.activeTextEditor?.document);
 
     let filePath: string | undefined;
