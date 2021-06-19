@@ -1,0 +1,100 @@
+import {
+    Range,
+    workspace,
+    Uri,
+    FileType,
+    CompletionItem,
+    CompletionItemKind,
+    CompletionItemProvider,
+    TextDocument,
+    Position,
+    CompletionList,
+    TreeItem,
+    CancellationToken,
+    CompletionContext,
+    ProviderResult,
+} from "vscode";
+import { getActiveEditor, log } from "./shared";
+import * as path from "path";
+import * as fs from "fs";
+
+/*
+// @TODO: configuration
+// separator format: system, win32, posix
+// trigger character: /, \, drive letter
+// recognize and trigger home directory notation: ~\, HOME\, $HOME\, $env: if powershell
+*/
+
+export class pathCompletion implements CompletionItemProvider {
+    provideCompletionItems(
+        document: TextDocument,
+        position: Position,
+        token: CancellationToken,
+        context: CompletionContext
+    ): ProviderResult<CompletionItem[] | CompletionList<CompletionItem>> {
+        let folderUri = this.getFolderFromDocument(document);
+        let folderItems = this.getPathCompletionItems(folderUri);
+
+        return [new CompletionItem("p")];
+    }
+
+    getFolderFromDocument(document: TextDocument): Uri {
+        return Uri.parse(path.dirname(document.uri.fsPath));
+    }
+
+    async getPathCompletionItems(folderPath: Uri): Promise<string[]> {
+        let items = (await workspace.fs.readDirectory(folderPath)).map(([name]) => name);
+        return Promise.resolve(items);
+    }
+}
+
+export async function test() {
+    let items = await workspace.fs.readDirectory(Uri.parse("c:/Temp/"));
+    
+    console.log(items);
+}
+
+// export async function provideCompletionItems(document?: TextDocument, position?: Position): Promise<CompletionItemProvider<CompletionItem>> {
+//     let completionItems = await getFolderContent(Uri.parse("c:/temp"));
+
+//     let completionList = completionItems.map((item) => {
+//         return new CompletionItem(item[0]);
+//     });
+
+//     return new CompletionList(completionList, true);
+// }
+
+// /**
+//  * Returns the content of the passed in folder
+//  * @export
+//  * @param {Uri} folderUri Uri of the folder to return the content from
+//  * @return {*}  {Promise<[string, FileType][]>}
+//  */
+// async function getFolderContent(folderUri: Uri): Promise<[string, FileType][]> {
+//     return Promise.resolve(workspace.fs.readDirectory(folderUri));
+// }
+
+// /**
+//  * Returns the path the user entered in the text editor
+//  * @export
+//  * @return {*}  {(Promise<string | undefined>)}
+//  */
+// export async function getUserPath(): Promise<string | undefined> {
+//     const editor = getActiveEditor();
+
+//     let range = editor?.document?.getWordRangeAtPosition(getActiveEditor()?.selection.active!, undefined);
+//     if (!range) {
+//         return Promise.reject();
+//     }
+
+//     return Promise.resolve(await getTextFromRange(range));
+// }
+
+// /**
+//  * Returns text from the selected Range
+//  * @param {Range} range The Range to return text from
+//  * @return {*}  {(Promise<string | undefined>)}
+//  */
+// export async function getTextFromRange(range: Range): Promise<string | undefined> {
+//     return Promise.resolve(getActiveEditor()?.document.getText(range));
+// }

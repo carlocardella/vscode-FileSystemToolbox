@@ -124,6 +124,10 @@
             {
                 "command": "vscode-FileSystemToolbox.NewFileRelativeToWorkspaceRoot",
                 "title": "FST: New file relative to workspace root"
+            },
+            {
+                "command": "vscode-FileSystemToolbox.test",
+                "title": "FST: test"
             }
         ],
         "menus": {
@@ -323,5 +327,8 @@
         "webpack": "^5.36.2",
         "webpack-cli": "^4.7.0",
         "webpack-dev": "^1.1.1"
+    },
+    "dependencies": {
+        "fs": "^0.0.1-security"
     }
 }
