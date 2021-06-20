@@ -5,7 +5,7 @@ import * as folders from "./modules/folders";
 import * as crud from "./modules/crud";
 import * as pathStrings from "./modules/pathStrings";
 import * as pathCompleter from "./modules/pathCompleter";
-import { TextDocument, CompletionList, CompletionItem, CompletionItemKind } from 'vscode';
+import { TextDocument, CompletionList, CompletionItem, CompletionItemKind } from "vscode";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -40,7 +40,8 @@ export function activate(context: vscode.ExtensionContext) {
 	// path transformation
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.TransformPathToPosix', () => { pathStrings.transformPath(pathStrings.PathTransformationType.posix); }));
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.TransformPathToWin32', () => { pathStrings.transformPath(pathStrings.PathTransformationType.win32); }));
-	
+
+	// todo: remove it
 	context.subscriptions.push(
         vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.test", () => {
             pathCompleter.test();
@@ -55,10 +56,17 @@ export function activate(context: vscode.ExtensionContext) {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 				let currentFolder = pathCompleter.getUserPath();
 				if (!currentFolder) { return; }
-				let folderItems = fs.readdirSync(currentFolder, null);
+				let folderItems = fs.readdirSync(currentFolder, {withFileTypes: true});
 
 				let completionItems = folderItems.map((item) => {
-					return new vscode.CompletionItem(item, CompletionItemKind.Value);
+					// return new vscode.CompletionItem(item, CompletionItemKind.Value);
+					if (item.isDirectory() || item.isSymbolicLink()) {
+						return new vscode.CompletionItem(item.name, CompletionItemKind.Folder);
+					} else if(item.isFile()) {
+						return new vscode.CompletionItem(item.name, CompletionItemKind.File);
+					} else {
+						return new vscode.CompletionItem(item.name, undefined);
+					}
 				});
 
 				return completionItems;

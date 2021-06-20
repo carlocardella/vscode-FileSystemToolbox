@@ -1,22 +1,5 @@
-import {
-    Range,
-    workspace,
-    Uri,
-    FileType,
-    CompletionItem,
-    CompletionItemKind,
-    CompletionItemProvider,
-    TextDocument,
-    Position,
-    CompletionList,
-    TreeItem,
-    CancellationToken,
-    CompletionContext,
-    ProviderResult,
-} from "vscode";
-import { getActiveEditor, log } from "./shared";
-import * as path from "path";
-import * as fs from "fs";
+import { Range, Uri, workspace, FileType } from 'vscode';
+import { getActiveEditor } from "./shared";
 
 /*
 // @TODO: configuration
@@ -25,6 +8,7 @@ import * as fs from "fs";
 // recognize and trigger home directory notation: ~\, HOME\, $HOME\, $env: if powershell
 */
 
+// todo: remove it
 export async function test() {
     // let items = await workspace.fs.readDirectory(Uri.parse("c:/Temp/"));
     // console.log(items);
@@ -52,7 +36,7 @@ export async function test() {
 // export async function getUserPath(): Promise<string | undefined> {
 //     const editor = getActiveEditor();
 
-//     let range = editor?.document?.getWordRangeAtPosition(getActiveEditor()?.selection.active!, undefined);
+//     let range = editor?.document?.getWordRangeAtPosition(getActiveEditor()?.selection.active!, RegExp('[^\\"]+$'));
 //     if (!range) {
 //         return Promise.reject();
 //     }
@@ -72,7 +56,7 @@ export async function test() {
 export function getUserPath(): string {
     const editor = getActiveEditor();
 
-    let range = editor?.document.getWordRangeAtPosition(editor.selection.active, RegExp('[^"]+$'));
+    let range = editor?.document.getWordRangeAtPosition(editor.selection.active, RegExp('[^\\"]+$'));
     if (!range) {
         return "";
     }
