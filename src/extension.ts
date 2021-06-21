@@ -5,9 +5,7 @@ import * as folders from "./modules/folders";
 import * as crud from "./modules/crud";
 import * as pathStrings from "./modules/pathStrings";
 import * as pathCompleter from "./modules/pathCompleter";
-import { TextDocument, CompletionList, CompletionItem, CompletionItemKind } from "vscode";
-import * as fs from "fs";
-import * as path from "path";
+import { getCompletionItems } from "./modules/pathCompleter";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -48,34 +46,21 @@ export function activate(context: vscode.ExtensionContext) {
         })
     );
 
-
 	// path intellisense
-	const provider2 = vscode.languages.registerCompletionItemProvider(
+	const completionProvider = vscode.languages.registerCompletionItemProvider(
 		"*",
         {
 			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 				let currentFolder = pathCompleter.getUserPath();
 				if (!currentFolder) { return; }
-				let folderItems = fs.readdirSync(currentFolder, {withFileTypes: true});
 
-				let completionItems = folderItems.map((item) => {
-					// return new vscode.CompletionItem(item, CompletionItemKind.Value);
-					if (item.isDirectory() || item.isSymbolicLink()) {
-						return new vscode.CompletionItem(item.name, CompletionItemKind.Folder);
-					} else if(item.isFile()) {
-						return new vscode.CompletionItem(item.name, CompletionItemKind.File);
-					} else {
-						return new vscode.CompletionItem(item.name, undefined);
-					}
-				});
-
-				return completionItems;
+				return getCompletionItems(currentFolder);
             },
         },
 		"/"
     );
 
-    context.subscriptions.push(provider2);
+    context.subscriptions.push(completionProvider);
 }
 
 // this method is called when your extension is deactivated
