@@ -1,5 +1,4 @@
-import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from "node:constants";
-import { Range, Uri, workspace, FileType, CompletionItem, CompletionItemKind } from "vscode";
+import { Range, Uri, workspace, CompletionItem, CompletionItemKind } from "vscode";
 import { getActiveEditor } from "./shared";
 
 /*
@@ -8,26 +7,6 @@ import { getActiveEditor } from "./shared";
 // trigger character: /, \, drive letter
 // recognize and trigger home directory notation: ~\, HOME\, $HOME\, $env: if powershell
 */
-
-// todo: remove it
-export async function test() {
-    // let items = await workspace.fs.readDirectory(Uri.parse("c:/Temp/"));
-    // console.log(items);
-
-    const editor = getActiveEditor();
-    let s = editor?.document.getWordRangeAtPosition(editor.selection.active, RegExp('[^"]+$'));
-    console.log(getTextFromRange(s!));
-}
-
-// /**
-//  * Returns the content of the passed in folder
-//  * @export
-//  * @param {Uri} folderUri Uri of the folder to return the content from
-//  * @return {*}  {Promise<[string, FileType][]>}
-//  */
-// async function getFolderContent(folderUri: Uri): Promise<[string, FileType][]> {
-//     return Promise.resolve(workspace.fs.readDirectory(folderUri));
-// }
 
 /**
  * Returns the path the user entered in the text editor
@@ -69,22 +48,21 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                 completionItems = items.map((item) => {
                     let completionItemKind: CompletionItemKind;
                     switch (item[1]) {
+                        case 0:
+                            completionItemKind = CompletionItemKind.Snippet;
+                            break;
                         case 1:
                             completionItemKind = CompletionItemKind.File;
                             break;
-                        case 2:
-                            completionItemKind = CompletionItemKind.Folder;
-                            break;
-                        case 64:
-                            completionItemKind = CompletionItemKind.Folder;
-                            break;
                         default:
+                            completionItemKind = CompletionItemKind.Folder;
                             break;
                     }
 
                     return new CompletionItem(item[0], completionItemKind!);
                 });
 
+                // let completionItemsSorted = completionItems.sort((first, second) => 0 - (first.kind < second.kind ? -1 : 1));
                 resolve(completionItems);
             },
             (err) => reject(err)

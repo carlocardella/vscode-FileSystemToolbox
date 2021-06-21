@@ -39,13 +39,6 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.TransformPathToPosix', () => { pathStrings.transformPath(pathStrings.PathTransformationType.posix); }));
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.TransformPathToWin32', () => { pathStrings.transformPath(pathStrings.PathTransformationType.win32); }));
 
-	// todo: remove it
-	context.subscriptions.push(
-        vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.test", () => {
-            pathCompleter.test();
-        })
-    );
-
 	// path intellisense
 	const completionProvider = vscode.languages.registerCompletionItemProvider(
 		"*",
