@@ -62,7 +62,6 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                     return new CompletionItem(item[0], completionItemKind!);
                 });
 
-                // let completionItemsSorted = completionItems.sort((first, second) => 0 - (first.kind < second.kind ? -1 : 1));
                 resolve(completionItems);
             },
             (err) => reject(err)

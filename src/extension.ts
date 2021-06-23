@@ -41,16 +41,18 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// path intellisense
 	const completionProvider = vscode.languages.registerCompletionItemProvider(
-		"*",
+        "*",
         {
-			provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-				let currentFolder = pathCompleter.getUserPath();
-				if (!currentFolder) { return; }
+            provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
+                let currentFolder = pathCompleter.getUserPath();
+                if (!currentFolder) {
+                    return;
+                }
 
-				return getCompletionItems(currentFolder);
+                return getCompletionItems(currentFolder);
             },
         },
-		"/"
+        ...["/", "\\", ":/", ":\\"]
     );
 
     context.subscriptions.push(completionProvider);
