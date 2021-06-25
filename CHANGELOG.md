@@ -36,6 +36,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [0.1.2] - 2021-06-24
+
+### Changed
+
+* Fixed `Duplicate File`: properly select the file name so the user can easily enter the new file name, and make sure the new file is opened in a new editor
+
 ## [0.1.1] - 2021-06-17
 
 ### Changed
