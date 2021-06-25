@@ -26,16 +26,18 @@ export async function duplicateFile(): Promise<void> {
         return;
     }
 
+    const valueSelectionStart = folderPath.length + 1;
+    const valueSelectionEnd = currentFileName.lastIndexOf(path.parse(currentFileName).ext);
     const valueSelection: ValueSelection = {
-        start: folderPath.length + 1,
-        end: currentFilePath.length - currentFileName.lastIndexOf(path.parse(currentFileName).ext),
+        start: valueSelectionStart,
+        end: valueSelectionStart + valueSelectionEnd,
     };
     const targetFileName = await askForDuplicateName(currentFilePath, "Choose the new file name", valueSelection);
     if (!targetFileName) {
         return;
     }
 
-    workspace.fs.copy(Uri.file(currentFilePath), Uri.file(targetFileName), { overwrite: false });
+    await workspace.fs.copy(Uri.file(currentFilePath), Uri.file(targetFileName), { overwrite: false });
 
     return new Promise((resolve, reject) => {
         workspace.openTextDocument(targetFileName).then(
