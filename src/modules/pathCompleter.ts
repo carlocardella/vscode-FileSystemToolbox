@@ -1,8 +1,6 @@
-import { Range, Uri, workspace, CompletionItem, CompletionItemKind, TreeItem } from "vscode";
+import { Range, Uri, workspace, CompletionItem, CompletionItemKind } from "vscode";
 import { getActiveEditor } from "./shared";
-import * as fs from "fs";
 import * as path from "path";
-import * as os from "os";
 
 /*
 // @TODO: configuration
@@ -48,30 +46,32 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
         await workspace.fs.readDirectory(Uri.parse(currentFolder)).then(
             (items) => {
                 let completionItems: CompletionItem[] = [];
-                completionItems = items
-                    .map((item) => {
-                        let completionItemKind: CompletionItemKind;
-                        let sortString = "";
-                        switch (item[1]) {
-                            case 0:
-                                completionItemKind = CompletionItemKind.Snippet;
-                                sortString = "d";
-                                break;
-                            case 1:
-                                completionItemKind = CompletionItemKind.File;
-                                sortString = "f";
-                                break;
-                            default:
-                                completionItemKind = CompletionItemKind.Folder;
-                                sortString = "d";
-                                break;
-                        }
+                completionItems = items.map((item) => {
+                    let completionItemKind: CompletionItemKind;
+                    let sortString = "";
+                    let completionItemLabel = "";
+                    switch (item[1]) {
+                        case 0:
+                            completionItemKind = CompletionItemKind.Snippet;
+                            sortString = "d";
+                            completionItemLabel = path.join(item[0], path.sep);
+                            break;
+                        case 1:
+                            completionItemKind = CompletionItemKind.File;
+                            sortString = "f";
+                            completionItemLabel = item[0];
+                            break;
+                        default:
+                            completionItemKind = CompletionItemKind.Folder;
+                            sortString = "d";
+                            completionItemLabel = path.join(item[0], path.sep);
+                            break;
+                    }
 
-                        let completionItem = new CompletionItem(item[0], completionItemKind!);
-                        completionItem.sortText = sortString;
-                        return completionItem;
-                    })
-                    .sort((a, b) => (a.kind! > b.kind! ? 1 : -1));
+                    let completionItem = new CompletionItem(completionItemLabel, completionItemKind);
+                    completionItem.sortText = sortString;
+                    return completionItem;
+                });
 
                 return resolve(completionItems);
             },
