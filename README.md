@@ -8,6 +8,8 @@
 [![GitHub issues](https://img.shields.io/github/issues/carlocardella/vscode-FileSystemToolbox.svg)](https://github.com/carlocardella/vscode-FileSystemToolbox/issues)
 [![GitHub license](https://img.shields.io/github/license/carlocardella/vscode-FileSystemToolbox.svg)](https://github.com/carlocardella/vscode-FileSystemToolbox/blob/master/LICENSE.md)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/carlocardella/vscode-FileSystemToolbox.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fcarlocardella%2Fvscode-FileSystemToolbox)
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/carlocardella/vscode-filesystemtoolbox)
+
 
 Collection of tools to work with the File System.
 
