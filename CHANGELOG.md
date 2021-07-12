@@ -36,6 +36,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [0.1.3] - 2021-07-12
+
+### Changed
+
+* Updated context submenu commands
+
 ## [0.1.2] - 2021-06-24
 
 ### Changed
