@@ -1,6 +1,7 @@
 import { Range, Uri, workspace, CompletionItem, CompletionItemKind } from "vscode";
 import { getActiveEditor } from "./shared";
 import * as path from "path";
+import * as os from "os";
 
 /*
 // @TODO: configuration
@@ -54,7 +55,8 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                         case 0:
                             completionItemKind = CompletionItemKind.Snippet;
                             sortString = "d";
-                            completionItemLabel = path.join(item[0], path.sep);
+                            // completionItemLabel = path.join(item[0], path.sep);
+                            completionItemLabel = item[0];
                             break;
                         case 1:
                             completionItemKind = CompletionItemKind.File;
@@ -64,11 +66,25 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                         default:
                             completionItemKind = CompletionItemKind.Folder;
                             sortString = "d";
-                            completionItemLabel = path.join(item[0], path.sep);
+                            // completionItemLabel = path.join(item[0], path.sep);
+                            completionItemLabel = item[0];
                             break;
                     }
 
                     let completionItem = new CompletionItem(completionItemLabel, completionItemKind);
+
+                    if (completionItem.kind === CompletionItemKind.Folder) {
+                        completionItem.command = {
+                            command: "default:type",
+                            title: "triggerCompletion",
+                            arguments: [
+                                {
+                                    text: "/",
+                                },
+                            ],
+                        };
+                    }
+
                     completionItem.sortText = sortString;
                     return completionItem;
                 });
