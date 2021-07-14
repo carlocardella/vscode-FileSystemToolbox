@@ -5,7 +5,8 @@ import * as folders from "./modules/folders";
 import * as crud from "./modules/crud";
 import * as pathStrings from "./modules/pathStrings";
 import * as pathCompleter from "./modules/pathCompleter";
-import { getCompletionItems } from "./modules/pathCompleter";
+import { getCompletionItems, getPathCompletionConfiguration } from "./modules/pathCompleter";
+import * as path from "path";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -39,6 +40,8 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.TransformPathToWin32', () => { pathStrings.transformPath(pathStrings.PathTransformationType.win32); }));
 
 	// path intellisense
+	// let pathCompletionSeparator: string = vscode.workspace.getConfiguration("fst").get("pathCompletionSeparator")!;
+	// if (pathCompletionSeparator === "SystemDefault") { pathCompletionSeparator = path.sep; };
 	const completionProvider = vscode.languages.registerCompletionItemProvider(
         "*",
         {
@@ -52,8 +55,8 @@ export function activate(context: vscode.ExtensionContext) {
             },
         },
         ...["/", "\\"]
-    );
-
+		// pathCompletionSeparator
+	);
     context.subscriptions.push(completionProvider);
 }
 

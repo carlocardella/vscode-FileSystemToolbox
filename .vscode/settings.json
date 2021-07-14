@@ -30,5 +30,6 @@
     "mochaExplorer.files": "src/test/**/*test.ts",
     "mochaExplorer.logpanel": true,
     "mochaExplorer.require": "ts-node/register",
-    "mochaExplorer.esmLoader": false
+    "mochaExplorer.esmLoader": false,
+    "cSpell.words": ["Autocompleter", "USERPROFILE", "carlocardella", "filesystemtoolbox", "submenu", "submenus"]
 }

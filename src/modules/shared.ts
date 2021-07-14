@@ -82,7 +82,7 @@ export type ValueSelection = {
 
 /**
  * Prompts the user to select a new name for the file to be duplicated
- * @param {string} value The value to prefill in the input box
+ * @param {string} value The value to pre-fill in the input box
  * @param {string} promptThe text to display underneath the input box
  * @param {ValueSelection} valueSelection Selection of the prefilled value
  * @return {*}  {(Promise<string | undefined>)}
@@ -131,4 +131,14 @@ export function getLinesFromSelection(editor: TextEditor): TextLine[] | undefine
     });
 
     return lines!;
+}
+
+/**
+ * Returns text from the selected Range
+ * @export
+ * @param {Range} range The Range to return text from
+ * @return {*}  {string}
+ */
+export function getTextFromRange(range: Range): string {
+    return getActiveEditor()?.document.getText(range)!;
 }

@@ -273,8 +273,8 @@
                         "default": "fullPath"
                     },
                     "fst.MetadataPathPosition": {
-                        "type": "string",
                         "description": "The position where show the metadata info, relative to the selection content",
+                        "type": "string",
                         "enum": [
                             "above",
                             "below"
@@ -282,18 +282,43 @@
                         "default": "below"
                     },
                     "fst.CopyMetadataLineNumbers": {
-                        "type": "boolean",
                         "description": "Copy the line numbers with the text selection and metadata",
+                        "type": "boolean",
                         "default": true
                     },
                     "fst.CopyMetadataSelectionRange": {
-                        "type": "boolean",
                         "description": "Copy the selection range along with the selection metadata",
+                        "type": "boolean",
                         "default": true
                     },
                     "fst.MetadataCopyLineNumbers": {
-                        "type": "boolean",
                         "description": "Copy the original line numbers along with the text selection",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "fst.EnablePathCompleter": {
+                        "description": "Enable the path autocomplete feature",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "fst.PathCompleterAppendPathSeparator": {
+                        "description": "Append the path separator to folders, of \"EnablePAthCompleter\" is `true`. If `PathCompleterAppendPathSeparator` is `true` and if the folder is not empty, the next path element will be presented as autocompletion.",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "fst.PathCompleterSeparator": {
+                        "description": "The separator character to use with path completion",
+                        "type": "string",
+                        "enum": [
+                            "SystemDefault",
+                            "\\",
+                            "/"
+                        ],
+                        "default": "SystemDefault"
+                    },
+                    "fst.PathCompleterTriggerOutsideQuotes": {
+                        "description": "Trigger path autocompletion even if the path is outside quotes",
+                        "type": "boolean",
                         "default": true
                     }
                 }

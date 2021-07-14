@@ -1,14 +1,14 @@
-import { Range, Uri, workspace, CompletionItem, CompletionItemKind } from "vscode";
-import { getActiveEditor } from "./shared";
+import { Range, Uri, workspace, CompletionItem, CompletionItemKind, window } from "vscode";
+import { getActiveEditor, getLinesFromSelection, getTextFromRange } from "./shared";
 import * as path from "path";
 import * as os from "os";
 
 /*
-// @TODO: configuration
-// separator format: system, win32, posix
-// trigger character: /, \, drive letter
-// recognize and trigger home directory notation: ~\, HOME\, $HOME\, $env: if powershell
+// todo: normalize path autocompletion
+// todo: support home directory aliases, e.g. "~", "HOME", $env:USERPROFILE (and others) if powershell
 */
+
+let config = workspace.getConfiguration("fst");
 
 /**
  * Returns the path the user entered in the text editor
@@ -16,24 +16,22 @@ import * as os from "os";
  * @return {*}  {string}
  */
 export function getUserPath(): string {
-    const editor = getActiveEditor();
+    // get the latest config
+    getPathCompletionConfiguration();
 
-    let range = editor?.document.getWordRangeAtPosition(editor.selection.active, RegExp('[^\\"]+$'));
-    if (!range) {
-        return "";
+    if (shouldComplete()) {
+        const editor = getActiveEditor();
+
+        // fix autocompletion triggered only if the path begins with "/"
+        let range = editor?.document.getWordRangeAtPosition(editor.selection.active, new RegExp(/[^ "'`]+$/));
+        if (!range) {
+            return "";
+        }
+
+        return getTextFromRange(range);
     }
 
-    return getTextFromRange(range);
-}
-
-/**
- * Returns text from the selected Range
- * @export
- * @param {Range} range The Range to return text from
- * @return {*}  {string}
- */
-export function getTextFromRange(range: Range): string {
-    return getActiveEditor()?.document.getText(range)!;
+    return "";
 }
 
 /**
@@ -43,7 +41,15 @@ export function getTextFromRange(range: Range): string {
  * @return {*}  {Promise<CompletionItem[]>}
  */
 export function getCompletionItems(currentFolder: string): Promise<CompletionItem[]> {
+    const config = workspace.getConfiguration("fst");
+
     return new Promise(async (resolve, reject) => {
+        let pathCompletionSeparator = config.get<string>("PathCompleterSeparator");
+        if (pathCompletionSeparator === "SystemDefault") {
+            pathCompletionSeparator = path.sep;
+        }
+        let appendPathSeparator = config.get<boolean>("PathCompleterAppendPathSeparator");
+
         await workspace.fs.readDirectory(Uri.parse(currentFolder)).then(
             (items) => {
                 let completionItems: CompletionItem[] = [];
@@ -55,7 +61,6 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                         case 0:
                             completionItemKind = CompletionItemKind.Snippet;
                             sortString = "d";
-                            // completionItemLabel = path.join(item[0], path.sep);
                             completionItemLabel = item[0];
                             break;
                         case 1:
@@ -66,20 +71,20 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                         default:
                             completionItemKind = CompletionItemKind.Folder;
                             sortString = "d";
-                            // completionItemLabel = path.join(item[0], path.sep);
                             completionItemLabel = item[0];
                             break;
                     }
 
                     let completionItem = new CompletionItem(completionItemLabel, completionItemKind);
 
-                    if (completionItem.kind === CompletionItemKind.Folder) {
+                    // trigger the next autocompletion
+                    if (completionItem.kind === CompletionItemKind.Folder && appendPathSeparator) {
                         completionItem.command = {
                             command: "default:type",
                             title: "triggerCompletion",
                             arguments: [
                                 {
-                                    text: "/",
+                                    text: pathCompletionSeparator,
                                 },
                             ],
                         };
@@ -94,4 +99,62 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
             (err) => reject(err)
         );
     });
+}
+
+/**
+ * Return `true` if the cursor is within quotes
+ * @param {string} text Text containing the cursor
+ * @return {*}  {boolean}
+ */
+function isInsideQuotes(): boolean {
+    let editor = getActiveEditor();
+    if (!editor) {
+        return false;
+    }
+
+    let isInsideQuotes = false;
+
+    getLinesFromSelection(editor)?.forEach((line) => {
+        let match = line.text.match(/(["]|[']|[`])/g);
+        if (match!.length % 2 === 1) {
+            isInsideQuotes = true;
+        }
+    });
+
+    return isInsideQuotes;
+}
+
+/**
+ * Return the string within quotes (single or double)
+ * @param {string} text The text to filter
+ * @return {*}  {(string | undefined)}
+ */
+function getStringWithinQuotes(text: string): string | undefined {
+    return text?.match(new RegExp(/(?<=["'])[^"']*/))?.[0];
+}
+
+/**
+ * Checks if the extension should provide Path Autocompletion
+ * @return {*}  {boolean}
+ */
+function shouldComplete(): boolean {
+    // check of PathAutocompleter is enabled
+    if (!config.get<boolean>("EnablePathCompleter")) {
+        return false;
+    }
+
+    // check if the cursor is inside quotes
+    if (!config.get<boolean>("PathCompleterTriggerOutsideQuotes") && !isInsideQuotes()) {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * refresh the path completion configuration object
+ * @export
+ */
+export function getPathCompletionConfiguration() {
+    config = workspace.getConfiguration("fst");
 }
