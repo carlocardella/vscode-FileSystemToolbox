@@ -2,6 +2,7 @@ import { Range, Uri, workspace, CompletionItem, CompletionItemKind, window } fro
 import { getActiveEditor, getLinesFromSelection, getTextFromRange } from "./shared";
 import * as path from "path";
 import * as os from "os";
+import * as fs from "fs";
 
 /*
 // todo: normalize path autocompletion
@@ -50,54 +51,43 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
         }
         let appendPathSeparator = config.get<boolean>("PathCompleterAppendPathSeparator");
 
-        await workspace.fs.readDirectory(Uri.parse(currentFolder)).then(
-            (items) => {
-                let completionItems: CompletionItem[] = [];
-                completionItems = items.map((item) => {
-                    let completionItemKind: CompletionItemKind;
-                    let sortString = "";
-                    let completionItemLabel = "";
-                    switch (item[1]) {
-                        case 0:
-                            completionItemKind = CompletionItemKind.Snippet;
-                            sortString = "d";
-                            completionItemLabel = item[0];
-                            break;
-                        case 1:
-                            completionItemKind = CompletionItemKind.File;
-                            sortString = "f";
-                            completionItemLabel = item[0];
-                            break;
-                        default:
-                            completionItemKind = CompletionItemKind.Folder;
-                            sortString = "d";
-                            completionItemLabel = item[0];
-                            break;
-                    }
+        let completionItems: CompletionItem[] = [];
+        fs.readdirSync(currentFolder, { withFileTypes: true }).forEach((item) => {
+            let completionItemKind: CompletionItemKind;
+            let sortString = "";
+            let completionItemLabel = "";
+            if (item.isDirectory() || item.isSymbolicLink()) {
+                completionItemKind = CompletionItemKind.Folder;
+                sortString = "d";
+            } else if (item.isFile()) {
+                completionItemKind = CompletionItemKind.File;
+                sortString = "f";
+            } else {
+                completionItemKind = CompletionItemKind.Snippet;
+                sortString = "s";
+            }
+            completionItemLabel = item.name;
 
-                    let completionItem = new CompletionItem(completionItemLabel, completionItemKind);
+            let completionItem = new CompletionItem(completionItemLabel, completionItemKind);
 
-                    // trigger the next autocompletion
-                    if (completionItem.kind === CompletionItemKind.Folder && appendPathSeparator) {
-                        completionItem.command = {
-                            command: "default:type",
-                            title: "triggerCompletion",
-                            arguments: [
-                                {
-                                    text: pathCompletionSeparator,
-                                },
-                            ],
-                        };
-                    }
+            // trigger the next autocompletion
+            if (completionItem.kind === CompletionItemKind.Folder && appendPathSeparator) {
+                completionItem.command = {
+                    command: "default:type",
+                    title: "triggerCompletion",
+                    arguments: [
+                        {
+                            text: pathCompletionSeparator,
+                        },
+                    ],
+                };
+            }
 
-                    completionItem.sortText = sortString;
-                    return completionItem;
-                });
+            completionItem.sortText = sortString;
+            completionItems.push(completionItem);
+        });
 
-                return resolve(completionItems);
-            },
-            (err) => reject(err)
-        );
+        return resolve(completionItems);
     });
 }
 
