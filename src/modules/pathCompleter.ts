@@ -23,13 +23,12 @@ export function getUserPath(): string {
     if (shouldComplete()) {
         const editor = getActiveEditor();
 
-        // fix autocompletion triggered only if the path begins with "/"
-        let range = editor?.document.getWordRangeAtPosition(editor.selection.active, new RegExp(/[^ "'`]+$/));
+        let range = editor?.document.getWordRangeAtPosition(editor.selection.active, new RegExp(/[^"'`]+$/));
         if (!range) {
             return "";
         }
 
-        return getTextFromRange(range);
+        return getTextFromRange(range).trim();
     }
 
     return "";
@@ -52,7 +51,8 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
         let appendPathSeparator = config.get<boolean>("PathCompleterAppendPathSeparator");
 
         let completionItems: CompletionItem[] = [];
-        fs.readdirSync(currentFolder, { withFileTypes: true }).forEach((item) => {
+        // bug: does not work with Junctions
+        fs.readdirSync(path.resolve(currentFolder), { withFileTypes: true }).forEach((item) => {
             let completionItemKind: CompletionItemKind;
             let sortString = "";
             let completionItemLabel = "";
