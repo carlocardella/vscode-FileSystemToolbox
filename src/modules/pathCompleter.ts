@@ -1,8 +1,6 @@
-import { Range, Uri, workspace, CompletionItem, CompletionItemKind, window } from "vscode";
+import { Uri, workspace, CompletionItem, CompletionItemKind, FileType } from "vscode";
 import { getActiveEditor, getLinesFromSelection, getTextFromRange } from "./shared";
 import * as path from "path";
-import * as os from "os";
-import * as fs from "fs";
 
 /*
 // todo: normalize path autocompletion
@@ -50,44 +48,65 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
         }
         let appendPathSeparator = config.get<boolean>("PathCompleterAppendPathSeparator");
 
-        let completionItems: CompletionItem[] = [];
-        // bug: does not work with Junctions
-        fs.readdirSync(path.resolve(currentFolder), { withFileTypes: true }).forEach((item) => {
-            let completionItemKind: CompletionItemKind;
-            let sortString = "";
-            let completionItemLabel = "";
-            if (item.isDirectory() || item.isSymbolicLink()) {
-                completionItemKind = CompletionItemKind.Folder;
-                sortString = "d";
-            } else if (item.isFile()) {
-                completionItemKind = CompletionItemKind.File;
-                sortString = "f";
-            } else {
-                completionItemKind = CompletionItemKind.Snippet;
-                sortString = "s";
-            }
-            completionItemLabel = item.name;
+        await workspace.fs.readDirectory(Uri.file(currentFolder)).then(
+            (items) => {
+                let completionItems: CompletionItem[] = [];
+                completionItems = items.map((item) => {
+                    let completionItemKind: CompletionItemKind;
+                    let sortString = "";
+                    let completionItemLabel = "";
+                    switch (item[1]) {
+                        case FileType.Unknown:
+                            completionItemKind = CompletionItemKind.Issue;
+                            sortString = "u";
+                            break;
+                        case FileType.File:
+                            completionItemKind = CompletionItemKind.File;
+                            sortString = "f";
+                            break;
+                        case FileType.Directory:
+                            completionItemKind = CompletionItemKind.Folder;
+                            sortString = "d";
+                            break;
+                        case FileType.SymbolicLink:
+                            completionItemKind = CompletionItemKind.Variable;
+                            // sortString = "s";
+                            break;
+                        default:
+                            if (<number>item[1] === 65) {
+                                completionItemKind = CompletionItemKind.File;
+                                sortString = "f";
+                            } else if (<number>item[1] === 66) {
+                                completionItemKind = CompletionItemKind.Folder;
+                                sortString = "d";
+                            }
+                            break;
+                    }
+                    completionItemLabel = item[0];
 
-            let completionItem = new CompletionItem(completionItemLabel, completionItemKind);
+                    let completionItem = new CompletionItem(completionItemLabel, completionItemKind!);
 
-            // trigger the next autocompletion
-            if (completionItem.kind === CompletionItemKind.Folder && appendPathSeparator) {
-                completionItem.command = {
-                    command: "default:type",
-                    title: "triggerCompletion",
-                    arguments: [
-                        {
-                            text: pathCompletionSeparator,
-                        },
-                    ],
-                };
-            }
+                    // trigger the next autocompletion
+                    if (completionItem.kind === CompletionItemKind.Folder && appendPathSeparator) {
+                        completionItem.command = {
+                            command: "default:type",
+                            title: "triggerCompletion",
+                            arguments: [
+                                {
+                                    text: pathCompletionSeparator,
+                                },
+                            ],
+                        };
+                    }
 
-            completionItem.sortText = sortString;
-            completionItems.push(completionItem);
-        });
+                    completionItem.sortText = sortString;
+                    return completionItem;
+                });
 
-        return resolve(completionItems);
+                return resolve(completionItems);
+            },
+            (err) => reject(err)
+        );
     });
 }
 
