@@ -9,7 +9,7 @@
     "categories": [
         "Other"
     ],
-    "icon": "tech-service.png",
+    "icon": "/Assets/tech-service.png",
     "preview": true,
     "publisher": "carlocardella",
     "author": {
@@ -29,7 +29,9 @@
         "utility",
         "FileSystem",
         "files",
-        "folders"
+        "folders",
+        "path autocompleter",
+        "path intellisense"
     ],
     "activationEvents": [
         "*"

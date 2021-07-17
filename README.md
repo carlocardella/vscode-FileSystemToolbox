@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/carlocardella/vscode-FileSystemToolbox.svg)](https://github.com/carlocardella/vscode-FileSystemToolbox/issues)
 [![GitHub license](https://img.shields.io/github/license/carlocardella/vscode-FileSystemToolbox.svg)](https://github.com/carlocardella/vscode-FileSystemToolbox/blob/master/LICENSE.md)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/carlocardella/vscode-FileSystemToolbox.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fcarlocardella%2Fvscode-FileSystemToolbox)
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/carlocardella/vscode-filesystemtoolbox)
+<!-- [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/carlocardella/vscode-filesystemtoolbox) -->
 
 
 Collection of tools to work with the File System.
@@ -43,6 +43,26 @@ The extension does not require any special permission, therefore is enabled to r
 * New file relative to workspace root
 * Duplicate active file
 * Remove active file
+
+### Path Autocomplete
+
+a.k.a. `path intellisense`, in other words, you can start typing a file system path and the extension will suggest completion items, as you are probably already used to with your programming language of choice.
+
+The feature is enabled by default and can be customized through these settings:
+
+* `fst.EnablePathCompleter` (default `true`): 
+  * Easy to guess, change this to `false` and the path autocomplete feature will be completely disabled
+* `fst.PathCompleterAppendPathSeparator` (default `true`):
+  * If enabled and if you select a folder from the autocompletion, it appends the default path separator and automatically shows the next list of completion items
+* `fst.PathCompleterSeparator` (default `SystemDefault`):
+  * Controls the path separator you want to use: by default it uses the System separator (`\` on Windows, `/` on Linux/macOS)
+* `fst.PathCompleterTriggerOutsideQuotes` (default `true`):
+  * Show the path autocompletion even if the cursor is not within quotes. Supported quotes are
+    * Single quotes: `'`
+    * Double quotes: `"`
+    * Backtick: `` ` ``
+
+![path autocomplete](/Assets/path_autocomplete.gif)
 
 ### Thanks to
 

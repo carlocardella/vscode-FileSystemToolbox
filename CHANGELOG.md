@@ -25,7 +25,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ### Others
 
-* Show path autocomplete
 * Make Relative
 * Resolve
 * Normalize
@@ -35,6 +34,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
   * Create files under each leaf folder with the same braces mechanism
 
 ## Log
+
+## [0.3.2] - 2021-07-16
+
+### Added
+
+* `Path Autocomplete` (path insellisense): enabled by default
 
 ## [0.2.0] - 2021-07-12
 
