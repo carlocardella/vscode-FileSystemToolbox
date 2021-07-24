@@ -1,4 +1,5 @@
-import { env, Position, Range, Selection, TextEditor, TextLine, Uri, window, workspace, WorkspaceFolder } from "vscode";
+import { env, Position, Range, Selection, TextDocument, TextEditor, TextLine, Uri, window, workspace, WorkspaceFolder } from "vscode";
+import * as path from "path";
 
 /**
  * Returns the Uri of the active document
@@ -7,6 +8,29 @@ import { env, Position, Range, Selection, TextEditor, TextLine, Uri, window, wor
  */
 export function getDocumentUri(): Uri | undefined {
     return window.activeTextEditor?.document.uri;
+}
+
+/**
+ * Get the path to the folder containing the active document
+ * @export
+ * @return {*}  {(string | undefined)}
+ */
+export function getDocumentContainer(): string | undefined {
+    let documentUri = getDocumentUri();
+    if (!documentUri) {
+        return;
+    }
+
+    return path.dirname(documentUri.fsPath);
+}
+
+/**
+ * Get the active document
+ * @export
+ * @return {*}  {(TextDocument | undefined)}
+ */
+export function getActiveDocument(): TextDocument | undefined {
+    return window.activeTextEditor?.document;
 }
 
 /**

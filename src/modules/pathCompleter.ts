@@ -1,13 +1,11 @@
 import { Uri, workspace, CompletionItem, CompletionItemKind, FileType, Range } from "vscode";
-import { getActiveEditor, getCursorPosition, getLinesFromSelection, getTextFromRange } from "./shared";
+import { getActiveEditor, getCursorPosition, getLinesFromSelection, getTextFromRange, getDocumentContainer, getActiveDocument } from "./shared";
 import * as path from "path";
 
 /*
 // todo: normalize path autocompletion
 // todo: support home directory aliases, e.g. "~", "HOME", $env:USERPROFILE (and others) if powershell
 // todo: improve performance
-// todo: if the file is saved, use its location as starting folder for the autocomplete suggestions
-// investigate: autocompletion does not seem to work in the package file (all JSON files?)
 */
 
 let config = workspace.getConfiguration("fst");
@@ -32,7 +30,15 @@ export function getUserPath(): string {
             return "";
         }
 
-        return getTextFromRange(range).trim();
+        let userPath = getTextFromRange(range).trim();
+        const document = getActiveDocument();
+        if (document?.isUntitled) {
+        } else {
+            let documentContainer = getDocumentContainer();
+            userPath = path.join(documentContainer!, userPath);
+        }
+
+        return userPath;
     }
 
     return "";
@@ -76,7 +82,6 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                             break;
                         case FileType.SymbolicLink:
                             completionItemKind = CompletionItemKind.Variable;
-                            // sortString = "s";
                             break;
                         default:
                             if (<number>item[1] === 65) {
