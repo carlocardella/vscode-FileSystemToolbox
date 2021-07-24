@@ -35,6 +35,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [0.4.0] - 2021-07-24
+
+### Changed
+
+* `Path Autocomplete` now uses the file relative path. If the file is already seved on disk, path suggestions will start from the containing folder relative path.
+* `Path Autocomplete`: improved quotes handling.
+
 ## [0.3.2] - 2021-07-16
 
 ### Added
