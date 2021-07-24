@@ -1,4 +1,4 @@
-import { env, Range, Selection, TextEditor, TextLine, Uri, window, workspace, WorkspaceFolder } from 'vscode';
+import { env, Position, Range, Selection, TextEditor, TextLine, Uri, window, workspace, WorkspaceFolder } from "vscode";
 
 /**
  * Returns the Uri of the active document
@@ -16,7 +16,9 @@ export function getDocumentUri(): Uri | undefined {
  */
 export function getWorkspaceFolder(): WorkspaceFolder | undefined {
     const fileUri = getDocumentUri();
-    if (!fileUri) { return; }
+    if (!fileUri) {
+        return;
+    }
     return workspace.getWorkspaceFolder(fileUri);
 }
 
@@ -39,7 +41,7 @@ export function getLineNumberOrRange(): Promise<string> {
         return lineStart === lineEnd ? lineStart : `${lineStart}~${lineEnd}`;
     });
 
-    return Promise.resolve(selectedRanges!.join(';')!);
+    return Promise.resolve(selectedRanges!.join(";")!);
 }
 
 /**
@@ -70,7 +72,6 @@ export function getActiveEditor(): TextEditor | undefined {
     return window.activeTextEditor;
 }
 
-
 export type ValueSelection = {
     /**
      * Start and End index to be used to select the file name to duplicate
@@ -92,7 +93,7 @@ export async function askForDuplicateName(value: string, prompt: string, valueSe
         ignoreFocusOut: true,
         value: value,
         prompt: prompt,
-        valueSelection: [valueSelection.start, valueSelection.end]
+        valueSelection: [valueSelection.start, valueSelection.end],
     });
 
     return Promise.resolve(newPath);
@@ -119,9 +120,11 @@ export function getTextFromSelection(editor: TextEditor, selection: Selection): 
 export function getLinesFromSelection(editor: TextEditor): TextLine[] | undefined {
     let lines: TextLine[] = [];
     let selections = editor?.selections;
-    if (!selections) { return; }
+    if (!selections) {
+        return;
+    }
 
-    selections.forEach(s => {
+    selections.forEach((s) => {
         let selectionStartLine = s.start.line;
         let selectionEndLine = s.end.line;
 
@@ -141,4 +144,19 @@ export function getLinesFromSelection(editor: TextEditor): TextLine[] | undefine
  */
 export function getTextFromRange(range: Range): string {
     return getActiveEditor()?.document.getText(range)!;
+}
+
+/**
+ * Returns the Position of the cursor in the editor. Supports multicursor
+ * @export
+ * @param {TextEditor} editor The editor to get the cursor position from
+ * @return {*}  {Position[]}
+ */
+export function getCursorPosition(editor: TextEditor): Position[] {
+    let position: Position[] = [];
+    editor.selections.forEach((selection) => {
+        position.push(selection.active);
+    });
+
+    return position;
 }

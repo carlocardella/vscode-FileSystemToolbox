@@ -1,10 +1,13 @@
-import { Uri, workspace, CompletionItem, CompletionItemKind, FileType } from "vscode";
-import { getActiveEditor, getLinesFromSelection, getTextFromRange } from "./shared";
+import { Uri, workspace, CompletionItem, CompletionItemKind, FileType, Range } from "vscode";
+import { getActiveEditor, getCursorPosition, getLinesFromSelection, getTextFromRange } from "./shared";
 import * as path from "path";
 
 /*
 // todo: normalize path autocompletion
 // todo: support home directory aliases, e.g. "~", "HOME", $env:USERPROFILE (and others) if powershell
+// todo: improve performance
+// todo: if the file is saved, use its location as starting folder for the autocomplete suggestions
+// investigate: autocompletion does not seem to work in the package file (all JSON files?)
 */
 
 let config = workspace.getConfiguration("fst");
@@ -21,7 +24,10 @@ export function getUserPath(): string {
     if (shouldComplete()) {
         const editor = getActiveEditor();
 
-        let range = editor?.document.getWordRangeAtPosition(editor.selection.active, new RegExp(/[^"'`]+$/));
+        let range: Range | undefined = undefined;
+        let regex = new RegExp("((?<=[\"'`]).*?(?=['\"`]))|([^\"'`]+$)");
+
+        range = editor?.document.getWordRangeAtPosition(editor.selection.active, regex);
         if (!range) {
             return "";
         }
@@ -122,10 +128,12 @@ function isInsideQuotes(): boolean {
     }
 
     let isInsideQuotes = false;
+    let cursorPosition = getCursorPosition(editor)[0];
 
     getLinesFromSelection(editor)?.forEach((line) => {
-        let match = line.text.match(/(["]|[']|[`])/g);
-        if (match!.length % 2 === 1) {
+        let lineTextToCursorPosition = line.text.substring(0, cursorPosition.character);
+        let match = lineTextToCursorPosition.match(/(["]|[']|[`])/g);
+        if (match && match?.length % 2 === 1) {
             isInsideQuotes = true;
         }
     });
@@ -139,7 +147,7 @@ function isInsideQuotes(): boolean {
  * @return {*}  {(string | undefined)}
  */
 function getStringWithinQuotes(text: string): string | undefined {
-    return text?.match(new RegExp(/(?<=["'])[^"']*/))?.[0];
+    return text?.match(new RegExp(/(?<=["'`]).*?(?=['"`])/))?.[0];
 }
 
 /**
