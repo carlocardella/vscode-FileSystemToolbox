@@ -1,7 +1,15 @@
 import * as os from "os";
 import * as path from "path";
-import { CompletionItem, CompletionItemKind, FileType, Range, Selection, Uri, workspace } from "vscode";
-import { getActiveDocument, getActiveEditor, getCursorPosition, getDocumentContainer, getLinesFromSelection, getTextFromRange } from "./shared";
+import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace } from "vscode";
+import {
+    getActiveDocument,
+    getActiveEditor,
+    getCursorPosition,
+    getDocumentContainer,
+    getLinesFromSelection,
+    getTextFromRange,
+    notImplementedException,
+} from "./shared";
 
 /*
 // todo: normalize path autocompletion
@@ -46,20 +54,19 @@ export function getUserPath(): string {
  * @return {*}  {string}
  */
 export function getUserPathInternal(pathSelection: Range): string {
-    let userPath = getTextFromRange(pathSelection).trim();
-
     if (config.get<boolean>("PathCompleterExpandHomeDirAlias")) {
         expandHomeDirAlias(pathSelection);
     }
 
-    let document = getActiveDocument();
-    if (document?.isUntitled) {
-        return userPath;
+    let userPath = getTextFromRange(pathSelection).trim();
+
+    // the file has a path on disk, use it as base for the path completion
+    if (!getActiveDocument()?.isUntitled && userPath.startsWith(".")) {
+        let documentContainer = getDocumentContainer();
+        userPath = path.join(documentContainer!, userPath);
     }
 
-    let documentContainer = getDocumentContainer();
-    userPath = path.join(documentContainer!, userPath);
-
+    // // unsaved document, it is not possible to use a relative path, return whatever the user entered
     return userPath;
 }
 
@@ -69,6 +76,8 @@ export function getUserPathInternal(pathSelection: Range): string {
  * @param {Range} pathSelection The Range containing the path the user entered
  */
 export function expandHomeDirAlias(pathSelection: Range) {
+    notImplementedException();
+
     // investigate: resolve environment variables? If so, add $env:USERPROFILE if the language is Powershell
     let userPath = getTextFromRange(pathSelection).trim();
     const editor = getActiveEditor();
@@ -76,9 +85,15 @@ export function expandHomeDirAlias(pathSelection: Range) {
     if (userPath.startsWith("~\\")) {
         userPath = userPath.replace("~\\", os.homedir());
     }
+    if (userPath.startsWith("~/")) {
+        userPath = userPath.replace("~/", os.homedir());
+    }
 
     if (userPath.toUpperCase().startsWith("HOME\\")) {
         userPath = userPath.replace("HOME\\", os.homedir());
+    }
+    if (userPath.toUpperCase().startsWith("HOME/")) {
+        userPath = userPath.replace("HOME/", os.homedir());
     }
 
     editor?.edit((editBuilder) => {

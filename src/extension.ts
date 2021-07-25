@@ -54,7 +54,7 @@ export function activate(context: vscode.ExtensionContext) {
                 return getCompletionItems(currentFolder);
             },
         },
-        ...["/", "\\", "."]
+        ...["/", "\\"]
 		// pathCompletionSeparator
 	);
     context.subscriptions.push(completionProvider);
