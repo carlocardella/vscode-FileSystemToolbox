@@ -1,11 +1,12 @@
-import { Uri, workspace, CompletionItem, CompletionItemKind, FileType, Range } from "vscode";
-import { getActiveEditor, getCursorPosition, getLinesFromSelection, getTextFromRange, getDocumentContainer, getActiveDocument } from "./shared";
+import * as os from "os";
 import * as path from "path";
+import { CompletionItem, CompletionItemKind, FileType, Range, Selection, Uri, workspace } from "vscode";
+import { getActiveDocument, getActiveEditor, getCursorPosition, getDocumentContainer, getLinesFromSelection, getTextFromRange } from "./shared";
 
 /*
 // todo: normalize path autocompletion
-// todo: support home directory aliases, e.g. "~", "HOME", $env:USERPROFILE (and others) if powershell
 // todo: improve performance
+// todo: properly handle relative paths starting with '.' or '..'
 */
 
 let config = workspace.getConfiguration("fst");
@@ -30,18 +31,60 @@ export function getUserPath(): string {
             return "";
         }
 
-        let userPath = getTextFromRange(range).trim();
-        const document = getActiveDocument();
-        if (document?.isUntitled) {
-        } else {
-            let documentContainer = getDocumentContainer();
-            userPath = path.join(documentContainer!, userPath);
-        }
+        let userPath = getUserPathInternal(range);
 
         return userPath;
     }
 
     return "";
+}
+
+/**
+ * Get the path the user entered in the text editor
+ * @export
+ * @param {Range} pathSelection The Range containing the path the user entered
+ * @return {*}  {string}
+ */
+export function getUserPathInternal(pathSelection: Range): string {
+    let userPath = getTextFromRange(pathSelection).trim();
+
+    if (config.get<boolean>("PathCompleterExpandHomeDirAlias")) {
+        expandHomeDirAlias(pathSelection);
+    }
+
+    let document = getActiveDocument();
+    if (document?.isUntitled) {
+        return userPath;
+    }
+
+    let documentContainer = getDocumentContainer();
+    userPath = path.join(documentContainer!, userPath);
+
+    return userPath;
+}
+
+/**
+ * Expand the home directory alias: "~", "HOME"
+ * @export
+ * @param {Range} pathSelection The Range containing the path the user entered
+ */
+export function expandHomeDirAlias(pathSelection: Range) {
+    // investigate: resolve environment variables? If so, add $env:USERPROFILE if the language is Powershell
+    let userPath = getTextFromRange(pathSelection).trim();
+    const editor = getActiveEditor();
+
+    if (userPath.startsWith("~\\")) {
+        userPath = userPath.replace("~\\", os.homedir());
+    }
+
+    if (userPath.toUpperCase().startsWith("HOME\\")) {
+        userPath = userPath.replace("HOME\\", os.homedir());
+    }
+
+    editor?.edit((editBuilder) => {
+        editBuilder.replace(pathSelection, userPath);
+    });
+    // todo: remove unwanted text selection
 }
 
 /**
