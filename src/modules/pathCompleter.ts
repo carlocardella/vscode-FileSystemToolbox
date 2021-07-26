@@ -1,6 +1,6 @@
 import * as os from "os";
 import * as path from "path";
-import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace } from "vscode";
+import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace, Selection } from "vscode";
 import {
     getActiveDocument,
     getActiveEditor,
@@ -14,7 +14,6 @@ import {
 /*
 // todo: normalize path autocompletion
 // todo: improve performance
-// todo: properly handle relative paths starting with '.' or '..'
 */
 
 let config = workspace.getConfiguration("fst");
@@ -66,7 +65,7 @@ export function getUserPathInternal(pathSelection: Range): string {
         userPath = path.join(documentContainer!, userPath);
     }
 
-    // // unsaved document, it is not possible to use a relative path, return whatever the user entered
+    // unsaved document, it is not possible to use a relative path, return whatever the user entered
     return userPath;
 }
 
@@ -76,30 +75,26 @@ export function getUserPathInternal(pathSelection: Range): string {
  * @param {Range} pathSelection The Range containing the path the user entered
  */
 export function expandHomeDirAlias(pathSelection: Range) {
-    notImplementedException();
-
     // investigate: resolve environment variables? If so, add $env:USERPROFILE if the language is Powershell
     let userPath = getTextFromRange(pathSelection).trim();
     const editor = getActiveEditor();
 
-    if (userPath.startsWith("~\\")) {
+    if (userPath.startsWith("~")) {
         userPath = userPath.replace("~\\", os.homedir());
     }
-    if (userPath.startsWith("~/")) {
-        userPath = userPath.replace("~/", os.homedir());
+
+    if (userPath.startsWith("HOME")) {
+        userPath = userPath.replace("HOME", os.homedir());
     }
 
-    if (userPath.toUpperCase().startsWith("HOME\\")) {
-        userPath = userPath.replace("HOME\\", os.homedir());
-    }
-    if (userPath.toUpperCase().startsWith("HOME/")) {
-        userPath = userPath.replace("HOME/", os.homedir());
-    }
-
-    editor?.edit((editBuilder) => {
-        editBuilder.replace(pathSelection, userPath);
-    });
-    // todo: remove unwanted text selection
+    editor
+        ?.edit((editBuilder) => {
+            editBuilder.replace(pathSelection, userPath);
+        })
+        .then(() => {
+            // remove the selection added by the replace
+            editor.selection = new Selection(editor.selection.active, editor.selection.active);
+        });
 }
 
 /**
@@ -109,8 +104,6 @@ export function expandHomeDirAlias(pathSelection: Range) {
  * @return {*}  {Promise<CompletionItem[]>}
  */
 export function getCompletionItems(currentFolder: string): Promise<CompletionItem[]> {
-    const config = workspace.getConfiguration("fst");
-
     return new Promise(async (resolve, reject) => {
         let pathCompletionSeparator = config.get<string>("PathCompleterSeparator");
         if (pathCompletionSeparator === "SystemDefault") {
