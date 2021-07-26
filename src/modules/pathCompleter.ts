@@ -76,15 +76,16 @@ export function getUserPathInternal(pathSelection: Range): string {
  */
 export function expandHomeDirAlias(pathSelection: Range) {
     // investigate: resolve environment variables? If so, add $env:USERPROFILE if the language is Powershell
+    // todo: on home dir expansion, trigger the next autocompletion
     let userPath = getTextFromRange(pathSelection).trim();
     const editor = getActiveEditor();
 
     if (userPath.startsWith("~")) {
-        userPath = userPath.replace("~\\", os.homedir());
+        userPath = userPath.replace(/~\\{1,2}|~\//, os.homedir());
     }
 
-    if (userPath.startsWith("HOME")) {
-        userPath = userPath.replace("HOME", os.homedir());
+    if (userPath.startsWith("HOME\\") || userPath.startsWith("HOME//")) {
+        userPath = userPath.replace(/HOME\\{1,2}|HOME\//, os.homedir());
     }
 
     editor

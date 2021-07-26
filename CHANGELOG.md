@@ -35,6 +35,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [0.5.0] - <!-- todo -->
+
+* `Path Autocomplete`, optionally expand home dir alias "~" and "HOME"
+* `Path Autocomplete`, handle "." and ".." path elements
+
 ## [0.4.0] - 2021-07-24
 
 ### Changed
