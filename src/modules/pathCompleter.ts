@@ -1,7 +1,15 @@
 import * as os from "os";
 import * as path from "path";
 import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace, Selection } from "vscode";
-import { getActiveDocument, getActiveEditor, getCursorPosition, getDocumentContainer, getLinesFromSelection, getTextFromRange } from "./shared";
+import {
+    getActiveDocument,
+    getActiveEditor,
+    getCursorPosition,
+    getDocumentContainer,
+    getLinesFromSelection,
+    getTextFromRange,
+    getUserPathRangeAtCursorPosition,
+} from "./shared";
 
 /*
 // todo: normalize path autocompletion
@@ -22,12 +30,11 @@ export function getUserPath(): string {
 
     if (shouldComplete()) {
         const editor = getActiveEditor();
+        if (!editor) {
+            return "";
+        }
 
-        let range: Range | undefined = undefined;
-        let regex = new RegExp("((?<=[\"'`]).*?(?=['\"`]))|([^\"'` ]+$)");
-
-        // fix: if getWordRangeAtPosition returns a string like "" "\", autocompletion is not presented but no real exception is thrown
-        range = editor?.document.getWordRangeAtPosition(editor.selection.active, regex);
+        let range = getUserPathRangeAtCursorPosition(editor);
         if (!range) {
             return "";
         }

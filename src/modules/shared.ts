@@ -200,3 +200,19 @@ export function createNewEditor(text?: string): Promise<TextEditor> {
         );
     });
 }
+
+/**
+ * Returns the file system path at the current cursor position
+ * @export
+ * @param {TextEditor} editor The editor containing the cursor position
+ * @return {*}  {(Range | undefined)}
+ */
+export function getUserPathRangeAtCursorPosition(editor: TextEditor): Range | undefined {
+    if (!editor) {
+        return;
+    }
+
+    let regex = new RegExp("((?<=[\"'`]).*?(?=['\"`]))|([^\"'` ]+$)");
+    // fix: if getWordRangeAtPosition returns a string like "" "\", autocompletion is not presented but no real exception is thrown
+    return editor?.document.getWordRangeAtPosition(editor.selection.active, regex);
+}
