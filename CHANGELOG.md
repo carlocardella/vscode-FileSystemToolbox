@@ -10,8 +10,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 * Open file path under cursor
 * Open file path under cursor in external default editor
-* Copy relative path relative to current file
-* Copy absolute path relative to current file
 
 ### Folders
 
@@ -35,7 +33,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
-## [0.5.0] - <!-- todo -->
+## [0.5.0] - 2021-07-26
 
 * `Path Autocomplete`, optionally expand home dir alias "~" and "HOME"
 * `Path Autocomplete`, handle "." and ".." path elements

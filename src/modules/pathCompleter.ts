@@ -1,20 +1,11 @@
 import * as os from "os";
 import * as path from "path";
 import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace, Selection } from "vscode";
-import {
-    getActiveDocument,
-    getActiveEditor,
-    getCursorPosition,
-    getDocumentContainer,
-    getLinesFromSelection,
-    getTextFromRange,
-    notImplementedException,
-} from "./shared";
+import { getActiveDocument, getActiveEditor, getCursorPosition, getDocumentContainer, getLinesFromSelection, getTextFromRange } from "./shared";
 
 /*
 // todo: normalize path autocompletion
 // todo: improve performance
-// fix: if outside quotes, path autocompletion is not presented
 */
 
 let config = workspace.getConfiguration("fst");
@@ -34,6 +25,7 @@ export function getUserPath(): string {
         let range: Range | undefined = undefined;
         let regex = new RegExp("((?<=[\"'`]).*?(?=['\"`]))|([^\"'` ]+$)");
 
+        // fix: if getWordRangeAtPosition returns a string like "" "\", autocompletion is not presented but no real exception is thrown
         range = editor?.document.getWordRangeAtPosition(editor.selection.active, regex);
         if (!range) {
             return "";
