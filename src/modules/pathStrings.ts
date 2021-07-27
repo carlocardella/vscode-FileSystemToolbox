@@ -1,5 +1,8 @@
 import * as path from "path";
-import { getActiveEditor, getTextFromSelection } from "./shared";
+import { getActiveEditor, getTextFromSelection, getTextFromRange, createNewEditor } from "./shared";
+import { commands, Range, Uri } from "vscode";
+import { getUserPathInternal } from "./pathCompleter";
+import * as fs from "fs";
 
 /**
  * Enumerates Platform path types
@@ -55,4 +58,30 @@ export async function transformPath(type: PathTransformationType): Promise<strin
     editor.edit((editBuilder) => {
         editBuilder.replace(selection, pathString!);
     });
+}
+
+export async function openFileUnderCursor() {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+
+    const selection = editor?.selection;
+    if (!selection) {
+        return;
+    }
+
+    let range: Range | undefined = undefined;
+    let regex = new RegExp("((?<=[\"'`]).*?(?=['\"`]))|([^\"'` ]+$)");
+    // fix: if getWordRangeAtPosition returns a string like "" "\", autocompletion is not presented but no real exception is thrown
+    range = editor?.document.getWordRangeAtPosition(editor.selection.active, regex);
+    if (!range) {
+        return;
+    }
+
+    let userPath = getUserPathInternal(range!).trim();
+    let filePath = path.resolve(userPath);
+    if (fs.existsSync(filePath)) {
+        commands.executeCommand("vscode.open", Uri.file(filePath));
+    }
 }

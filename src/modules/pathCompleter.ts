@@ -6,6 +6,7 @@ import { getActiveDocument, getActiveEditor, getCursorPosition, getDocumentConta
 /*
 // todo: normalize path autocompletion
 // todo: improve performance
+// todo: manage relative path in the form of   "Assets/tech-service.png",
 */
 
 let config = workspace.getConfiguration("fst");

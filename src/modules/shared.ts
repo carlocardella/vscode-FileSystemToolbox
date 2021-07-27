@@ -184,3 +184,19 @@ export function getCursorPosition(editor: TextEditor): Position[] {
 
     return position;
 }
+
+/**
+ * Creates a new TextEditor containing the passed in text
+ * @param {string} text
+ * @returns {TextEditor}
+ */
+export function createNewEditor(text?: string): Promise<TextEditor> {
+    return new Promise(async (resolve, reject) => {
+        await workspace.openTextDocument({ content: text, preview: true } as any).then(
+            (doc) => {
+                resolve(window.showTextDocument(doc));
+            },
+            (err) => reject(err)
+        );
+    });
+}

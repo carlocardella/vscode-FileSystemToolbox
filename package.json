@@ -130,6 +130,10 @@
             {
                 "command": "vscode-FileSystemToolbox.test",
                 "title": "FST: test"
+            },
+            {
+                "command": "vscode-FileSystemToolbox.OpenFileUnderCursor",
+                "title": "FST: Open file under cursor"
             }
         ],
         "menus": {
