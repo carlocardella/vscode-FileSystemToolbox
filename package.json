@@ -171,6 +171,9 @@
                 {
                     "submenu": "fst.transform",
                     "group": "Transform"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.OpenFileUnderCursor"
                 }
             ],
             "fst.copy": [

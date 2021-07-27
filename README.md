@@ -43,6 +43,7 @@ The extension does not require any special permission, therefore is enabled to r
 * New file relative to workspace root
 * Duplicate active file
 * Remove active file
+* Open file under cursor
 
 ### Path Autocomplete
 
@@ -61,6 +62,10 @@ The feature is enabled by default and can be customized through these settings:
     * Single quotes: `'`
     * Double quotes: `"`
     * Backtick: `` ` ``
+* `fst.PathCompleterExpandHomeDirAlias` (default `false`)
+  * Expand home dir aliases: 
+    * `~`
+    * `HOME`
 
 ![path autocomplete](/Assets/path_autocomplete.gif)
 

@@ -6,11 +6,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-### Files
-
-* Open file path under cursor
-* Open file path under cursor in external default editor
-
 ### Folders
 
 * Copy containing folder relative path
@@ -32,6 +27,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
   * Create files under each leaf folder with the same braces mechanism
 
 ## Log
+
+## [0.6.0] - 2021-07-27
+
+### Added
+
+* `Open file under cursor`: open the file at the current cursor position in VSCode. _Note_: this command does not support multiple cursors
 
 ## [0.5.0] - 2021-07-26
 
