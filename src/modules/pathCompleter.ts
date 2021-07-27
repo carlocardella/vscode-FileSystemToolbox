@@ -14,6 +14,7 @@ import {
 /*
 // todo: normalize path autocompletion
 // todo: improve performance
+// fix: if outside quotes, path autocompletion is not presented
 */
 
 let config = workspace.getConfiguration("fst");
@@ -31,7 +32,7 @@ export function getUserPath(): string {
         const editor = getActiveEditor();
 
         let range: Range | undefined = undefined;
-        let regex = new RegExp("((?<=[\"'`]).*?(?=['\"`]))|([^\"'`]+$)");
+        let regex = new RegExp("((?<=[\"'`]).*?(?=['\"`]))|([^\"'` ]+$)");
 
         range = editor?.document.getWordRangeAtPosition(editor.selection.active, regex);
         if (!range) {
