@@ -20,8 +20,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 * Make Relative
 * Resolve
-* Convert HOME to ~
-* Convert ~ to HOME
 * Create tree with braces as placeholder, e.g. `/folder/{d1,d2,d2}` created folders `d1`, `d2` and `d3` under `/folder`
   * Create files under each leaf folder with the same braces mechanism
 
@@ -32,6 +30,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Added
 
 * `Normalize path` (platform specific)
+* `Expand home dir alias`: "~" and "HOME"
 
 ## [0.6.0] - 2021-07-27
 

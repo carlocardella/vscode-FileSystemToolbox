@@ -138,6 +138,10 @@
             {
                 "command": "vscode-FileSystemToolbox.NormalizePath",
                 "title": "FST: Normalize path"
+            },
+            {
+                "command": "vscode-FileSystemToolbox.expandHomeDirAlias",
+                "title": "FST: Expand home dir alias"
             }
         ],
         "menus": {
@@ -249,6 +253,10 @@
                 },
                 {
                     "command": "vscode-FileSystemToolbox.NormalizePath",
+                    "group": "fst.transform"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.expandHomeDirAlias",
                     "group": "fst.transform"
                 }
             ]

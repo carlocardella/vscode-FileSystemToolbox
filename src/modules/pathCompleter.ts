@@ -1,6 +1,7 @@
 import * as os from "os";
 import * as path from "path";
 import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace, Selection } from "vscode";
+import { expandHomeDirAlias } from "./pathStrings";
 import {
     getActiveDocument,
     getActiveEditor,
@@ -56,6 +57,7 @@ export function getUserPath(): string {
 export function getUserPathInternal(pathSelection: Range): string {
     if (config.get<boolean>("PathCompleterExpandHomeDirAlias")) {
         expandHomeDirAlias(pathSelection);
+        // todo: on home dir expansion, trigger the next autocompletion
     }
 
     let userPath = getTextFromRange(pathSelection).trim();
@@ -68,35 +70,6 @@ export function getUserPathInternal(pathSelection: Range): string {
 
     // unsaved document, it is not possible to use a relative path, return whatever the user entered
     return userPath;
-}
-
-/**
- * Expand the home directory alias: "~", "HOME"
- * @export
- * @param {Range} pathSelection The Range containing the path the user entered
- */
-export function expandHomeDirAlias(pathSelection: Range) {
-    // investigate: resolve environment variables? If so, add $env:USERPROFILE if the language is Powershell
-    // todo: on home dir expansion, trigger the next autocompletion
-    let userPath = getTextFromRange(pathSelection).trim();
-    const editor = getActiveEditor();
-
-    if (userPath.startsWith("~")) {
-        userPath = userPath.replace(/~\\{1,2}|~\//, os.homedir());
-    }
-
-    if (userPath.startsWith("HOME\\") || userPath.startsWith("HOME//")) {
-        userPath = userPath.replace(/HOME\\{1,2}|HOME\//, os.homedir());
-    }
-
-    editor
-        ?.edit((editBuilder) => {
-            editBuilder.replace(pathSelection, userPath);
-        })
-        .then(() => {
-            // remove the selection added by the replace
-            editor.selection = new Selection(editor.selection.active, editor.selection.active);
-        });
 }
 
 /**

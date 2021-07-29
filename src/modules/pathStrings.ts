@@ -1,9 +1,9 @@
 import * as path from "path";
-import { getActiveEditor, getTextFromSelection, getTextFromRange, createNewEditor, getUserPathRangeAtCursorPosition } from "./shared";
-import { commands, Range, Uri } from "vscode";
+import { getActiveEditor, getTextFromSelection, getUserPathRangeAtCursorPosition, getTextFromRange } from "./shared";
+import { commands, Uri, Selection, Range } from "vscode";
 import { getUserPathInternal } from "./pathCompleter";
 import * as fs from "fs";
-import { askForFilePathAndName } from "./crud";
+import * as os from 'os';
 
 /**
  * Enumerates Platform path types
@@ -111,4 +111,47 @@ export function normalizePath(pathToNormalize?: string): boolean {
     });
 
     return true;
+}
+
+/**
+ * Expand the home directory alias: "~", "HOME"
+ * @export
+ * @param {Range} pathSelection The Range containing the path the user entered
+ */
+export function expandHomeDirAlias(pathSelection?: Range) {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+
+    if (!pathSelection) {
+        if (!editor.selection.isEmpty) {
+            pathSelection = new Range(editor.selection.start, editor.selection.end);
+        } else {
+            pathSelection = getUserPathRangeAtCursorPosition(editor);
+            if (!pathSelection) {
+                return;
+            }
+        }
+    }
+
+    // investigate: resolve environment variables? If so, add $env:USERPROFILE if the language is Powershell
+    let userPath = getTextFromRange(pathSelection).trim();
+
+    if (userPath.startsWith("~")) {
+        userPath = userPath.replace(/~\\{1,2}|~\//, os.homedir());
+    }
+
+    if (userPath.startsWith("HOME\\") || userPath.startsWith("HOME//")) {
+        userPath = userPath.replace(/HOME\\{1,2}|HOME\//, os.homedir());
+    }
+
+    editor
+        ?.edit((editBuilder) => {
+            editBuilder.replace(pathSelection!, userPath);
+        })
+        .then(() => {
+            // remove the selection added by the replace
+            editor.selection = new Selection(editor.selection.active, editor.selection.active);
+        });
 }

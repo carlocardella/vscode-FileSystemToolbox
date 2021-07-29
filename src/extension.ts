@@ -41,6 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.TransformPathToWin32', () => { pathStrings.transformPath(pathStrings.PathTransformationType.win32); }));
 
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.NormalizePath', () => { pathStrings.normalizePath(); }));
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.expandHomeDirAlias', () => { pathStrings.expandHomeDirAlias(); }));
 
 	// path intellisense
 	// let pathCompletionSeparator: string = vscode.workspace.getConfiguration("fst").get("pathCompletionSeparator")!;

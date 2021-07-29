@@ -10,7 +10,6 @@
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/carlocardella/vscode-FileSystemToolbox.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fcarlocardella%2Fvscode-FileSystemToolbox)
 <!-- [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/carlocardella/vscode-filesystemtoolbox) -->
 
-
 Collection of tools to work with the File System.
 
 The marketplace has a number of great extensions to work with files and folder, I installed a few of them to cover the entire range of actions I normally use, unfortunately that means there is some overlapping between them, basically the same action is contributed by multiple extensions. That is what motivated me to build this extension: I like the idea to have a single extension for all those operations and without duplicates; plus, it is a good pastime 😊.
@@ -45,6 +44,7 @@ The extension does not require any special permission, therefore is enabled to r
 * Remove active file
 * Open file under cursor
 * Normalize path (platform specific)
+* Expand home dir alias
 
 ### Path Autocomplete
 
@@ -52,7 +52,7 @@ a.k.a. `path intellisense`, in other words, you can start typing a file system p
 
 The feature is enabled by default and can be customized through these settings:
 
-* `fst.EnablePathCompleter` (default `true`): 
+* `fst.EnablePathCompleter` (default `true`):
   * Easy to guess, change this to `false` and the path autocomplete feature will be completely disabled
 * `fst.PathCompleterAppendPathSeparator` (default `true`):
   * If enabled and if you select a folder from the autocompletion, it appends the default path separator and automatically shows the next list of completion items
@@ -64,7 +64,7 @@ The feature is enabled by default and can be customized through these settings:
     * Double quotes: `"`
     * Backtick: `` ` ``
 * `fst.PathCompleterExpandHomeDirAlias` (default `false`)
-  * Expand home dir aliases: 
+  * Expand home dir aliases:
     * `~`
     * `HOME`
 
