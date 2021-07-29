@@ -1,6 +1,6 @@
 import * as path from "path";
 import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace } from "vscode";
-import { expandHomeDirAlias } from "./pathStrings";
+import { expandHomeDirAlias, normalizePath } from './pathStrings';
 import {
     getActiveDocument,
     getActiveEditor,
@@ -134,6 +134,11 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                 folderUp.sortText = "a";
                 completionItems.push(folderUp);
                 triggerNextCompletion(folderUp, appendPathSeparator!, pathCompletionSeparator!);
+
+                // normalize the path
+                if (config.get<boolean>("PathCompleterNormalizePath")) {
+                    normalizePath();
+                }
 
                 return resolve(completionItems);
             },

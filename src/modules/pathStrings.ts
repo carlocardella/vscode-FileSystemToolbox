@@ -1,9 +1,9 @@
 import * as path from "path";
 import { getActiveEditor, getTextFromSelection, getUserPathRangeAtCursorPosition, getTextFromRange } from "./shared";
-import { commands, Uri, Selection, Range } from "vscode";
+import { commands, Uri, Selection, Range, SelectionRange } from "vscode";
 import { getUserPathInternal } from "./pathCompleter";
 import * as fs from "fs";
-import * as os from 'os';
+import * as os from "os";
 
 /**
  * Enumerates Platform path types
@@ -104,8 +104,12 @@ export function normalizePath(pathToNormalize?: string): boolean {
                     return false;
                 }
 
-                pathToNormalize = getUserPathInternal(range!).trim();
-                editBuilder.replace(range, path.normalize(pathToNormalize!));
+                pathToNormalize = getUserPathInternal(range).trim();
+
+                // editBuilder.replace(range, path.normalize(pathToNormalize!)); // fix: editBuilder does not have any effect
+                // investigate: suggested in https://github.com/microsoft/vscode/issues/32058#issuecomment-322162175, still does not work
+                // editBuilder.delete(range);
+                // editBuilder.insert(range.start, path.normalize(pathToNormalize!));
             }
         }
     });

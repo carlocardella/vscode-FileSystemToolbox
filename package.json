@@ -350,6 +350,11 @@
                         "description": "Expand the home directory alias to the user home directory",
                         "type": "boolean",
                         "default": false
+                    },
+                    "fst.PathCompleterNormalizePath": {
+                        "description": "Normalize the path after performing the path completion",
+                        "type": "boolean",
+                        "default": true
                     }
                 }
             }
