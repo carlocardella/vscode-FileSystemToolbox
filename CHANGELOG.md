@@ -32,6 +32,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * `Normalize path` (platform specific)
 * `Expand home dir alias`: "~" and "HOME"
 
+### Changed
+
+* Enable path autocompletion on folder up: `..`
+
 ## [0.6.0] - 2021-07-27
 
 ### Added
