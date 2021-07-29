@@ -40,6 +40,8 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.TransformPathToPosix', () => { pathStrings.transformPath(pathStrings.PathTransformationType.posix); }));
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.TransformPathToWin32', () => { pathStrings.transformPath(pathStrings.PathTransformationType.win32); }));
 
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.NormalizePath', () => { pathStrings.normalizePath(); }));
+
 	// path intellisense
 	// let pathCompletionSeparator: string = vscode.workspace.getConfiguration("fst").get("pathCompletionSeparator")!;
 	// if (pathCompletionSeparator === "SystemDefault") { pathCompletionSeparator = path.sep; };

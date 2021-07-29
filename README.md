@@ -44,6 +44,7 @@ The extension does not require any special permission, therefore is enabled to r
 * Duplicate active file
 * Remove active file
 * Open file under cursor
+* Normalize path (platform specific)
 
 ### Path Autocomplete
 

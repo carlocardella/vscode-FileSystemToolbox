@@ -3,6 +3,7 @@ import { getActiveEditor, getTextFromSelection, getTextFromRange, createNewEdito
 import { commands, Range, Uri } from "vscode";
 import { getUserPathInternal } from "./pathCompleter";
 import * as fs from "fs";
+import { askForFilePathAndName } from "./crud";
 
 /**
  * Enumerates Platform path types
@@ -78,4 +79,36 @@ export async function openFileUnderCursor() {
     if (fs.existsSync(filePath)) {
         commands.executeCommand("vscode.open", Uri.file(filePath));
     }
+}
+
+/**
+ * Normalize the path string to the platform type
+ * @export
+ * @param {string} [pathToNormalize] The path to normalize
+ * @return {*}  {boolean}
+ */
+export function normalizePath(pathToNormalize?: string): boolean {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return false;
+    }
+
+    editor.edit((editBuilder) => {
+        if (!pathToNormalize) {
+            if (!editor.selection.isEmpty) {
+                pathToNormalize = getTextFromSelection(editor, editor.selection);
+                editBuilder.replace(editor.selection, path.normalize(pathToNormalize!));
+            } else {
+                let range = getUserPathRangeAtCursorPosition(editor);
+                if (!range) {
+                    return false;
+                }
+
+                pathToNormalize = getUserPathInternal(range!).trim();
+                editBuilder.replace(range, path.normalize(pathToNormalize!));
+            }
+        }
+    });
+
+    return true;
 }

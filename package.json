@@ -134,6 +134,10 @@
             {
                 "command": "vscode-FileSystemToolbox.OpenFileUnderCursor",
                 "title": "FST: Open file under cursor"
+            },
+            {
+                "command": "vscode-FileSystemToolbox.NormalizePath",
+                "title": "FST: Normalize path"
             }
         ],
         "menus": {
@@ -241,6 +245,10 @@
                 },
                 {
                     "command": "vscode-FileSystemToolbox.TransformPathToWin32",
+                    "group": "fst.transform"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.NormalizePath",
                     "group": "fst.transform"
                 }
             ]
