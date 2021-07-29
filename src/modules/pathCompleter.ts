@@ -1,6 +1,5 @@
-import * as os from "os";
 import * as path from "path";
-import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace, Selection } from "vscode";
+import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace } from "vscode";
 import { expandHomeDirAlias } from "./pathStrings";
 import {
     getActiveDocument,
@@ -57,7 +56,6 @@ export function getUserPath(): string {
 export function getUserPathInternal(pathSelection: Range): string {
     if (config.get<boolean>("PathCompleterExpandHomeDirAlias")) {
         expandHomeDirAlias(pathSelection);
-        // todo: on home dir expansion, trigger the next autocompletion
     }
 
     let userPath = getTextFromRange(pathSelection).trim();
@@ -124,17 +122,7 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                     let completionItem = new CompletionItem(completionItemLabel, completionItemKind!);
 
                     // trigger the next autocompletion
-                    if (completionItem.kind === CompletionItemKind.Folder && appendPathSeparator) {
-                        completionItem.command = {
-                            command: "default:type",
-                            title: "triggerCompletion",
-                            arguments: [
-                                {
-                                    text: pathCompletionSeparator,
-                                },
-                            ],
-                        };
-                    }
+                    triggerNextCompletion(completionItem, appendPathSeparator!, pathCompletionSeparator!);
 
                     completionItem.sortText = sortString;
 
@@ -145,24 +133,33 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                 let folderUp = new CompletionItem("..", CompletionItemKind.Folder);
                 folderUp.sortText = "a";
                 completionItems.push(folderUp);
-                // trigger the next autocompletion
-                if (folderUp.kind === CompletionItemKind.Folder && appendPathSeparator) {
-                    folderUp.command = {
-                        command: "default:type",
-                        title: "triggerCompletion",
-                        arguments: [
-                            {
-                                text: pathCompletionSeparator,
-                            },
-                        ],
-                    };
-                }
+                triggerNextCompletion(folderUp, appendPathSeparator!, pathCompletionSeparator!);
 
                 return resolve(completionItems);
             },
             (err) => reject(err)
         );
     });
+}
+
+/**
+ * Append the path separator to the current path and trigger the next autocompletion
+ * @param {CompletionItem} completionItem CompletionType of type Folder to append the path separator to
+ * @param {boolean} appendPathSeparator Make sure the user wants to append the path separator
+ * @param {string} pathCompletionSeparator Path separator to use
+ */
+function triggerNextCompletion(completionItem: CompletionItem, appendPathSeparator: boolean, pathCompletionSeparator: string) {
+    if (completionItem.kind === CompletionItemKind.Folder && appendPathSeparator) {
+        completionItem.command = {
+            command: "default:type",
+            title: "triggerCompletion",
+            arguments: [
+                {
+                    text: pathCompletionSeparator,
+                },
+            ],
+        };
+    }
 }
 
 /**
