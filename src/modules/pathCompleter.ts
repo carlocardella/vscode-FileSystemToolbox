@@ -164,8 +164,26 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                     }
 
                     completionItem.sortText = sortString;
+
                     return completionItem;
                 });
+
+                // add folderUp (..)
+                let folderUp = new CompletionItem("..", CompletionItemKind.Folder);
+                folderUp.sortText = "a";
+                completionItems.push(folderUp);
+                // trigger the next autocompletion
+                if (folderUp.kind === CompletionItemKind.Folder && appendPathSeparator) {
+                    folderUp.command = {
+                        command: "default:type",
+                        title: "triggerCompletion",
+                        arguments: [
+                            {
+                                text: pathCompletionSeparator,
+                            },
+                        ],
+                    };
+                }
 
                 return resolve(completionItems);
             },
