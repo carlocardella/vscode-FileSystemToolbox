@@ -25,7 +25,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
-## [0.7.0] - @todo
+## [0.7.0] - 2021-07-31
 
 ### Added
 
