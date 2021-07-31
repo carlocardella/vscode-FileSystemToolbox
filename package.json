@@ -327,7 +327,7 @@
                         "default": true
                     },
                     "fst.PathCompleterAppendPathSeparator": {
-                        "description": "Append the path separator to folders, of \"EnablePAthCompleter\" is `true`. If `PathCompleterAppendPathSeparator` is `true` and if the folder is not empty, the next path element will be presented as autocompletion.",
+                        "description": "Append the path separator to folders, if \"EnablePathCompleter\" is true. If PathCompleterAppendPathSeparator is true and if the folder is not empty, the next path element will be presented as autocompletion.",
                         "type": "boolean",
                         "default": true
                     },

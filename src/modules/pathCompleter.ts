@@ -1,6 +1,6 @@
 import * as path from "path";
 import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace } from "vscode";
-import { expandHomeDirAlias, normalizePath } from './pathStrings';
+import { expandHomeDirAlias, normalizePath } from "./pathStrings";
 import {
     getActiveDocument,
     getActiveEditor,
@@ -121,8 +121,10 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
 
                     let completionItem = new CompletionItem(completionItemLabel, completionItemKind!);
 
-                    // trigger the next autocompletion
-                    triggerNextCompletion(completionItem, appendPathSeparator!, pathCompletionSeparator!);
+                    if (appendPathSeparator) {
+                        // trigger the next autocompletion
+                        triggerNextCompletion(completionItem, appendPathSeparator!, pathCompletionSeparator!);
+                    }
 
                     completionItem.sortText = sortString;
 
@@ -133,12 +135,18 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                 let folderUp = new CompletionItem("..", CompletionItemKind.Folder);
                 folderUp.sortText = "a";
                 completionItems.push(folderUp);
-                triggerNextCompletion(folderUp, appendPathSeparator!, pathCompletionSeparator!);
-
-                // normalize the path
-                if (config.get<boolean>("PathCompleterNormalizePath")) {
-                    normalizePath();
+                if (appendPathSeparator) {
+                    // trigger the next autocompletion
+                    triggerNextCompletion(folderUp, appendPathSeparator!, pathCompletionSeparator!);
                 }
+
+                // if (config.get<boolean>("PathCompleterNormalizePath")) {
+                //     normalizePath();
+                //     if (appendPathSeparator) {
+                //         // trigger the next autocompletion @fix: does not work
+                //         triggerNextCompletion(folderUp, appendPathSeparator!, pathCompletionSeparator!);
+                //     }
+                // }
 
                 return resolve(completionItems);
             },
