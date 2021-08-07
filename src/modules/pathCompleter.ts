@@ -17,7 +17,7 @@ import {
 // todo: manage relative path in the form of   "Assets/tech-service.png",
 */
 
-let config = workspace.getConfiguration("fst");
+let config = workspace.getConfiguration("FileSystemToolbox");
 
 /**
  * Returns the path the user entered in the text editor
@@ -232,5 +232,5 @@ function shouldComplete(): boolean {
  * @export
  */
 export function getPathCompletionConfiguration() {
-    config = workspace.getConfiguration("fst");
+    config = workspace.getConfiguration("FileSystemToolbox");
 }

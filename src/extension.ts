@@ -6,7 +6,7 @@ import * as crud from "./modules/crud";
 import * as pathStrings from "./modules/pathStrings";
 import * as pathCompleter from "./modules/pathCompleter";
 import { getCompletionItems } from "./modules/pathCompleter";
-import * as pathString from './modules/pathStrings';
+import * as pathString from "./modules/pathStrings";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-FileSystemToolbox.expandHomeDirAlias', () => { pathStrings.expandHomeDirAlias(); }));
 
 	// path intellisense
-	// let pathCompletionSeparator: string = vscode.workspace.getConfiguration("fst").get("pathCompletionSeparator")!;
+	// let pathCompletionSeparator: string = vscode.workspace.getConfiguration("FileSystemToolbox").get("pathCompletionSeparator")!;
 	// if (pathCompletionSeparator === "SystemDefault") { pathCompletionSeparator = path.sep; };
 	const completionProvider = vscode.languages.registerCompletionItemProvider(
         "*",

@@ -46,102 +46,118 @@
         "commands": [
             {
                 "command": "copyFilePath",
-                "title": "FST: Copy active file path",
-                "enablement": "editorIsOpen"
+                "title": "Copy active file path",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.CopyFileName",
-                "title": "FST: Copy active file name",
-                "enablement": "editorIsOpen"
+                "title": "Copy active file name",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.CopyRelativeFilePath",
-                "title": "FST: Copy relative file path",
-                "enablement": "editorIsOpen"
+                "title": "Copy relative file path",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.CopyFileNameWithoutExtension",
-                "title": "FST: Copy active file name without extension",
-                "enablement": "editorIsOpen"
+                "title": "Copy active file name without extension",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.CopyFilePathWithLineNumber",
-                "title": "FST: Copy active file path with line number",
-                "enablement": "editorIsOpen"
+                "title": "Copy active file path with line number",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.CopyFileNameWithLineNumber",
-                "title": "FST: Copy active file name with line number",
-                "enablement": "editorIsOpen"
+                "title": "Copy active file name with line number",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.CopyWorkspaceRootPath",
-                "title": "FST: Copy Workspace root path",
-                "enablement": "editorIsOpen"
+                "title": "Copy Workspace root path",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.CopyFolderPath",
-                "title": "FST: Copy folder path",
-                "enablement": "editorIsOpen"
+                "title": "Copy folder path",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.CopyRelativeFolderPath",
-                "title": "FST: Copy relative folder path",
-                "enablement": "editorIsOpen"
+                "title": "Copy relative folder path",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.DuplicateFile",
-                "title": "FST: Duplicate file",
-                "enablement": "editorIsOpen"
+                "title": "Duplicate file",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.RemoveFile",
-                "title": "FST: Remove file",
-                "enablement": "editorIsOpen"
+                "title": "Remove file",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.CopyRelativeFilePathWithLineNumber",
-                "title": "FST: Copy relative file path with line number",
-                "enablement": "editorIsOpen"
+                "title": "Copy relative file path with line number",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.CopySelectionWithMetadata",
-                "title": "FST: Copy Selection With Metadata",
-                "enablement": "editorIsOpen"
+                "title": "Copy Selection With Metadata",
+                "enablement": "editorIsOpen",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.TransformPathToPosix",
-                "title": "FST: Transform path to Posix",
-                "enablement": "editorHasSelection"
+                "title": "Transform path to Posix",
+                "enablement": "editorHasSelection",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.TransformPathToWin32",
-                "title": "FST: Transform path to Win32",
-                "enablement": "editorHasSelection"
+                "title": "Transform path to Win32",
+                "enablement": "editorHasSelection",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.NewFileRelativeToCurrentFile",
-                "title": "FST: New file relative to current file"
+                "title": "New file relative to current file",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.NewFileRelativeToWorkspaceRoot",
-                "title": "FST: New file relative to workspace root"
-            },
-            {
-                "command": "vscode-FileSystemToolbox.test",
-                "title": "FST: test"
+                "title": "New file relative to workspace root",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.OpenFileUnderCursor",
-                "title": "FST: Open file under cursor"
+                "title": "Open file under cursor",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.NormalizePath",
-                "title": "FST: Normalize path"
+                "title": "Normalize path",
+                "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.expandHomeDirAlias",
-                "title": "FST: Expand home dir alias"
+                "title": "Expand home dir alias",
+                "category": "File System Toolbox"
             }
         ],
         "menus": {
@@ -287,7 +303,7 @@
             {
                 "title": "File System Toolbox",
                 "properties": {
-                    "fst.CopyMetadataPathType": {
+                    "FileSystemToolbox.CopyMetadataPathType": {
                         "type": "string",
                         "description": "The type of path to use when copying a selection with metadata",
                         "enum": [
@@ -297,7 +313,7 @@
                         ],
                         "default": "fullPath"
                     },
-                    "fst.MetadataPathPosition": {
+                    "FileSystemToolbox.MetadataPathPosition": {
                         "description": "The position where show the metadata info, relative to the selection content",
                         "type": "string",
                         "enum": [
@@ -306,32 +322,32 @@
                         ],
                         "default": "below"
                     },
-                    "fst.CopyMetadataLineNumbers": {
+                    "FileSystemToolbox.CopyMetadataLineNumbers": {
                         "description": "Copy the line numbers with the text selection and metadata",
                         "type": "boolean",
                         "default": true
                     },
-                    "fst.CopyMetadataSelectionRange": {
+                    "FileSystemToolbox.CopyMetadataSelectionRange": {
                         "description": "Copy the selection range along with the selection metadata",
                         "type": "boolean",
                         "default": true
                     },
-                    "fst.MetadataCopyLineNumbers": {
+                    "FileSystemToolbox.MetadataCopyLineNumbers": {
                         "description": "Copy the original line numbers along with the text selection",
                         "type": "boolean",
                         "default": true
                     },
-                    "fst.EnablePathCompleter": {
+                    "FileSystemToolbox.EnablePathCompleter": {
                         "description": "Enable the path autocomplete feature",
                         "type": "boolean",
                         "default": true
                     },
-                    "fst.PathCompleterAppendPathSeparator": {
+                    "FileSystemToolbox.PathCompleterAppendPathSeparator": {
                         "description": "Append the path separator to folders, if \"EnablePathCompleter\" is true. If PathCompleterAppendPathSeparator is true and if the folder is not empty, the next path element will be presented as autocompletion.",
                         "type": "boolean",
                         "default": true
                     },
-                    "fst.PathCompleterSeparator": {
+                    "FileSystemToolbox.PathCompleterSeparator": {
                         "description": "The separator character to use with path completion",
                         "type": "string",
                         "enum": [
@@ -341,17 +357,17 @@
                         ],
                         "default": "SystemDefault"
                     },
-                    "fst.PathCompleterTriggerOutsideQuotes": {
+                    "FileSystemToolbox.PathCompleterTriggerOutsideQuotes": {
                         "description": "Trigger path autocompletion even if the path is outside quotes",
                         "type": "boolean",
                         "default": true
                     },
-                    "fst.PathCompleterExpandHomeDirAlias": {
+                    "FileSystemToolbox.PathCompleterExpandHomeDirAlias": {
                         "description": "Expand the home directory alias to the user home directory",
                         "type": "boolean",
                         "default": false
                     },
-                    "fst.PathCompleterNormalizePath": {
+                    "FileSystemToolbox.PathCompleterNormalizePath": {
                         "description": "Normalize the path after performing the path completion",
                         "type": "boolean",
                         "default": true

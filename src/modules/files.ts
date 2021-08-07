@@ -168,7 +168,7 @@ export async function copySelectionWithMetadata(): Promise<string | undefined | 
         return Promise.reject();
     }
 
-    let config = workspace.getConfiguration("fst", window.activeTextEditor?.document);
+    let config = workspace.getConfiguration("FileSystemToolbox", window.activeTextEditor?.document);
 
     let filePath: string | undefined;
     switch (config.get("CopyMetadataPathType")) {
