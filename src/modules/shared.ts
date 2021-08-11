@@ -212,7 +212,33 @@ export function getUserPathRangeAtCursorPosition(editor: TextEditor): Range | un
         return;
     }
 
-    let regex = new RegExp("((?<=[\"'`]).*?(?=['\"`]))|([^\"'` ]+$)");
+    let regex = new RegExp("((?<=[\"'`]).*?(?=['\"`]))|([^\"'` ]+$)", "g");
     // fix: if getWordRangeAtPosition returns a string like "" "\", autocompletion is not presented but no real exception is thrown
-    return editor?.document.getWordRangeAtPosition(editor.selection.active, regex);
+    // return editor?.document.getWordRangeAtPosition(editor.selection.active, regex);
+    pippo(true);
+    return editor?.document.getWordRangeAtPosition(editor.selection.active);
+}
+
+function pippo(triggerOutsideQuotes?: boolean): string {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return "";
+    }
+
+    let cursorPosition = getCursorPosition(editor);
+    let currentLine = getLinesFromSelection(editor);
+    if (!currentLine) {
+        return "";
+    }
+
+    let textBeforeCursor = currentLine[0].text.substring(0, cursorPosition[0].character);
+    let textAfterCursor = currentLine[0].text.substring(cursorPosition[0].character);
+
+    let regex = "";
+    triggerOutsideQuotes ? (regex = "[^\"'`]*?$") : "[^\"'` ]*?$";
+
+    textBeforeCursor = textBeforeCursor.match(new RegExp(regex))![0];
+    textAfterCursor = textAfterCursor.match(new RegExp("[^\"'`]*"))![0];
+
+    return path.join(textBeforeCursor, textAfterCursor); // todo: check possible permutations: use "/" on Windows for example 
 }
