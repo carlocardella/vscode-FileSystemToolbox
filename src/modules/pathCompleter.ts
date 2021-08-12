@@ -1,20 +1,12 @@
 import * as path from "path";
 import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace } from "vscode";
-import { expandHomeDirAlias, normalizePath } from "./pathStrings";
-import {
-    getActiveDocument,
-    getActiveEditor,
-    getCursorPosition,
-    getDocumentContainer,
-    getLinesFromSelection,
-    getTextFromRange,
-    getUserPathRangeAtCursorPosition,
-} from "./shared";
+import { expandHomeDirAlias } from "./pathStrings";
+import { getActiveDocument, getActiveEditor, getCursorPosition, getDocumentContainer, getLinesFromSelection, getTextFromRange } from "./shared";
 
 /*
 // todo: normalize path autocompletion
-// todo: improve performance
-// todo: manage relative path in the form of   "Assets/tech-service.png",
+// todo: manage relative path in the form of   "Assets/tech-service.png". Works fine for items under the root folder, it should work for other folders as well 
+// fix: autocomplete is not presented for json files, if the file type is changed to plain text then autocompletion works fine 
 */
 
 let config = workspace.getConfiguration("FileSystemToolbox");
@@ -24,50 +16,22 @@ let config = workspace.getConfiguration("FileSystemToolbox");
  * @export
  * @return {*}  {string}
  */
-export function getUserPath(): string {
+export function getUserPath(): string | undefined {
     // get the latest config
     getPathCompletionConfiguration();
 
     if (shouldComplete()) {
         const editor = getActiveEditor();
         if (!editor) {
-            return "";
+            return;
         }
 
-        let range = getUserPathRangeAtCursorPosition(editor);
-        if (!range) {
-            return "";
-        }
-
-        let userPath = getUserPathInternal(range);
+        let userPath = getStringWithinQuotes();
 
         return userPath;
     }
 
-    return "";
-}
-
-/**
- * Get the path the user entered in the text editor
- * @export
- * @param {Range} pathSelection The Range containing the path the user entered
- * @return {*}  {string}
- */
-export function getUserPathInternal(pathSelection: Range): string {
-    if (config.get<boolean>("PathCompleterExpandHomeDirAlias")) {
-        expandHomeDirAlias(pathSelection);
-    }
-
-    let userPath = getTextFromRange(pathSelection).trim();
-
-    // the file has a path on disk, use it as base for the path completion
-    if (!getActiveDocument()?.isUntitled && userPath.startsWith(".")) {
-        let documentContainer = getDocumentContainer();
-        userPath = path.join(documentContainer!, userPath);
-    }
-
-    // unsaved document, it is not possible to use a relative path, return whatever the user entered
-    return userPath;
+    return;
 }
 
 /**
@@ -131,13 +95,15 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                     return completionItem;
                 });
 
-                // add folderUp (..)
-                let folderUp = new CompletionItem("..", CompletionItemKind.Folder);
-                folderUp.sortText = "a";
-                completionItems.push(folderUp);
-                if (appendPathSeparator) {
-                    // trigger the next autocompletion
-                    triggerNextCompletion(folderUp, appendPathSeparator!, pathCompletionSeparator!);
+                // add folderUp (..) but only if the current folder is not the root folder
+                if (path.resolve(currentFolder) !== path.resolve("/")) {
+                    let folderUp = new CompletionItem("..", CompletionItemKind.Folder);
+                    folderUp.sortText = "a";
+                    completionItems.push(folderUp);
+                    if (appendPathSeparator) {
+                        // trigger the next autocompletion
+                        triggerNextCompletion(folderUp, appendPathSeparator!, pathCompletionSeparator!);
+                    }
                 }
 
                 // if (config.get<boolean>("PathCompleterNormalizePath")) {
@@ -205,8 +171,46 @@ function isInsideQuotes(): boolean {
  * @param {string} text The text to filter
  * @return {*}  {(string | undefined)}
  */
-function getStringWithinQuotes(text: string): string | undefined {
-    return text?.match(new RegExp(/(?<=["'`]).*?(?=['"`])/))?.[0];
+export function getStringWithinQuotes(text?: string): string | undefined {
+    // return text?.match(new RegExp(/(?<=["'`]).*?(?=['"`])/))?.[0];
+    const editor = getActiveEditor();
+    if (!editor) {
+        return "";
+    }
+
+    let cursorPosition = getCursorPosition(editor);
+    let currentLine = getLinesFromSelection(editor);
+    if (!currentLine) {
+        return "";
+    }
+
+    // investigate: This is a bit cumbersome, but it works: the idea is to get the string "around" the cursor and delimited by /["'` ]/. I tried to use a regexp instead of this workaround but I could not get it to work.
+    let textBeforeCursor = currentLine[0].text.substring(0, cursorPosition[0].character);
+    let textAfterCursor = currentLine[0].text.substring(cursorPosition[0].character);
+
+    let regexTextBeforeCursor = "";
+    let triggerOutsideQuotes = config.get<boolean>("PathCompleterTriggerOutsideQuotes");
+    triggerOutsideQuotes ? (regexTextBeforeCursor = "[^\"'`]*?$") : "[^\"'` ]*?$";
+    let regexTextAfterCursor = new RegExp("[^\"'` ]*");
+
+    textBeforeCursor = textBeforeCursor.match(new RegExp(regexTextBeforeCursor))![0].trim();
+    textAfterCursor = textAfterCursor.match(new RegExp(regexTextAfterCursor))![0].trim();
+
+    // let stringWithinQuotes = path.join(textBeforeCursor, textAfterCursor);
+    // note: path.join normalizes the path, it strips the leading . for a local path, e.g. ".\wsl" and prevents the next auto-complete from working
+    let stringWithinQuotes = textBeforeCursor + textAfterCursor;
+
+    if (config.get<boolean>("PathCompleterExpandHomeDirAlias")) {
+        expandHomeDirAlias(stringWithinQuotes);
+    }
+
+    // the file has a path on disk, use it as base for the path completion
+    if (!getActiveDocument()?.isUntitled && stringWithinQuotes.startsWith(".")) {
+        let documentContainer = getDocumentContainer();
+        stringWithinQuotes = path.join(documentContainer!, stringWithinQuotes);
+    }
+
+    return stringWithinQuotes;
 }
 
 /**

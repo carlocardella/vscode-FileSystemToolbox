@@ -1,7 +1,7 @@
 import * as path from "path";
 import { getActiveEditor, getTextFromSelection, getUserPathRangeAtCursorPosition, getTextFromRange } from "./shared";
 import { commands, Uri, Selection, Range } from "vscode";
-import { getUserPathInternal } from "./pathCompleter";
+import { getStringWithinQuotes } from "./pathCompleter";
 import * as fs from "fs";
 import * as os from "os";
 
@@ -72,12 +72,12 @@ export async function openFileUnderCursor() {
         return;
     }
 
-    let range = getUserPathRangeAtCursorPosition(editor);
-
-    let userPath = getUserPathInternal(range!).trim();
-    let filePath = path.resolve(userPath);
-    if (fs.existsSync(filePath)) {
-        commands.executeCommand("vscode.open", Uri.file(filePath));
+    let userPath = getStringWithinQuotes();
+    if (userPath) {
+        let filePath = path.resolve(userPath);
+        if (fs.existsSync(filePath)) {
+            commands.executeCommand("vscode.open", Uri.file(filePath));
+        }
     }
 }
 
@@ -98,57 +98,37 @@ export function normalizePath(pathToNormalize?: string): string {
             if (!editor.selection.isEmpty) {
                 pathToNormalize = getTextFromSelection(editor, editor.selection);
                 editBuilder.replace(editor.selection, path.normalize(pathToNormalize!));
-            } else {
-                let range = getUserPathRangeAtCursorPosition(editor);
-                if (!range) {
-                    return "";
-                }
-
-                pathToNormalize = getUserPathInternal(range).trim();
-                editBuilder.replace(range, path.normalize(pathToNormalize!));
+                return pathToNormalize;
             }
         }
     });
 
-    return path.normalize(pathToNormalize!);
+    return "";
 }
 
-/**
- * Expand the home directory alias: "~", "HOME"
- * @export
- * @param {Range} pathSelection The Range containing the path the user entered
- */
-export function expandHomeDirAlias(pathSelection?: Range) {
+export function expandHomeDirAlias(userPath?: string) {
     const editor = getActiveEditor();
     if (!editor) {
         return;
     }
 
-    if (!pathSelection) {
-        if (!editor.selection.isEmpty) {
-            pathSelection = new Range(editor.selection.start, editor.selection.end);
-        } else {
-            pathSelection = getUserPathRangeAtCursorPosition(editor);
-            if (!pathSelection) {
-                return;
-            }
-        }
+    if (!userPath) {
+        userPath = getTextFromSelection(editor, editor.selection);
     }
 
-    // investigate: resolve environment variables? If so, add $env:USERPROFILE if the language is Powershell
-    let userPath = getTextFromRange(pathSelection).trim();
+    //     // investigate: resolve environment variables? If so, add $env:USERPROFILE if the language is Powershell
 
-    if (userPath.startsWith("~")) {
-        userPath = userPath.replace(/~\\{1,2}|~\//, os.homedir());
+    if (userPath!.startsWith("~")) {
+        userPath = userPath?.replace("~", os.homedir());
     }
 
-    if (userPath.startsWith("HOME\\") || userPath.startsWith("HOME//")) {
-        userPath = userPath.replace(/HOME\\{1,2}|HOME\//, os.homedir());
+    if (userPath!.startsWith("HOME\\") || userPath!.startsWith("HOME/")) { // investigate: make it case insensitive? 
+        userPath = userPath!.replace("HOME", os.homedir());
     }
 
     editor
         ?.edit((editBuilder) => {
-            editBuilder.replace(pathSelection!, userPath);
+            editBuilder.replace(editor.selection, userPath!);
         })
         .then(() => {
             // remove the selection added by the replace
