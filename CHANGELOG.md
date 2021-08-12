@@ -25,6 +25,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [0.8.1] - 2021-08-12
+
+### Fixed
+
+* Path autocomplete is now presented correctly for json files
+
 ## [0.8.0] - 2021-08-12
 
 ### Changed

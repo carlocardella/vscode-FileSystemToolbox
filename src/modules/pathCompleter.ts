@@ -1,12 +1,12 @@
 import * as path from "path";
-import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace } from "vscode";
+import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace, Position, TextDocument } from "vscode";
 import { expandHomeDirAlias } from "./pathStrings";
 import { getActiveDocument, getActiveEditor, getCursorPosition, getDocumentContainer, getLinesFromSelection, getTextFromRange } from "./shared";
 
 /*
+// todo: if json and using \, escape it
 // todo: normalize path autocompletion
 // todo: manage relative path in the form of   "Assets/tech-service.png". Works fine for items under the root folder, it should work for other folders as well 
-// fix: autocomplete is not presented for json files, if the file type is changed to plain text then autocompletion works fine 
 */
 
 let config = workspace.getConfiguration("FileSystemToolbox");
@@ -40,7 +40,7 @@ export function getUserPath(): string | undefined {
  * @param {string} currentFolder The path so far typed (or selected) by the user. It is used to show the next CompletionItem[]
  * @return {*}  {Promise<CompletionItem[]>}
  */
-export function getCompletionItems(currentFolder: string): Promise<CompletionItem[]> {
+export function getCompletionItems(currentFolder: string, document: TextDocument, position: Position): Promise<CompletionItem[]> {
     return new Promise(async (resolve, reject) => {
         let pathCompletionSeparator = config.get<string>("PathCompleterSeparator");
         if (pathCompletionSeparator === "SystemDefault") {
@@ -82,6 +82,10 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                             break;
                     }
                     completionItemLabel = item[0];
+                    
+                    // if (document.languageId === "json" || document.languageId === "jsonc") {
+                    //     completionItemLabel = completionItemLabel.replace(/\\/g, "\\\\");
+                    // }
 
                     let completionItem = new CompletionItem(completionItemLabel, completionItemKind!);
 
@@ -91,6 +95,9 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                     }
 
                     completionItem.sortText = sortString;
+                    // https://stackoverflow.com/questions/60001714/custom-extension-for-json-completion-does-not-work-in-double-quotes
+                    // https://stackoverflow.com/questions/64584850/get-vscode-registercompletionitemprovider-to-work-in-a-json-file-with-a-word
+                    completionItem.range = new Range(position, position);
 
                     return completionItem;
                 });
@@ -99,20 +106,14 @@ export function getCompletionItems(currentFolder: string): Promise<CompletionIte
                 if (path.resolve(currentFolder) !== path.resolve("/")) {
                     let folderUp = new CompletionItem("..", CompletionItemKind.Folder);
                     folderUp.sortText = "a";
+                    folderUp.range = new Range(position, position);
+
                     completionItems.push(folderUp);
                     if (appendPathSeparator) {
                         // trigger the next autocompletion
                         triggerNextCompletion(folderUp, appendPathSeparator!, pathCompletionSeparator!);
                     }
                 }
-
-                // if (config.get<boolean>("PathCompleterNormalizePath")) {
-                //     normalizePath();
-                //     if (appendPathSeparator) {
-                //         // trigger the next autocompletion @fix: does not work
-                //         triggerNextCompletion(folderUp, appendPathSeparator!, pathCompletionSeparator!);
-                //     }
-                // }
 
                 return resolve(completionItems);
             },

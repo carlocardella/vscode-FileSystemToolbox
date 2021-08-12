@@ -55,7 +55,7 @@ export function activate(context: vscode.ExtensionContext) {
                     return;
                 }
 
-                return getCompletionItems(currentFolder);
+                return getCompletionItems(currentFolder, document, position);
             },
         },
         ...["/", "\\"]
