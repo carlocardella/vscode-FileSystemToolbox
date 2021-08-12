@@ -25,6 +25,16 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [0.8.0] - 2021-08-12
+
+### Changed
+
+* Updated command labels (both in the Command Palette and context menu) and settings identifier: "fst" is now spelled out as "File System Toolbox"
+
+### Fixed
+
+* Various improvement around presenting path autocompletion in certain scenarios with complex lines of text
+
 ## [0.7.0] - 2021-07-31
 
 ### Added
