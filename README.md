@@ -52,21 +52,23 @@ a.k.a. `path intellisense`, in other words, you can start typing a file system p
 
 The feature is enabled by default and can be customized through these settings:
 
-* `fst.EnablePathCompleter` (default `true`):
+* `FileSystemToolbox.EnablePathCompleter` (default `true`):
   * Easy to guess, change this to `false` and the path autocomplete feature will be completely disabled
-* `fst.PathCompleterAppendPathSeparator` (default `true`):
+* `FileSystemToolbox.PathCompleterAppendPathSeparator` (default `true`):
   * If enabled and if you select a folder from the autocompletion, it appends the default path separator and automatically shows the next list of completion items
-* `fst.PathCompleterSeparator` (default `SystemDefault`):
+* `FileSystemToolbox.PathCompleterSeparator` (default `SystemDefault`):
   * Controls the path separator you want to use: by default it uses the System separator (`\` on Windows, `/` on Linux/macOS)
-* `fst.PathCompleterTriggerOutsideQuotes` (default `true`):
+* `FileSystemToolbox.PathCompleterTriggerOutsideQuotes` (default `true`):
   * Show the path autocompletion even if the cursor is not within quotes. Supported quotes are
     * Single quotes: `'`
     * Double quotes: `"`
     * Backtick: `` ` ``
-* `fst.PathCompleterExpandHomeDirAlias` (default `false`)
+* `FileSystemToolbox.PathCompleterExpandHomeDirAlias` (default `false`)
   * Expand home dir aliases:
     * `~`
     * `HOME`
+* `FileSystemToolbox.PathCompleterUseSlashInJsonFile` (default `true`)
+  * Use the slash character as path separator in JSON file, regardless of the OS default (e.g. on Windows)
 
 ![path autocomplete](/Assets/path_autocomplete.gif)
 

@@ -7,6 +7,7 @@ import { getActiveDocument, getActiveEditor, getCursorPosition, getDocumentConta
 // todo: if json and using \, escape it
 // todo: normalize path autocompletion
 // todo: manage relative path in the form of   "Assets/tech-service.png". Works fine for items under the root folder, it should work for other folders as well 
+// todo: if the file is json/jsonc, use forward slashes instead of backslashes (add settings to control the default behavior)
 */
 
 let config = workspace.getConfiguration("FileSystemToolbox");
@@ -46,6 +47,11 @@ export function getCompletionItems(currentFolder: string, document: TextDocument
         if (pathCompletionSeparator === "SystemDefault") {
             pathCompletionSeparator = path.sep;
         }
+        if (document.languageId === "json" || document.languageId === "jsonc") {
+            if (config.get<boolean>("PathCompleterUseSlashInJsonFile")) {
+                pathCompletionSeparator = "/";
+            }
+        }
         let appendPathSeparator = config.get<boolean>("PathCompleterAppendPathSeparator");
 
         await workspace.fs.readDirectory(Uri.file(currentFolder)).then(
@@ -82,10 +88,6 @@ export function getCompletionItems(currentFolder: string, document: TextDocument
                             break;
                     }
                     completionItemLabel = item[0];
-                    
-                    // if (document.languageId === "json" || document.languageId === "jsonc") {
-                    //     completionItemLabel = completionItemLabel.replace(/\\/g, "\\\\");
-                    // }
 
                     let completionItem = new CompletionItem(completionItemLabel, completionItemKind!);
 

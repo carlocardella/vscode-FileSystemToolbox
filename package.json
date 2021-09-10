@@ -371,6 +371,11 @@
                         "description": "Normalize the path after performing the path completion",
                         "type": "boolean",
                         "default": true
+                    },
+                    "FileSystemToolbox.PathCompleterUseSlashInJsonFile": {
+                        "description": "Use the slash character as path separator in JSON file, regardless of the OS default (e.g. on Windows)",
+                        "type": "boolean",
+                        "default": true
                     }
                 }
             }

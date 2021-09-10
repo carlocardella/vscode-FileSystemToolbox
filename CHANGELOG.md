@@ -25,6 +25,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [0.9.0] - @todo
+
+### Added
+
+* Added new setting `FileSystemToolbox.PathCompleterUseSlashInJsonFile`: use forward slash as path separator for Json files regardless of the OS default (e.g. on Windows)
+
 ## [0.8.1] - 2021-08-12
 
 ### Fixed
