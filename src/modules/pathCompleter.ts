@@ -187,7 +187,7 @@ export function getStringWithinQuotes(text?: string): string | undefined {
         return "";
     }
 
-    // investigate: This is a bit cumbersome, but it works: the idea is to get the string "around" the cursor and delimited by /["'` ]/. I tried to use a regexp instead of this workaround but I could not get it to work.
+    // note: This is a bit cumbersome, but it works: the idea is to get the string "around" the cursor and delimited by /["'` ]/. I tried to use a regexp instead of this workaround but I could not get it to work.
     let textBeforeCursor = currentLine[0].text.substring(0, cursorPosition[0].character);
     let textAfterCursor = currentLine[0].text.substring(cursorPosition[0].character);
 
