@@ -4,6 +4,7 @@ import { commands, Uri, Selection, Range } from "vscode";
 import { getStringWithinQuotes } from "./pathCompleter";
 import * as fs from "fs";
 import * as os from "os";
+import { getFolderPath } from "./folders";
 
 /**
  * Enumerates Platform path types
@@ -74,7 +75,13 @@ export async function openFileUnderCursor() {
 
     let userPath = getStringWithinQuotes();
     if (userPath) {
+        // assume the path exists (it is a full path)
         let filePath = path.resolve(userPath);
+        if (!fs.existsSync(filePath)) {
+            // if the path does not exist, check if it is a relative path (relative to the open document)
+            filePath = path.join(getFolderPath(false)!, userPath);
+        }
+
         if (fs.existsSync(filePath)) {
             commands.executeCommand("vscode.open", Uri.file(filePath));
         }
@@ -122,7 +129,8 @@ export function expandHomeDirAlias(userPath?: string) {
         userPath = userPath?.replace("~", os.homedir());
     }
 
-    if (userPath!.startsWith("HOME\\") || userPath!.startsWith("HOME/")) { // investigate: make it case insensitive? 
+    if (userPath!.startsWith("HOME\\") || userPath!.startsWith("HOME/")) {
+        // investigate: make it case insensitive?
         userPath = userPath!.replace("HOME", os.homedir());
     }
 
