@@ -29,6 +29,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [1.0.0] - 2021-11-11
+
+### Changed
+
+* Removed Preview tag
+* Open file under cursor command can now open paths relative to the current document
+
 ## [0.9.0] - 2021-09-10
 
 ### Added
