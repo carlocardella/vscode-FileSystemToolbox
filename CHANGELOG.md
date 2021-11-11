@@ -16,6 +16,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 * Copy workspace name
 
+### Path
+
+* Open file under cursor to open relative paths (relative to the currently open document)
+
 ### Others
 
 * Make Relative
