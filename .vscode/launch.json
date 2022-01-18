@@ -15,11 +15,20 @@
             "preLaunchTask": "${defaultBuildTask}"
         },
         {
-            "name": "Run Extension Full VSCode, sync off",
+            "name": "Run Extension, single-root workspace",
             "type": "extensionHost",
             "request": "launch",
             "runtimeExecutable": "${execPath}",
-            "args": ["--extensionDevelopmentPath=${workspaceFolder}", "--sync off"],
+            "args": ["--extensionDevelopmentPath=${workspaceFolder}", "--disable-extensions", "C:/LocalTemp/"],
+            "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+            "preLaunchTask": "${defaultBuildTask}"
+        },
+        {
+            "name": "Run Extension, multi-root workspace",
+            "type": "extensionHost",
+            "request": "launch",
+            "runtimeExecutable": "${execPath}",
+            "args": ["--extensionDevelopmentPath=${workspaceFolder}", "--disable-extensions", "C:/LocalTemp/", "C:/Temp/"],
             "outFiles": ["${workspaceFolder}/dist/**/*.js"],
             "preLaunchTask": "${defaultBuildTask}"
         },

@@ -1,6 +1,6 @@
 import * as path from "path";
-import { getActiveEditor, getTextFromSelection, getUserPathRangeAtCursorPosition, getTextFromRange } from "./shared";
-import { commands, Uri, Selection, Range } from "vscode";
+import { getActiveEditor, getTextFromSelection, getUserPathRangeAtCursorPosition, getTextFromRange, getWorkspaceFolder } from "./shared";
+import { commands, Uri, Selection, Range, UriHandler, window, workspace, WorkspaceFolder } from "vscode";
 import { getStringWithinQuotes } from "./pathCompleter";
 import * as fs from "fs";
 import * as os from "os";
@@ -113,6 +113,12 @@ export function normalizePath(pathToNormalize?: string): string {
     return "";
 }
 
+/**
+ * Expand Home directory to the current user's home directory
+ * @export
+ * @param {string} [userPath] The path to expand
+ * @return {*}
+ */
 export function expandHomeDirAlias(userPath?: string) {
     const editor = getActiveEditor();
     if (!editor) {
@@ -123,7 +129,7 @@ export function expandHomeDirAlias(userPath?: string) {
         userPath = getTextFromSelection(editor, editor.selection);
     }
 
-    //     // investigate: resolve environment variables? If so, add $env:USERPROFILE if the language is Powershell
+    // investigate: resolve environment variables? If so, add $env:USERPROFILE if the language is Powershell
 
     if (userPath!.startsWith("~")) {
         userPath = userPath?.replace("~", os.homedir());
@@ -142,4 +148,69 @@ export function expandHomeDirAlias(userPath?: string) {
             // remove the selection added by the replace
             editor.selection = new Selection(editor.selection.active, editor.selection.active);
         });
+}
+
+/**
+ * Ask the user to enter the path to a file in the current workspace or folder
+ * @return {*}  {(Promise<string | undefined>)}
+ */
+async function askForFilePath(): Promise<string | undefined> {
+    let fileName = await window.showInputBox({
+        ignoreFocusOut: true,
+        prompt: "Enter the file path",
+    });
+
+    if (!fileName) {
+        return Promise.reject();
+    }
+
+    return Promise.resolve(fileName);
+}
+
+/**
+ * Ask the user to chose which workspace to use as the root folder
+ * @return {*}  {(Promise<WorkspaceFolder | undefined>)}
+ */
+async function askForWhichWorkspace(): Promise<WorkspaceFolder | undefined> {
+    let items = workspace.workspaceFolders;
+    let workspaceName = await window.showQuickPick(items?.map((folder) => folder.name) ?? [], { ignoreFocusOut: true });
+
+    return items?.find((folder) => folder.name === workspaceName);
+}
+
+/**
+ * Allows the user to type/paste a relative file path to open; the path is relative to the workspace root or open folder. In a multi-root workspace, the user is prompted to choose which workspace to use as root for the relative path.
+ * @export
+ * @param {string} [filePath] The relative file path to open
+ * @return {*}
+ */
+export async function openWorkspaceFile(filePath?: string) {
+    let workspaceFolderPath: string | undefined;
+
+    if (workspace.workspaceFolders) {
+        if (workspace.workspaceFolders?.length > 1) {
+            // ask which workspace
+            let workspaceFolder = await askForWhichWorkspace();
+            workspaceFolderPath = workspaceFolder?.uri.fsPath;
+        } else {
+            workspaceFolderPath = workspace.workspaceFolders?.[0]?.uri.fsPath;
+        }
+    } else {
+        window.showWarningMessage("No Workspace or folder open");
+        return;
+    }
+
+    if (!filePath) {
+        filePath = await askForFilePath();
+    }
+    if (!filePath) {
+        return;
+    }
+
+    if (workspaceFolderPath) {
+        const fileToOpen = path.join(workspaceFolderPath, filePath);
+        if (fs.existsSync(fileToOpen) && fs.lstatSync(fileToOpen).isFile()) {
+            commands.executeCommand("vscode.open", Uri.file(fileToOpen));
+        }
+    }
 }

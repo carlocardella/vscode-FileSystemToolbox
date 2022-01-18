@@ -45,6 +45,7 @@ The extension does not require any special permission, therefore is enabled to r
 * Open file under cursor
 * Normalize path (platform specific)
 * Expand home dir alias
+* Open workspace file
 
 ### Path Autocomplete
 

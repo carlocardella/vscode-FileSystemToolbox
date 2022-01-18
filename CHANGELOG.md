@@ -18,8 +18,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ### Path
 
-* Open file under cursor to open relative paths (relative to the currently open document)
-
 ### Others
 
 * Make Relative
@@ -28,6 +26,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
   * Create files under each leaf folder with the same braces mechanism
 
 ## Log
+
+## [1.1.0] - 2022-01-17
+
+### Added
+
+* Add `Open workspace file`: allows the user to type/paste a relative file path to open. The path is relative to the workspace root or open folder. In a multi-root workspace, the user is prompted to choose which workspace to use as root for the relative path.
 
 ## [1.0.0] - 2021-11-11
 

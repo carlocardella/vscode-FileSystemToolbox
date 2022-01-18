@@ -149,6 +149,11 @@
                 "category": "File System Toolbox"
             },
             {
+                "command": "vscode-FileSystemToolbox.OpenWorkspaceFile",
+                "title": "Open workspace file",
+                "category": "File System Toolbox"
+            },
+            {
                 "command": "vscode-FileSystemToolbox.NormalizePath",
                 "title": "Normalize path",
                 "category": "File System Toolbox"
@@ -197,6 +202,9 @@
                 },
                 {
                     "command": "vscode-FileSystemToolbox.OpenFileUnderCursor"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.OpenWorkspaceFile"
                 }
             ],
             "fst.copy": [

@@ -22,12 +22,12 @@
         "titleBar.inactiveBackground": "#36618099",
         "titleBar.inactiveForeground": "#e7e7e799",
         "tab.activeBorder": "#457ca4",
+        "sash.hoverBorder": "#457ca4",
         "statusBar.background": "#366180",
         "statusBar.foreground": "#e7e7e7",
         "statusBarItem.hoverBackground": "#457ca4",
         "statusBarItem.remoteBackground": "#366180",
-        "statusBarItem.remoteForeground": "#e7e7e7",
-        "sash.hoverBorder": "#457ca4"
+        "statusBarItem.remoteForeground": "#e7e7e7"
     },
     "peacock.color": "#366180",
     "mochaExplorer.files": "src/test/**/*test.ts",

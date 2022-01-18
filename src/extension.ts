@@ -94,6 +94,12 @@ export function activate(context: vscode.ExtensionContext) {
             workspaces.getWorkspaceRootPath();
         })
     );
+    context.subscriptions.push(
+        vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.OpenWorkspaceFile", () => {
+            pathStrings.openWorkspaceFile();
+        })
+    );
+
 
     // path transformation
     context.subscriptions.push(
