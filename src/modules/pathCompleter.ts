@@ -1,11 +1,9 @@
 import * as path from "path";
 import { CompletionItem, CompletionItemKind, FileType, Range, Uri, workspace, Position, TextDocument } from "vscode";
 import { expandHomeDirAlias } from "./pathStrings";
-import { getActiveDocument, getActiveEditor, getCursorPosition, getDocumentContainer, getLinesFromSelection, getTextFromRange } from "./shared";
+import { getActiveDocument, getActiveEditor, getCursorPosition, getDocumentContainer, getLinesFromSelection } from "./shared";
 
 /*
-// todo: if json and using \, escape it
-// todo: normalize path autocompletion
 // todo: manage relative path in the form of   "Assets/tech-service.png". Works fine for items under the root folder, it should work for other folders as well 
 // todo: if the file is json/jsonc, use forward slashes instead of backslashes (add settings to control the default behavior)
 */

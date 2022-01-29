@@ -27,6 +27,16 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [1.2.0] - 2022-01-29
+
+### Added
+
+* Enabled File System Toolbox context menu in the Explorer TreeView
+
+### Changed
+
+* `Copy selection with metadata` now copies the relative file path by default; you can still get the full file path instead through `FileSystemToolbox.CopyMetadataPathType`
+
 ## [1.1.0] - 2022-01-17
 
 ### Added

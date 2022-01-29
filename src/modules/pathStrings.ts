@@ -1,6 +1,6 @@
 import * as path from "path";
-import { getActiveEditor, getTextFromSelection, getUserPathRangeAtCursorPosition, getTextFromRange, getWorkspaceFolder } from "./shared";
-import { commands, Uri, Selection, Range, UriHandler, window, workspace, WorkspaceFolder } from "vscode";
+import { getActiveEditor, getTextFromSelection } from "./shared";
+import { commands, Uri, Selection, window, workspace, WorkspaceFolder } from "vscode";
 import { getStringWithinQuotes } from "./pathCompleter";
 import * as fs from "fs";
 import * as os from "os";
@@ -191,7 +191,11 @@ export async function openWorkspaceFile(filePath?: string) {
         if (workspace.workspaceFolders?.length > 1) {
             // ask which workspace
             let workspaceFolder = await askForWhichWorkspace();
-            workspaceFolderPath = workspaceFolder?.uri.fsPath;
+            if (!workspaceFolder) {
+                return;
+            } else {
+                workspaceFolderPath = workspaceFolder?.uri.fsPath;
+            }
         } else {
             workspaceFolderPath = workspace.workspaceFolders?.[0]?.uri.fsPath;
         }

@@ -1,9 +1,8 @@
 import { getFilePath, getFileName } from "./files";
 import { getFolderPath } from "./folders";
 import * as path from "path";
-import { askForDuplicateName, notImplementedException, ValueSelection, getDocumentUri, getWorkspaceFolder } from "./shared";
+import { askForDuplicateName, ValueSelection, getDocumentUri, getWorkspaceFolder } from "./shared";
 import { Uri, workspace, window, WorkspaceEdit } from "vscode";
-import * as os from "os";
 
 /**
  * Duplicate the file open in the active editor

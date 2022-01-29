@@ -44,14 +44,8 @@
     "contributes": {
         "commands": [
             {
-                "command": "copyFilePath",
-                "title": "Copy active file path",
-                "enablement": "editorIsOpen",
-                "category": "File System Toolbox"
-            },
-            {
                 "command": "vscode-FileSystemToolbox.CopyFileName",
-                "title": "Copy active file name",
+                "title": "Copy file name",
                 "enablement": "editorIsOpen",
                 "category": "File System Toolbox"
             },
@@ -63,19 +57,19 @@
             },
             {
                 "command": "vscode-FileSystemToolbox.CopyFileNameWithoutExtension",
-                "title": "Copy active file name without extension",
+                "title": "Copy file name without extension",
                 "enablement": "editorIsOpen",
                 "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.CopyFilePathWithLineNumber",
-                "title": "Copy active file path with line number",
+                "title": "Copy file path with line number",
                 "enablement": "editorIsOpen",
                 "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.CopyFileNameWithLineNumber",
-                "title": "Copy active file name with line number",
+                "title": "Copy file name with line number",
                 "enablement": "editorIsOpen",
                 "category": "File System Toolbox"
             },
@@ -118,7 +112,7 @@
             {
                 "command": "vscode-FileSystemToolbox.CopySelectionWithMetadata",
                 "title": "Copy Selection With Metadata",
-                "enablement": "editorIsOpen",
+                "enablement": "editorHasSelection",
                 "category": "File System Toolbox"
             },
             {
@@ -146,6 +140,7 @@
             {
                 "command": "vscode-FileSystemToolbox.OpenFileUnderCursor",
                 "title": "Open file under cursor",
+                "enablement": "editorIsOpen",
                 "category": "File System Toolbox"
             },
             {
@@ -156,11 +151,13 @@
             {
                 "command": "vscode-FileSystemToolbox.NormalizePath",
                 "title": "Normalize path",
+                "enablement": "editorHasSelection",
                 "category": "File System Toolbox"
             },
             {
                 "command": "vscode-FileSystemToolbox.expandHomeDirAlias",
                 "title": "Expand home dir alias",
+                "enablement": "editorHasSelection",
                 "category": "File System Toolbox"
             }
         ],
@@ -180,6 +177,12 @@
             "editor/context": [
                 {
                     "submenu": "fst.editorContext",
+                    "group": "File System Toolbox"
+                }
+            ],
+            "explorer/context": [
+                {
+                    "submenu": "fst.explorerContext",
                     "group": "File System Toolbox"
                 }
             ],
@@ -205,6 +208,20 @@
                 },
                 {
                     "command": "vscode-FileSystemToolbox.OpenWorkspaceFile"
+                }
+            ],
+            "fst.explorerContext": [
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFileName"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.OpenWorkspaceFile"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyWorkspaceRootPath"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.CopyFileNameWithoutExtension"
                 }
             ],
             "fst.copy": [
@@ -257,6 +274,10 @@
                 {
                     "command": "vscode-FileSystemToolbox.NewFileRelativeToWorkspaceRoot",
                     "group": "fst.new"
+                },
+                {
+                    "command": "vscode-FileSystemToolbox.DuplicateFile",
+                    "group": "fst.new"
                 }
             ],
             "fst.remove": [
@@ -290,6 +311,10 @@
                 "label": "File System Toolbox"
             },
             {
+                "id": "fst.explorerContext",
+                "label": "File System Toolbox"
+            },
+            {
                 "id": "fst.copy",
                 "label": "Copy"
             },
@@ -318,7 +343,7 @@
                             "fileName",
                             "relativePath"
                         ],
-                        "default": "fullPath"
+                        "default": "relativePath"
                     },
                     "FileSystemToolbox.MetadataPathPosition": {
                         "description": "The position where show the metadata info, relative to the selection content",
@@ -397,23 +422,22 @@
     },
     "devDependencies": {
         "@types/glob": "^7.2.0",
-        "@types/mocha": "^9.0.0",
-        "@types/node": "^16.11.9",
+        "@types/mocha": "^9.1.0",
+        "@types/node": "^17.0.13",
         "@types/vscode": "^1.45.0",
-        "@typescript-eslint/eslint-plugin": "^5.4.0",
-        "@typescript-eslint/parser": "^5.4.0",
+        "@typescript-eslint/eslint-plugin": "^5.10.1",
+        "@typescript-eslint/parser": "^5.10.1",
         "eslint": "^7.32.0",
         "glob": "^7.2.0",
-        "mocha": "^9.1.3",
-        "mocha-explorer-launcher-scripts": "^0.3.0",
+        "mocha": "^9.2.0",
         "nyc": "^15.1.0",
         "source-map-support": "^0.5.21",
         "ts-loader": "^9.2.6",
         "ts-node": "^10.4.0",
-        "typescript": "^4.5.2",
+        "typescript": "^4.5.5",
         "vscode-test": "^1.6.1",
-        "webpack": "^5.64.2",
-        "webpack-cli": "^4.9.1",
+        "webpack": "^5.67.0",
+        "webpack-cli": "^4.9.2",
         "webpack-dev": "^1.1.1"
     },
     "dependencies": {

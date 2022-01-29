@@ -1,8 +1,7 @@
 import { getDocumentUri, writeClipboard, log, getLineNumberOrRange, getActiveEditor, getLinesFromSelection } from "./shared";
 import * as path from "path";
-import { window, workspace } from "vscode";
+import { Uri, window, workspace } from "vscode";
 import { EOL } from "os";
-import { getActiveTextEditor } from "../test/suite/testHelpers";
 
 /**
  * The type of file path to return as file metadata
@@ -21,10 +20,11 @@ export enum FileMetadataType {
  * @export
  * @param {FileMetadataType} metadataType The type of path metadata to return
  * @param {boolean} appendSelectionRange Append the selected line or lines range
+ * @param {Uri} [uri] Optional URI to use instead of the active editor
  * @return {*}  {(Promise<string | undefined>)}
  */
-export async function getFileMetadata(metadataType: FileMetadataType, appendSelectionRange: boolean): Promise<string | undefined> {
-    const filePath = getFilePath();
+export async function getFileMetadata(metadataType: FileMetadataType, appendSelectionRange: boolean, uri?: Uri): Promise<string | undefined> {
+    const filePath = getFilePath(uri);
     if (!filePath) {
         return Promise.reject();
     }
@@ -55,20 +55,24 @@ export async function getFileMetadata(metadataType: FileMetadataType, appendSele
 /**
  * Returns the active file path
  * @export
+ * @param {Uri} [uri] Optional URI to use instead of the active editor
  * @return {*}  {(string | undefined)}
  */
-export function getFilePath(): string | undefined {
-    return getDocumentUri()?.fsPath;
+export function getFilePath(uri?: Uri): string | undefined {
+    let filePath: string | undefined;
+    uri ? (filePath = uri.fsPath) : (filePath = getDocumentUri()?.fsPath);
+    return filePath;
 }
 
 /**
  * Copies the path of the file open in the current editor to the clipboard
  * @export
  * @param {boolean} appendSelectionRange Optionally copies the file path with the active line number
+ * @param {Uri} [uri] Optional URI to use instead of the active editor
  * @return {*}
  */
-export async function copyFilePath(appendSelectionRange: boolean) {
-    const filePath = await getFileMetadata(FileMetadataType.fullPath, appendSelectionRange);
+export async function copyFilePath(appendSelectionRange: boolean, uri?: Uri) {
+    const filePath = await getFileMetadata(FileMetadataType.fullPath, appendSelectionRange, uri);
     if (!filePath) {
         return;
     }
@@ -82,8 +86,8 @@ export async function copyFilePath(appendSelectionRange: boolean) {
  * @param {boolean} appendSelectionRange Optionally copies the file name with the active line number
  * @return {*}
  */
-export async function copyFileName(appendSelectionRange: boolean) {
-    const fileName = await getFileMetadata(FileMetadataType.fileName, appendSelectionRange);
+export async function copyFileName(appendSelectionRange: boolean, uri?: Uri) {
+    const fileName = await getFileMetadata(FileMetadataType.fileName, appendSelectionRange, uri);
     if (!fileName) {
         return;
     }
@@ -94,10 +98,11 @@ export async function copyFileName(appendSelectionRange: boolean) {
 /**
  * Copy the name of the file open in the current editor, without extension
  * @export
+ * @param {boolean} appendSelectionRange Optionally copies the file name with the active line number
  * @return {*}
  */
-export async function copyFileNameWithoutExtension() {
-    const fileName = getFileName();
+export async function copyFileNameWithoutExtension(uri?: Uri) {
+    const fileName = getFileName(uri);
     if (!fileName) {
         return;
     }
@@ -124,10 +129,11 @@ export async function copyRelativeFilePath(appendSelectionRange: boolean): Promi
 /**
  * Returns the active file name
  * @export
+ * @param {boolean} appendSelectionRange Optionally copies the file name with the active line number
  * @return {*}  {(string | undefined)}
  */
-export function getFileName(): string | undefined {
-    const filePath = getFilePath();
+export function getFileName(uri?: Uri): string | undefined {
+    const filePath = getFilePath(uri);
     if (!filePath) {
         return undefined;
     }

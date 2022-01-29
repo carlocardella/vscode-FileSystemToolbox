@@ -36,14 +36,16 @@ export function getActiveDocument(): TextDocument | undefined {
 /**
  * Returns the active WorkspaceFolder
  * @export
+ * @param {boolean} appendSelectionRange Optionally copies the file name with the active line number
  * @return {*}  {(WorkspaceFolder | undefined)}
  */
-export function getWorkspaceFolder(): WorkspaceFolder | undefined {
-    const fileUri = getDocumentUri();
-    if (!fileUri) {
+export function getWorkspaceFolder(fileUri?: Uri): WorkspaceFolder | undefined {
+    let uri: Uri | undefined;
+    fileUri ? (uri = fileUri) : (uri = getDocumentUri());
+    if (!uri) {
         return;
     }
-    return workspace.getWorkspaceFolder(fileUri);
+    return workspace.getWorkspaceFolder(uri);
 }
 
 /**

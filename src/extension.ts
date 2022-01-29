@@ -15,13 +15,13 @@ export function activate(context: vscode.ExtensionContext) {
 
     // files
     context.subscriptions.push(
-        vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.CopyFileName", () => {
-            files.copyFileName(false);
+        vscode.commands.registerCommand("vscode-FileSystemToolbox.CopyFileName", (e) => {
+            files.copyFileName(false, e);
         })
     );
     context.subscriptions.push(
-        vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.CopyFileNameWithoutExtension", () => {
-            files.copyFileNameWithoutExtension();
+        vscode.commands.registerCommand("vscode-FileSystemToolbox.CopyFileNameWithoutExtension", (e) => {
+            files.copyFileNameWithoutExtension(e);
         })
     );
     context.subscriptions.push(
@@ -90,16 +90,15 @@ export function activate(context: vscode.ExtensionContext) {
 
     // workspaces
     context.subscriptions.push(
-        vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.CopyWorkspaceRootPath", () => {
-            workspaces.getWorkspaceRootPath();
+        vscode.commands.registerCommand("vscode-FileSystemToolbox.CopyWorkspaceRootPath", (e) => {
+            workspaces.getWorkspaceRootPath(e);
         })
     );
     context.subscriptions.push(
-        vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.OpenWorkspaceFile", () => {
+        vscode.commands.registerCommand("vscode-FileSystemToolbox.OpenWorkspaceFile", () => {
             pathStrings.openWorkspaceFile();
         })
     );
-
 
     // path transformation
     context.subscriptions.push(

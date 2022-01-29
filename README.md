@@ -35,8 +35,11 @@ The extension does not require any special permission, therefore is enabled to r
 * Copy relative file path
 * Copy relative file path with line number
 * Copy workspace folder path
-* Convert path string to posix format
-* Convert path string to win32 format
+* Copy workspace root path
+* Copy folder path
+* Copy relative folder path
+* Transform path string to posix format
+* Transform path string to win32 format
 * Copy text selection with file metadata (line numbers, file path, selection range)
 * New file relative to current file path
 * New file relative to workspace root
