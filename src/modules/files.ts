@@ -1,6 +1,6 @@
 import { getDocumentUri, writeClipboard, log, getLineNumberOrRange, getActiveEditor, getLinesFromSelection } from "./shared";
 import * as path from "path";
-import { Uri, window, workspace } from "vscode";
+import { EndOfLine, Uri, window, workspace } from "vscode";
 import { EOL } from "os";
 
 /**
@@ -193,10 +193,6 @@ export async function copySelectionWithMetadata(): Promise<string | undefined | 
 
     let metadata: string[] = [];
 
-    if (config.get("MetadataPathPosition") === "above") {
-        metadata.push(filePath!);
-    }
-
     const editor = getActiveEditor();
     if (!editor) {
         return Promise.reject();
@@ -215,7 +211,15 @@ export async function copySelectionWithMetadata(): Promise<string | undefined | 
     });
 
     if (config.get("MetadataPathPosition") === "below") {
+        if (config.get("MetadataSeparatePathWithEmptyLine")) {
+            metadata.push("");
+        }
         metadata.push(filePath!);
+    } else {
+        if (config.get("MetadataSeparatePathWithEmptyLine")) {
+            metadata.unshift("");
+        }
+        metadata.unshift(filePath!);
     }
 
     // copy to clipboard

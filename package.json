@@ -354,6 +354,11 @@
                         ],
                         "default": "below"
                     },
+                    "FileSystemToolbox.MetadataSeparatePathWithEmptyLine":{
+                        "description": "Separate the metadata path with an empty line",
+                        "type": "boolean",
+                        "default": true
+                    },
                     "FileSystemToolbox.CopyMetadataLineNumbers": {
                         "description": "Copy the line numbers with the text selection and metadata",
                         "type": "boolean",

@@ -27,6 +27,16 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [1.2.1] - 2022-02-10
+
+### Fixed
+
+* Fixed `Copy selection with metadata` to properly copy path and metadata above the selection
+
+### Added
+
+* Added setting `FileSystemToolbox.MetadataSeparatePathWithEmptyLine` to separate the metadata path with an empty line; default is `true`
+
 ## [1.2.0] - 2022-01-29
 
 ### Added
