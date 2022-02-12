@@ -10,6 +10,10 @@
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/carlocardella/vscode-FileSystemToolbox.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fcarlocardella%2Fvscode-FileSystemToolbox)
 <!-- [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/carlocardella/vscode-filesystemtoolbox) -->
 
+[Install for VS Code](https://marketplace.visualstudio.com/items?itemName=CarloCardella.vscode-filesystemtoolbox)
+
+[Install for VS Codium](https://open-vsx.org/extension/carlocardella/vscode-filesystemtoolbox)
+
 Collection of tools to work with the File System.
 
 The marketplace has a number of great extensions to work with files and folder, I installed a few of them to cover the entire range of actions I normally use, unfortunately that means there is some overlapping between them, basically the same action is contributed by multiple extensions. That is what motivated me to build this extension: I like the idea to have a single extension for all those operations and without duplicates; plus, it is a good pastime 😊.
