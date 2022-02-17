@@ -210,6 +210,7 @@ export async function openWorkspaceFile(filePath?: string) {
     if (!filePath) {
         return;
     }
+    filePath = filePath?.trim();
 
     if (workspaceFolderPath) {
         const fileToOpen = path.join(workspaceFolderPath, filePath);
