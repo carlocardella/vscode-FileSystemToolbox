@@ -2,7 +2,7 @@
     "name": "vscode-filesystemtoolbox",
     "displayName": "File System Toolbox",
     "description": "Collection of tools to work with the File System",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "engines": {
         "vscode": "^1.45.0"
     },
