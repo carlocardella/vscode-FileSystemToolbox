@@ -27,6 +27,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [1.2.2] - 2022-02-19
+
+### Fixed
+
+* Make `Open workspace file` more robust, trim spaces at the beginning or end of the passed path
+
 ## [1.2.1] - 2022-02-10
 
 ### Fixed
