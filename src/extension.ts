@@ -50,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
         })
     );
     context.subscriptions.push(
-        vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.RemoveFile", () => {
+        vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.DeleteFile", () => {
             crud.removeFile();
         })
     );
@@ -73,6 +73,12 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.CopySelectionWithMetadata", () => {
             files.copySelectionWithMetadata();
+        })
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.MoveFile", () => {
+            files.moveFile();
         })
     );
 

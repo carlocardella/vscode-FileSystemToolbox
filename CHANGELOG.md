@@ -27,6 +27,17 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [1.3.0] - 2022-05-14
+
+### Added
+
+* Added `Move file` command to move the file in the active editor to a new location
+
+### Changed
+
+* The `Remove file` command has been renamed to `Delete file` to avoid confusion with `Move file`
+* Consolidated some context menu commands under a new menu group `Edit`
+
 ## [1.2.2] - 2022-02-19
 
 ### Fixed

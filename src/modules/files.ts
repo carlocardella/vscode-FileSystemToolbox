@@ -1,6 +1,6 @@
 import { getDocumentUri, writeClipboard, log, getLineNumberOrRange, getActiveEditor, getLinesFromSelection } from "./shared";
 import * as path from "path";
-import { EndOfLine, Uri, window, workspace } from "vscode";
+import { Uri, window, workspace } from "vscode";
 import { EOL } from "os";
 
 /**
@@ -225,4 +225,34 @@ export async function copySelectionWithMetadata(): Promise<string | undefined | 
     // copy to clipboard
     await writeClipboard(metadata.join(EOL));
     return Promise.resolve();
+}
+
+export async function moveFile() {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+
+    const destinationFolder = await window.showOpenDialog({ canSelectMany: false, title: "Select destination folder", canSelectFolders: true });
+    if (!destinationFolder) {
+        return;
+    }
+
+    let destinationUri = Uri.joinPath(destinationFolder[0], path.basename(editor.document.fileName));
+    workspace.fs.stat(destinationUri).then(
+        (stat) => {
+            window.showWarningMessage(`Destination file already exists: ${destinationUri.fsPath}`);
+            return;
+        },
+        (err) => {
+            // the destination file does not exist, we an attempt to move it (this may still fail if the user does not have write permissions)
+            try {
+                workspace.fs.rename(editor.document.uri, destinationUri, { overwrite: false });
+            } catch (error) {
+                console.log(error);
+                window.showErrorMessage(`Failed to move file: ${error}`);
+                return;
+            }
+        }
+    );
 }
