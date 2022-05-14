@@ -42,17 +42,24 @@ The extension does not require any special permission, therefore is enabled to r
 * Copy workspace root path
 * Copy folder path
 * Copy relative folder path
-* Transform path string to posix format
-* Transform path string to win32 format
+* Copy file path with line number
+* Copy Selection With Metadata
 * Copy text selection with file metadata (line numbers, file path, selection range)
+* Delete file
+* Duplicate active file
+* Duplicate file
+* Expand home dir alias
+* Move File
 * New file relative to current file path
 * New file relative to workspace root
-* Duplicate active file
-* Remove active file
-* Open file under cursor
 * Normalize path (platform specific)
-* Expand home dir alias
+* Open file under cursor
 * Open workspace file
+* Remove active file
+* Transform path string to posix format
+* Transform path string to win32 format
+* Transform path to Posix
+* Transform path to Win32
 
 ### Path Autocomplete
 
