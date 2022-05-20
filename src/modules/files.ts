@@ -1,6 +1,6 @@
 import { getDocumentUri, writeClipboard, log, getLineNumberOrRange, getActiveEditor, getLinesFromSelection } from "./shared";
 import * as path from "path";
-import { Uri, window, workspace } from "vscode";
+import { Uri, window, workspace, TextEditor } from "vscode";
 import { EOL } from "os";
 
 /**
@@ -227,9 +227,8 @@ export async function copySelectionWithMetadata(): Promise<string | undefined | 
     return Promise.resolve();
 }
 
-export async function moveFile() {
-    const editor = getActiveEditor();
-    if (!editor) {
+export async function moveFile(fileUris: Uri[]) {
+    if (!fileUris) {
         return;
     }
 
@@ -238,21 +237,25 @@ export async function moveFile() {
         return;
     }
 
-    let destinationUri = Uri.joinPath(destinationFolder[0], path.basename(editor.document.fileName));
-    workspace.fs.stat(destinationUri).then(
-        (stat) => {
-            window.showWarningMessage(`Destination file already exists: ${destinationUri.fsPath}`);
-            return;
-        },
-        (err) => {
-            // the destination file does not exist, we an attempt to move it (this may still fail if the user does not have write permissions)
-            try {
-                workspace.fs.rename(editor.document.uri, destinationUri, { overwrite: false });
-            } catch (error) {
-                console.log(error);
-                window.showErrorMessage(`Failed to move file: ${error}`);
+    fileUris.forEach((uri) => {
+        let fileName = path.basename(uri.fsPath);
+
+        let destinationUri = Uri.joinPath(destinationFolder[0], fileName);
+        workspace.fs.stat(destinationUri).then(
+            (stat) => {
+                window.showWarningMessage(`Destination file already exists: ${destinationUri.fsPath}`);
                 return;
+            },
+            (err) => {
+                // the destination file does not exist, we can attempt to move it (this may still fail if the user does not have write permissions)
+                try {
+                    workspace.fs.rename(uri, destinationUri, { overwrite: false });
+                } catch (error) {
+                    console.log(error);
+                    window.showErrorMessage(`Failed to move file: ${error}`);
+                    return;
+                }
             }
-        }
-    );
+        );
+    });
 }

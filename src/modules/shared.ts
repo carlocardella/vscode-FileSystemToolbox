@@ -1,5 +1,6 @@
-import { env, Position, Range, Selection, TextDocument, TextEditor, TextLine, Uri, window, workspace, WorkspaceFolder } from "vscode";
+import { env, Position, Range, Selection, TextDocument, TextEditor, TextLine, Uri, window, workspace, WorkspaceFolder, commands } from "vscode";
 import * as path from "path";
+import * as os from "os";
 
 /**
  * Returns the Uri of the active document
@@ -220,7 +221,7 @@ export function getUserPathRangeAtCursorPosition(editor: TextEditor): Range | un
 
 export function getRangeFromText(editor: TextEditor, text: string, selection: Selection): Range | undefined {
     let selectionText = getTextFromSelection(editor, selection);
-    
+
     if (selectionText?.includes(text)) {
         let start = selectionText?.indexOf(text);
         let end = selectionText?.lastIndexOf(text);
@@ -228,4 +229,17 @@ export function getRangeFromText(editor: TextEditor, text: string, selection: Se
     }
 
     return;
+}
+
+export async function getSelectedExplorerItems(): Promise<Uri[]> {
+    // workaround till https://github.com/Microsoft/vscode/issues/3553#issuecomment-1098562676 is implemented
+    const originalClipboard = await env.clipboard.readText();
+    await commands.executeCommand("copyFilePath");
+    let items: string[] = (await env.clipboard.readText()).split(os.EOL);
+
+    // restore the original clipboard
+    await env.clipboard.writeText(originalClipboard);
+
+    // newUri = await Uri.file(folder);
+    return Promise.resolve(items.map((i) => Uri.file(i)));
 }

@@ -5,8 +5,9 @@ import * as folders from "./modules/folders";
 import * as crud from "./modules/crud";
 import * as pathStrings from "./modules/pathStrings";
 import * as pathCompleter from "./modules/pathCompleter";
-import { getCompletionItems } from "./modules/pathCompleter";
 import * as pathString from "./modules/pathStrings";
+import * as shared from "./modules/shared";
+import { Uri, TextEditor, TextDocument } from "vscode";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -77,8 +78,22 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-        vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.MoveFile", () => {
-            files.moveFile();
+        vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.MoveFile", async (explorerSelectedUri) => {
+            if (explorerSelectedUri instanceof Uri) {
+                // invoked from context menu in Explorer treeview
+                console.log("from explorer treeview");
+            } else if (explorerSelectedUri instanceof String) {
+                // invoked from context menu in a text editor
+                console.log("from tect editor");
+            } else {
+                // invoked from command palette or keybinding
+                console.log("from command palette or keybinding");
+            }
+
+            // if (!explorerSelectedUri) {
+            //     explorerSelectedUri = await shared.getSelectedExplorerItems();
+            // }
+            // files.moveFile([explorerSelectedUri]);
         })
     );
 
@@ -139,7 +154,7 @@ export function activate(context: vscode.ExtensionContext) {
                     return;
                 }
 
-                return getCompletionItems(currentFolder, document, position);
+                return pathCompleter.getCompletionItems(currentFolder, document, position);
             },
         },
         ...["/", "\\"]

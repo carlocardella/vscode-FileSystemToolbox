@@ -28,7 +28,7 @@
             "type": "extensionHost",
             "request": "launch",
             "runtimeExecutable": "${execPath}",
-            "args": ["--extensionDevelopmentPath=${workspaceFolder}", "--disable-extensions", "C:/LocalTemp/", "C:/Temp/"],
+            "args": ["--extensionDevelopmentPath=${workspaceFolder}", "C:/LocalTemp/", "C:/Temp/", "--disable-extensions"],
             "outFiles": ["${workspaceFolder}/dist/**/*.js"],
             "preLaunchTask": "${defaultBuildTask}"
         },
