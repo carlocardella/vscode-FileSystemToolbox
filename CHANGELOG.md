@@ -28,6 +28,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [1.3.1] - 2022-10-22
+
+### Changed
+
+* Updates Node dependencies
+
 ## [1.3.0] - 2022-05-14
 
 ### Added
