@@ -4,8 +4,7 @@ import { expandHomeDirAlias } from "./pathStrings";
 import { getActiveDocument, getActiveEditor, getCursorPosition, getDocumentContainer, getLinesFromSelection } from "./shared";
 
 /*
-// todo: manage relative path in the form of   "Assets/tech-service.png". Works fine for items under the root folder, it should work for other folders as well 
-// todo: if the file is json/jsonc, use forward slashes instead of backslashes (add settings to control the default behavior)
+// @todo: manage relative path in the form of   "Assets/tech-service.png". Works fine for items under the root folder, it should work for other folders as well 
 */
 
 let config = workspace.getConfiguration("FileSystemToolbox");
@@ -33,6 +32,27 @@ export function getUserPath(): string | undefined {
     return;
 }
 
+function getUserPathSeparator(): string {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return path.sep;
+    }
+
+    const cursorPosition = getCursorPosition(editor)[0];
+    const separator = editor.document.getText(new Range(new Position(cursorPosition.line, cursorPosition.character - 1), cursorPosition));
+    // check if the user is using double backslashes, e.g. "C:\\Users\\" in json files
+    if (separator === "\\" && cursorPosition.character > 1) {
+        const previousSeparator = editor.document.getText(
+            new Range(new Position(cursorPosition.line, cursorPosition.character - 2), new Position(cursorPosition.line, cursorPosition.character - 1))
+        );
+        if (previousSeparator === "\\") {
+            return separator + previousSeparator;
+        }
+    }
+
+    return separator;
+}
+
 /**
  * Returns a CompletionItem[] object to be used to show the path autocompletion in the editor
  * @export
@@ -45,13 +65,14 @@ export function getCompletionItems(currentFolder: string, document: TextDocument
         if (pathCompletionSeparator === "SystemDefault") {
             pathCompletionSeparator = path.sep;
         }
-        if (document.languageId === "json" || document.languageId === "jsonc") {
-            if (config.get<boolean>("PathCompleterUseSlashInJsonFile")) {
-                pathCompletionSeparator = "/";
-            }
-        }
+        pathCompletionSeparator = getUserPathSeparator();
+
         let appendPathSeparator = config.get<boolean>("PathCompleterAppendPathSeparator");
 
+        // @ugly: workaround needed to handle cases where userPath begins with a backslash and a double backslash; without this, workspace.fs.readDirectory() throws an error (unknown file)
+        if (pathCompletionSeparator === "\\\\") {
+            currentFolder = "\\" + currentFolder;
+        }
         await workspace.fs.readDirectory(Uri.file(currentFolder)).then(
             (items) => {
                 let completionItems: CompletionItem[] = [];

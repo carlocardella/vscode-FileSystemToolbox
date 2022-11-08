@@ -28,6 +28,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Log
 
+## [1.3.2] - 2022-11-07
+
+### Fixed
+
+* [#4](https://github.com/carlocardella/vscode-FileSystemToolbox/issues/4)
+  * Path autocompletion respects the path separator typed by the user to start the autocompletion sequence
+
 ## [1.3.1] - 2022-10-22
 
 ### Changed
