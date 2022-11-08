@@ -83,9 +83,10 @@ The feature is enabled by default and can be customized through these settings:
     * `~`
     * `HOME`
 * `FileSystemToolbox.PathCompleterUseSlashInJsonFile` (default `true`)
-  * Use the slash character as path separator in JSON file, regardless of the OS default (e.g. on Windows)
+  * Uses the path separator character the user typed to start the autocompletion sequence
+  * Supports multi-cursor
 
-![path autocomplete](/Assets/path_autocomplete.gif)
+![fstoolbox_path_separator](https://user-images.githubusercontent.com/5784415/200476237-8b6d84f4-b03e-4bbc-9d43-5f6813d64aaa.gif)
 
 ### Thanks to
 
