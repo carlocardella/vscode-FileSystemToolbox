@@ -6,25 +6,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-### Folders
-
-* Copy containing folder relative path
-* New folder in workspace/folder root
-* New folder relative to current file
-
-### Workspace
-
-* Copy workspace name
-
-### Path
-
-### Others
-
-* Make Relative
-* Resolve
-* Create tree with braces as placeholder, e.g. `/folder/{d1,d2,d2}` created folders `d1`, `d2` and `d3` under `/folder`
-  * Create files under each leaf folder with the same braces mechanism
-* Manage hidden files and folder
+See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-FileSystemToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
 
 ## Log
 
