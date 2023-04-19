@@ -10,6 +10,16 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [1.4.0] - 2023-04-18
+
+### Added
+
+* `Rename file...` command: rename the current file even if you do not have a workspace or folder open
+
+### Changed
+
+* Updated Node modules
+
 ## [1.3.2] - 2022-11-07
 
 ### Fixed

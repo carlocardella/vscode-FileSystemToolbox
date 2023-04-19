@@ -50,6 +50,7 @@ The extension does not require any special permission, therefore is enabled to r
 * Duplicate file
 * Expand home dir alias
 * Move File
+* Rename File
 * New file relative to current file path
 * New file relative to workspace root
 * Normalize path (platform specific)

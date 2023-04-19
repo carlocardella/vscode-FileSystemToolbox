@@ -256,3 +256,35 @@ export async function moveFile() {
         }
     );
 }
+
+
+export async function renameFile() { 
+    // rename file
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+
+    const newFileName = await window.showInputBox({ prompt: "Enter new file name", value: path.basename(editor.document.fileName) });
+    if (!newFileName) {
+        return;
+    }
+
+    let newUri = Uri.joinPath(editor.document.uri.with({ path: path.dirname(editor.document.uri.path) }), newFileName);
+    workspace.fs.stat(newUri).then(
+        (stat) => {
+            window.showWarningMessage(`Destination file already exists: ${newUri.fsPath}`);
+            return;
+        },
+        (err) => {
+            // the destination file does not exist, we an attempt to move it (this may still fail if the user does not have write permissions)
+            try {
+                workspace.fs.rename(editor.document.uri, newUri, { overwrite: false });
+            } catch (error) {
+                console.log(error);
+                window.showErrorMessage(`Failed to rename file: ${error}`);
+                return;
+            }
+        }
+    );
+}

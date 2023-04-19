@@ -55,6 +55,11 @@ export function activate(context: vscode.ExtensionContext) {
         })
     );
     context.subscriptions.push(
+        vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.RenameFile", () => {
+            files.renameFile();
+        })
+    );
+    context.subscriptions.push(
         vscode.commands.registerTextEditorCommand("vscode-FileSystemToolbox.NewFileRelativeToCurrentFile", () => {
             crud.askForFilePathAndName(true, false);
         })
