@@ -10,6 +10,12 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [1.5.0] - 2023-11-06
+
+### Changed
+
+* Updated Node modules
+
 ## [1.4.0] - 2023-04-18
 
 ### Added
