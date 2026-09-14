@@ -23,7 +23,7 @@ describe("Folders", () => {
 
         test("Copy folder path", async () => {
             const expectedPath = path.dirname(testFilePath);
-            copyFolderPath(false);
+            await copyFolderPath(false);
             let clipContent = await readClipboard();
             assert.deepStrictEqual(clipContent, expectedPath);
         });
