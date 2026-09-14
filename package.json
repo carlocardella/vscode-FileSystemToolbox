@@ -2,14 +2,14 @@
   "name": "vscode-filesystemtoolbox",
   "displayName": "File System Toolbox",
   "description": "Collection of tools to work with the File System",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "engines": {
     "vscode": "^1.45.0"
   },
   "categories": [
     "Other"
   ],
-  "icon": "assets/tech-service.png",
+  "icon": "Assets/tech-service.png",
   "publisher": "carlocardella",
   "author": {
     "name": "Carlo Cardella",
@@ -33,7 +33,29 @@
     "path intellisense"
   ],
   "activationEvents": [
-    "*"
+    "onLanguage",
+    "onCommand:vscode-FileSystemToolbox.CopyFileName",
+    "onCommand:vscode-FileSystemToolbox.CopyRelativeFilePath",
+    "onCommand:vscode-FileSystemToolbox.CopyFileNameWithoutExtension",
+    "onCommand:vscode-FileSystemToolbox.CopyFilePathWithLineNumber",
+    "onCommand:vscode-FileSystemToolbox.CopyFileNameWithLineNumber",
+    "onCommand:vscode-FileSystemToolbox.CopyWorkspaceRootPath",
+    "onCommand:vscode-FileSystemToolbox.CopyFolderPath",
+    "onCommand:vscode-FileSystemToolbox.CopyRelativeFolderPath",
+    "onCommand:vscode-FileSystemToolbox.DuplicateFile",
+    "onCommand:vscode-FileSystemToolbox.DeleteFile",
+    "onCommand:vscode-FileSystemToolbox.RenameFile",
+    "onCommand:vscode-FileSystemToolbox.CopyRelativeFilePathWithLineNumber",
+    "onCommand:vscode-FileSystemToolbox.CopySelectionWithMetadata",
+    "onCommand:vscode-FileSystemToolbox.MoveFile",
+    "onCommand:vscode-FileSystemToolbox.TransformPathToPosix",
+    "onCommand:vscode-FileSystemToolbox.TransformPathToWin32",
+    "onCommand:vscode-FileSystemToolbox.NewFileRelativeToCurrentFile",
+    "onCommand:vscode-FileSystemToolbox.NewFileRelativeToWorkspaceRoot",
+    "onCommand:vscode-FileSystemToolbox.OpenFileUnderCursor",
+    "onCommand:vscode-FileSystemToolbox.OpenWorkspaceFile",
+    "onCommand:vscode-FileSystemToolbox.NormalizePath",
+    "onCommand:vscode-FileSystemToolbox.expandHomeDirAlias"
   ],
   "capabilities": {
     "untrustedWorkspaces": {
@@ -441,22 +463,21 @@
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^18.15.11",
+    "@types/node": "^26.4.1",
     "@types/vscode": "^1.45.0",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
+    "@vscode/test-electron": "^3.1.0",
     "eslint": "^8.35.0",
     "glob": "^8.1.0",
-    "mocha": "^10.2.0",
-    "nyc": "^15.1.0",
+    "mocha": "^12.0.0",
+    "nyc": "^18.0.0",
     "source-map-support": "^0.5.21",
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4",
-    "vscode-test": "^1.6.1",
-    "webpack": "^5.79.0",
-    "webpack-cli": "^5.0.1",
-    "webpack-dev": "^1.1.1"
+    "typescript": "^5.9.3",
+    "webpack": "^5.110.3",
+    "webpack-cli": "^5.0.1"
   },
   "dependencies": {
     "fs": "^0.0.2"

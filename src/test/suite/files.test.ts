@@ -48,11 +48,11 @@ suite("Files", () => {
                         selections.push(new Selection(4, 0, 4, 5));
                     }
                     else {
-                        selections.push(new Selection(2, 0, 2, 0));
+                        selections.push(new Selection(1, 0, 1, 0));
                     }
                     editor!.selections = selections;
                 };
-                t.f(t.copyLineNumber!);
+                await t.f(t.copyLineNumber!);
 
                 let clipContent = await readClipboard();
 
@@ -61,7 +61,7 @@ suite("Files", () => {
         });
 
         test("Copy file name without extension", async () => {
-            copyFileNameWithoutExtension();
+            await copyFileNameWithoutExtension();
             let clipContent = await readClipboard();
             assert.deepStrictEqual(clipContent, "test");
         });

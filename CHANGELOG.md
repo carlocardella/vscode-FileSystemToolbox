@@ -10,6 +10,17 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [1.5.1] - 2026-09-13
+
+### Changed
+
+* Updated Node modules to resolve known vulnerabilities
+* Migrated extension integration tests to `@vscode/test-electron`
+
+### Fixed
+
+* Updated integration tests for current Mocha and glob APIs and reliable asynchronous clipboard assertions
+
 ## [1.5.0] - 2023-11-06
 
 ### Changed
