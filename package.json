@@ -2,7 +2,7 @@
   "name": "vscode-filesystemtoolbox",
   "displayName": "File System Toolbox",
   "description": "Collection of tools to work with the File System",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "engines": {
     "vscode": "^1.45.0"
   },
@@ -465,7 +465,7 @@
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "^26.6.5",
-    "@types/vscode": "^1.140.0",
+    "@types/vscode": "1.45.0",
     "@typescript-eslint/eslint-plugin": "^8.72.1",
     "@typescript-eslint/parser": "^8.72.1",
     "@vscode/test-electron": "^3.1.0",

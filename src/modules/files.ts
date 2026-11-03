@@ -233,7 +233,8 @@ export async function moveFile() {
         return;
     }
 
-    const destinationFolder = await window.showOpenDialog({ canSelectMany: false, title: "Select destination folder", canSelectFolders: true });
+    const dialogOptions = { canSelectMany: false, title: "Select destination folder", canSelectFolders: true };
+    const destinationFolder = await window.showOpenDialog(dialogOptions);
     if (!destinationFolder) {
         return;
     }

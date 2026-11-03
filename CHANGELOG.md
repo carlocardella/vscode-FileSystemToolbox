@@ -6,6 +6,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.5.3] - 2026-11-02
+
+### Fixed
+
+* Aligned VS Code API type definitions with the declared minimum VS Code version so Marketplace packaging succeeds
+* Preserved the move-file dialog title while compiling against the minimum VS Code API types
+
 ## [1.5.2] - 2026-11-02
 
 ### Changed
