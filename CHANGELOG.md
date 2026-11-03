@@ -6,6 +6,15 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.5.2] - 2026-11-02
+
+### Changed
+
+* Updated npm dependencies to current compatible releases and removed obsolete `fs` and glob typings packages
+* Migrated to ESLint flat configuration and Node.js 24 in the publishing workflow
+* Added `npm test`, selectable VS Code test hosts, and extension activation smoke coverage
+* Applied available dependency security fixes; development-tool glob/minimatch advisories still await upstream fixes
+
 See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-FileSystemToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
 
 ## Log

@@ -2,7 +2,7 @@
   "name": "vscode-filesystemtoolbox",
   "displayName": "File System Toolbox",
   "description": "Collection of tools to work with the File System",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "engines": {
     "vscode": "^1.45.0"
   },
@@ -457,29 +457,27 @@
     "vscode:prepublish": "webpack --mode production",
     "webpack": "webpack --mode development",
     "webpack-dev": "webpack --mode development --watch",
+    "lint": "eslint src",
     "test-compile": "tsc -p ./",
+    "test": "npm run vscode:prepublish && npm run test-compile && node ./out/test/runTest.js",
     "unit-tests": "tsc -w -p ./"
   },
   "devDependencies": {
-    "@types/glob": "^8.1.0",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "^26.4.1",
-    "@types/vscode": "^1.45.0",
-    "@typescript-eslint/eslint-plugin": "^5.59.0",
-    "@typescript-eslint/parser": "^5.59.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^26.6.5",
+    "@types/vscode": "^1.140.0",
+    "@typescript-eslint/eslint-plugin": "^8.72.1",
+    "@typescript-eslint/parser": "^8.72.1",
     "@vscode/test-electron": "^3.1.0",
-    "eslint": "^8.35.0",
-    "glob": "^8.1.0",
-    "mocha": "^12.0.0",
+    "eslint": "^9.39.5",
+    "glob": "^13.0.6",
+    "mocha": "^12.0.3",
     "nyc": "^18.0.0",
     "source-map-support": "^0.5.21",
-    "ts-loader": "^9.4.2",
-    "ts-node": "^10.9.1",
+    "ts-loader": "^9.6.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "webpack": "^5.110.3",
-    "webpack-cli": "^5.0.1"
-  },
-  "dependencies": {
-    "fs": "^0.0.2"
+    "webpack": "^5.112.2",
+    "webpack-cli": "^7.2.3"
   }
 }

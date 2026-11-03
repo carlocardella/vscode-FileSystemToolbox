@@ -1,6 +1,6 @@
 import { before, describe, after, afterEach } from "mocha";
 import * as assert from 'assert';
-import { workspace, Uri, Selection } from 'vscode';
+import { workspace, Uri, Selection, extensions, commands } from 'vscode';
 import { copyFilePath, copyFileName, copyFileNameWithoutExtension } from '../../modules/files';
 import * as path from 'path';
 import { sleep, readClipboard, closeTextEditor, openDocument, getActiveTextEditor } from './testHelpers';
@@ -9,6 +9,19 @@ suite("Files", () => {
     const testFilePath = path.join(__dirname, "../../../src/test/assets/test.txt");
     before(async () => {
         console.log("Starting Files tests");
+    });
+
+    test("Extension activates and registers its commands", async () => {
+        const extension = extensions.getExtension('carlocardella.vscode-filesystemtoolbox');
+        assert.ok(extension, 'Extension is installed in the test host');
+        await extension.activate();
+        assert.strictEqual(extension.isActive, true);
+
+        const registeredCommands = await commands.getCommands(true);
+        const contributedCommands = extension.packageJSON.contributes.commands as { command: string }[];
+        contributedCommands.forEach(({ command }) => {
+            assert.ok(registeredCommands.includes(command), `${command} is registered`);
+        });
     });
 
     describe("No workspace", () => {

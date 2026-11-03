@@ -89,6 +89,29 @@ The feature is enabled by default and can be customized through these settings:
 
 ![fstoolbox_path_separator](https://user-images.githubusercontent.com/5784415/200476237-8b6d84f4-b03e-4bbc-9d43-5f6813d64aaa.gif)
 
+## Development
+
+Use Node.js 24 LTS, matching the publishing workflow.
+
+```sh
+npm ci
+npm run lint
+npm test
+```
+
+`npm test` builds the production extension, compiles the tests, and runs them
+inside VS Code. It downloads the latest stable VS Code by default. To select
+a specific test host, set `VSCODE_TEST_VERSION`, for example:
+
+```sh
+VSCODE_TEST_VERSION=1.137.0 npm test
+```
+
+TypeScript remains on 5.9 because the current TypeScript ESLint parser does not
+support TypeScript 7. The dependency audit still reports development-tool
+glob/minimatch advisories without upstream fixes; `npm audit --omit=dev` is
+clean. Do not force audit downgrades to obsolete tool versions.
+
 ### Thanks to
 
 File System Toolbox is freely inspired by these fine extensions:
