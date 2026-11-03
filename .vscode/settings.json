@@ -11,7 +11,7 @@
     "favorites.sortDirection": "ASC",
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#457ca4",
-        "activityBar.activeBorder": "#702f55",
+        "activityBar.activeBorder": "#e7e7e7",
         "activityBar.background": "#457ca4",
         "activityBar.foreground": "#e7e7e7",
         "activityBar.inactiveForeground": "#e7e7e799",
@@ -35,7 +35,9 @@
         "activityBarTop.inactiveForeground": "#e7e7e799",
         "commandCenter.foreground": "#e7e7e7",
         "statusBar.debuggingBackground": "#366180",
-        "statusBar.debuggingForeground": "#e7e7e7"
+        "statusBar.debuggingForeground": "#e7e7e7",
+        "activityBarTop.activeBorder": "#e7e7e7",
+        "statusBar.inactiveBackground": "#366180"
     },
     "peacock.color": "#366180",
     "mochaExplorer.files": "src/test/**/*test.ts",
